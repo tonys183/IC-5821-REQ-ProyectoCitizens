@@ -1,0 +1,131 @@
+/* src/pages/AuthForm.css */
+
+body {
+  /* Assuming you want the dark background on the body for these pages when they are active */
+  /* This might be better handled by a class on the body or a wrapper in App.js for auth routes */
+}
+
+.auth-layout-container { /* Add this class to your AuthLayout in App.js if you want the dark background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #1a1a1a; /* Dark background from image */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.form-container-styles { /* This class is already on LoginPage and RegistrationPage divs */
+  background-color: #087E8B; /* Teal background from image - adjust as needed */
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px; /* Max width for the form */
+  color: white;
+  text-align: center; /* Center title and links */
+}
+
+.form-container-styles h2 {
+  color: white;
+  margin-bottom: 25px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.form-container-styles .form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-container-styles .form-group label {
+  display: block;
+  color: white;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-container-styles .form-group input {
+  width: 100%;
+  padding: 12px 15px;
+  background-color: #065f6d; /* Darker teal for inputs */
+  border: 1px solid #054e58;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-container-styles .form-group input::placeholder {
+  color: #a0d8de;
+}
+
+.form-container-styles .form-group input:focus {
+  outline: none;
+  border-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+.form-container-styles .account-button { /* submit-button class is also there */
+  background-color: white;
+  color: #087E8B; /* Teal text */
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: auto; /* Fit content */
+  min-width: 150px; /* Minimum width */
+  display: inline-block;
+  margin-top: 10px; /* Space above button */
+}
+
+.form-container-styles .account-button:hover {
+  background-color: #f0f0f0; /* Lighter on hover */
+  transform: translateY(-2px);
+}
+
+.form-container-styles .account-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.form-container-styles .error-message {
+  color: #ffdddd; /* Lighter red for dark background */
+  background-color: rgba(255, 0, 0, 0.1);
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  border: 1px solid #ff4d4d;
+}
+
+.form-container-styles .success-message {
+  color: #ddffdd;
+  background-color: rgba(0, 255, 0, 0.1);
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  border: 1px solid #4dff4d;
+}
+
+.form-container-styles p {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.form-container-styles p a {
+  color: #f0f0f0; /* Lighter link color for contrast */
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.form-container-styles p a:hover {
+  color: white;
+} 

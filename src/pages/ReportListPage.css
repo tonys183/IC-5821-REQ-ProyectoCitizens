@@ -1,0 +1,147 @@
+/* Report List Page Styles */
+.report-list-page-container {
+  display: flex; 
+  gap: 20px; 
+  /* padding: 20px; /* Padding is handled by .main-content in App.css */
+}
+
+.report-list-main-content {
+  flex-grow: 1; 
+  display: flex;
+  flex-direction: column;
+}
+
+.report-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap; 
+  gap: 15px; 
+}
+
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  background-color: #007ba7; /* Consistent with other UI elements */
+  padding: 5px 10px;
+  border-radius: 4px;
+  flex-grow: 1; 
+  max-width: 500px; 
+}
+
+.search-input {
+  flex-grow: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 3px; /* Simple border radius */
+  background-color: #3c3c3c; /* Dark input background to match forms */
+  color: #fff;
+  font-size: 0.95em;
+}
+
+.search-input::placeholder {
+  color: #a0a0a0; /* Lighter grey for placeholder */
+}
+
+/* Search button is currently commented out in JSX, keeping styles minimal */
+.search-button {
+  background-color: #00A9B5; /* Teal button */
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 0 3px 3px 0; 
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.search-button:hover {
+  background-color: #008C9E;
+}
+
+.create-report-button {
+  background-color: #00A9B5; /* Teal to match theme */
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 500; /* Slightly less bold than main submit buttons */
+  transition: background-color 0.2s ease;
+  white-space: nowrap; 
+}
+
+.create-report-button:hover {
+  background-color: #008C9E; /* Darker teal */
+}
+
+.reports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+  gap: 20px;
+}
+
+.no-reports-message {
+  color: #ccc;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}
+
+.nuevos-avisos-sidebar {
+  width: 250px; 
+  background-color: #2d2d30; /* Darker grey, consistent with ReportCard */
+  padding: 20px;
+  border-radius: 8px;
+  color: #e0e0e0;
+  height: fit-content; 
+  flex-shrink: 0; 
+  border: 1px solid #444444;
+}
+
+.nuevos-avisos-sidebar h4 {
+  margin-top: 0;
+  color: #00A9B5; /* Teal accent */
+  margin-bottom: 15px;
+  border-bottom: 1px solid #444444;
+  padding-bottom: 10px;
+}
+
+.nuevos-avisos-sidebar p {
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) { 
+  .report-list-page-container {
+    flex-direction: column-reverse; 
+  }
+  .report-list-main-content {
+    width: 100%; 
+  }
+  .nuevos-avisos-sidebar {
+    width: 100%; 
+    margin-bottom: 20px; 
+  }
+  .reports-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) { 
+  .report-list-header {
+    flex-direction: column; 
+    align-items: stretch; 
+  }
+  .search-bar-container {
+    max-width: none; 
+  }
+  .create-report-button {
+    text-align: center; 
+    width: 100%; /* Make button full width on small screens */
+    padding: 12px; /* Adjust padding for full width */
+  }
+  .reports-grid {
+    grid-template-columns: 1fr; 
+  }
+} 

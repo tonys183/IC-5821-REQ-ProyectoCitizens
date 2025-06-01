@@ -1,0 +1,42 @@
+.report-card {
+  background-color: #2d2d30; /* Darker grey, consistent with other form elements */
+  border: 1px solid #444444;
+  border-radius: 8px;
+  padding: 20px;
+  color: #e0e0e0; /* Light grey text for card content */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Pushes details to bottom if content is short */
+}
+
+.report-card-title {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #00A9B5; /* Teal accent for title */
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+.report-card-description {
+  font-size: 0.95em;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  flex-grow: 1; /* Allows description to take up available space */
+}
+
+.report-card-details {
+  font-size: 0.85em;
+  color: #b0b0b0; /* Slightly darker grey for less prominent details */
+  border-top: 1px solid #444444; /* Separator line */
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.report-card-details p {
+  margin: 5px 0;
+}
+
+.report-card-details strong {
+  color: #c5c5c5; /* Slightly lighter for strong tags */
+} 

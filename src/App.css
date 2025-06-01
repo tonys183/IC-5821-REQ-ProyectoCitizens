@@ -1,0 +1,225 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #1e1e1e; /* Dark background for the whole page */
+  color: #fff; /* Default text color */
+}
+
+.App {
+  display: flex;
+  min-height: 100vh;
+  background-color: #1e1e1e; /* Dark background for the main area */
+  color: #ffffff; /* Default text color for content area */
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 25px;
+  margin-left: 200px; /* Should be equal to sidebar width from Sidebar.css */
+  overflow-y: auto; 
+}
+
+/* Styles for ReportFormPage - Consider moving to ReportFormPage.css */
+.report-form-container {
+  background-color: #2d2d30; /* Darker grey for form backgrounds */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 600px; /* Max width for this specific form */
+  margin: auto; 
+}
+
+/* .report-form-container h2 is covered by global .form-title if we make it consistent */
+/* If ReportFormPage needs a specifically styled h2, it should be in its own CSS or a more specific class */
+
+.report-form .form-group { 
+  /* Uses global .form-group */
+}
+
+.report-form label { 
+  /* Uses global .form-group label */
+}
+
+.report-form input[type="text"],
+.report-form select,
+.report-form textarea { 
+  /* Uses global .form-group input/select/textarea styles */
+}
+
+.report-form textarea { 
+  min-height: 100px; 
+  resize: vertical;
+}
+
+.report-form .submit-button { /* submit-button specifically within report-form */
+  float: right; 
+  width: auto; /* Override potential full-width from global .submit-button */
+  max-width: none; /* Override potential max-width from global .submit-button */
+}
+
+.report-form::after { /* Clearfix for floated button */
+  content: "";
+  clear: both;
+  display: table;
+}
+/* End of Styles for ReportFormPage */
+
+
+/* === GLOBAL / SHARED STYLES === */
+
+/* Standalone Page Background (Login, Register) */
+.standalone-page-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #1e1e1e; 
+  padding: 20px;
+}
+
+/* Shared Form Title */
+.form-title { 
+  text-align: center;
+  color: #00A9B5; /* Teal accent color */
+  margin-bottom: 25px;
+  font-size: 1.8em;
+  font-weight: 600;
+}
+
+/* Shared Form Group & Input Styling */
+.form-group { 
+  margin-bottom: 20px;
+}
+
+.form-group label { 
+  display: block;
+  color: #cccccc; 
+  margin-bottom: 8px;
+  font-size: 0.95em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  background-color: #3c3c3c; 
+  border: 1px solid #555555; 
+  color: #ffffff; 
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 1em;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus,
+.form-group input[type="number"]:focus,
+.form-group input[type="date"]:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #00A9B5; 
+  box-shadow: 0 0 0 2px rgba(0, 169, 181, 0.3);
+}
+
+/* Shared Submit/Action Button Style */
+.submit-button,
+.action-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #00A9B5; /* Teal for primary buttons */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  display: block; /* Ensure block display for centering if margin auto is used */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.submit-button:hover,
+.action-button:hover {
+  background-color: #008C9E; /* Darker teal on hover */
+}
+
+/* Specific Button for Auth Pages (Login, Register) */
+.account-button { 
+  background-color: #00A9B5; /* Teal to match theme */
+  color: white;
+  /* padding: 12px 25px; /* Covered by .submit-button if it inherits */
+  /* border: none; /* Covered */
+  /* border-radius: 4px; /* Covered */
+  /* cursor: pointer; /* Covered */
+  /* font-size: 1.1em; /* Covered */
+  font-weight: bold; /* Slightly bolder for these specific buttons */
+  /* display: block; /* Covered */
+  /* margin: 20px auto 0; /* Covered */
+  /* transition: background-color 0.3s ease; /* Covered */
+  max-width: 300px; 
+}
+
+.account-button:hover {
+  background-color: #008C9E; 
+}
+
+/* Auth Page Link (e.g., "Already have an account?") */
+.auth-switch-link { 
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9em;
+}
+
+.auth-switch-link a {
+  color: #00A9B5; /* Teal for links */
+  text-decoration: none;
+}
+
+.auth-switch-link a:hover {
+  text-decoration: underline;
+}
+
+/* Error Message Style */
+.error-message { 
+  color: #e74c3c; 
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 10px; 
+  font-size: 0.9em;
+}
+
+/* === RESPONSIVE ADJUSTMENTS === */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0; 
+    padding: 15px;
+  }
+  
+  .form-title {
+    font-size: 1.6em;
+  }
+
+  .standalone-page-background {
+    padding: 15px;
+  }
+
+  /* Report form specific responsive adjustments */
+  .report-form .submit-button {
+    float: none; 
+    width: 100%;
+    margin-top: 10px;
+    max-width: 100%; /* Ensure it can be full width on mobile */
+  }
+} 

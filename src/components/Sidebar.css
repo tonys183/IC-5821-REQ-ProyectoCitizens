@@ -1,0 +1,109 @@
+/* Sidebar styles based on the provided image */
+.sidebar {
+  width: 200px; /* Adjusted width based on image proportions */
+  background-color: #00A9B5; /* Teal color from image (approximate) */
+  color: #ffffff; /* White text */
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  padding-top: 0; /* No top padding, header will handle it */
+}
+
+/* No explicit sidebar-header needed if links start directly */
+
+.sidebar-nav {
+  flex-grow: 1; /* Pushes footer to bottom */
+  /* padding-top: 15px; */ /* Optional: if some space needed above first link */
+}
+
+.sidebar-nav.top-nav {
+  padding-top: 15px; /* Space above the first group of links */
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav li a {
+  display: block;
+  padding: 15px 25px; /* Generous padding */
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 1.1em;
+  font-weight: 500; /* Medium weight */
+  transition: background-color 0.2s ease-in-out;
+}
+
+.sidebar-nav li a:hover {
+  background-color: #008C9E; /* Slightly darker teal on hover */
+}
+
+.sidebar-nav li.active a {
+  background-color: #00BBD4; /* Lighter teal for active, or same with bold text */
+  /* Or keep same background and just make text bolder/brighter */
+  font-weight: 700; /* Bold for active link */
+  color: #ffffff;
+}
+
+.sidebar-separator {
+  height: 1px;
+  background-color: #008C9E; /* Darker teal for separator */
+  margin: 15px 10px; /* Vertical and horizontal margin */
+}
+
+.sidebar-nav.bottom-nav {
+  /* Styles for nav items below separator if needed, e.g., different padding */
+}
+
+.sidebar-footer {
+  padding: 10px 15px; /* Adjusted padding */
+  display: flex;
+  justify-content: space-between; /* Space between user info and icons */
+  align-items: center;
+  border-top: 1px solid #008C9E; /* Separator line above icons */
+}
+
+.sidebar-footer .user-info {
+  font-size: 0.85em;
+  color: #f0f0f0; /* Slightly off-white for user name */
+  text-align: left;
+  flex-grow: 1; /* Allow user info to take available space */
+}
+
+.sidebar-footer .user-info p {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Prevent long names from breaking layout */
+}
+
+.sidebar-footer .footer-icons span {
+  font-size: 1.2em; /* Icon size */
+  color: #ffffff;
+  cursor: pointer;
+  margin-left: 10px; /* Space between icons if they are close */
+}
+
+.sidebar-footer .footer-icons span:first-child {
+  margin-left: 0; /* No left margin for the first icon in the group */
+}
+
+/* Responsive - if sidebar needs to change on small screens */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+  }
+  .main-content {
+    margin-left: 0;
+  }
+  .sidebar-footer {
+    justify-content: space-around; /* Center items on mobile if layout changes */
+  }
+} 

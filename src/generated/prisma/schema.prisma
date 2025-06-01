@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model alert {
+  alert_id     Int           @id @default(autoincrement())
+  muni_id      Int?
+  alert_title  String?       @db.VarChar(50)
+  alert_date   DateTime?     @db.Date
+  alert_time   DateTime?     @db.Time(6)
+  description  String?
+  municipality municipality? @relation(fields: [muni_id], references: [muni_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model canton {
+  canton_id   Int      @id @default(autoincrement())
+  canton_name String?  @db.VarChar(25)
+  report      report[]
+}
+
+model district {
+  district_id                      Int      @id @default(autoincrement())
+  district_name                    String?  @db.VarChar(25)
+  report_report_districtTodistrict report[] @relation("report_districtTodistrict")
+}
+
+model municipality {
+  muni_id  Int     @id @default(autoincrement())
+  email    String? @db.VarChar(50)
+  password String?
+  alert    alert[]
+}
+
+model neighbor {
+  identification   Int      @id @default(autoincrement())
+  first_name       String?  @db.VarChar(25)
+  last_name        String?  @db.VarChar(25)
+  second_last_name String?  @db.VarChar(25)
+  email            String?  @unique @db.VarChar(50)
+  password         String?
+  phone_number     Int?
+  report           report[]
+}
+
+model problem {
+  problem_id      Int           @id @default(autoincrement())
+  problem_type_id Int?
+  problem_name    String?       @db.VarChar(25)
+  problem_type    problem_type? @relation(fields: [problem_type_id], references: [problem_type_id], onDelete: NoAction, onUpdate: NoAction)
+  report          report[]
+}
+
+model problem_type {
+  problem_type_id Int       @id @default(autoincrement())
+  type_name       String?   @db.VarChar(25)
+  problem         problem[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model report {
+  report_id                          Int       @id @default(autoincrement())
+  neighbor_id                        Int?
+  report_title                       String?   @db.VarChar(25)
+  problem_id                         Int?
+  canton_id                          Int?
+  district                           Int?
+  neighborhood                       String?   @db.VarChar(25)
+  street                             String?   @db.VarChar(25)
+  report_date                        DateTime? @db.Date
+  report_time                        DateTime? @db.Time(6)
+  status                             String?   @default("Waiting") @db.VarChar(25)
+  canton                             canton?   @relation(fields: [canton_id], references: [canton_id], onDelete: NoAction, onUpdate: NoAction)
+  district_report_districtTodistrict district? @relation("report_districtTodistrict", fields: [district], references: [district_id], onDelete: NoAction, onUpdate: NoAction)
+  neighbor                           neighbor? @relation(fields: [neighbor_id], references: [identification], onDelete: NoAction, onUpdate: NoAction)
+  problem                            problem?  @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction)
+}
