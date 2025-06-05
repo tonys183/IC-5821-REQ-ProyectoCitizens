@@ -5,7 +5,10 @@ import './AuthForm.css'; // Import the shared CSS file
 
 function RegistrationPage() {
   const [formData, setFormData] = useState({
-    fullName: '',
+    identification: '',
+    firstName: '',
+    lastName: '',
+    secondLastName: '',
     email: '',
     password: '',
     phoneNumber: '',
@@ -31,6 +34,21 @@ function RegistrationPage() {
       setIsLoading(false);
       return;
     }
+    
+    // Client-side validation for identification (must be a number)
+    if (isNaN(parseInt(formData.identification))) {
+      setError('La cédula debe ser un número.');
+      setIsLoading(false);
+      return;
+    }
+
+    // Prepare data for submission, ensure identification and phoneNumber are numbers if provided
+    const submissionData = {
+      ...formData,
+      identification: parseInt(formData.identification), // Ensure it's a number
+      phoneNumber: formData.phoneNumber ? parseInt(formData.phoneNumber) : null, // Ensure it's a number or null
+    };
+
 
     try {
       const response = await fetch('http://localhost:3001/api/auth/register', {
@@ -38,7 +56,7 @@ function RegistrationPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submissionData), // Use submissionData
       });
 
       const data = await response.json();
@@ -65,14 +83,46 @@ function RegistrationPage() {
       <h2>Registrarse</h2>
       <form onSubmit={handleSubmit} className="registration-form">
         <div className="form-group">
-          <label htmlFor="fullName">Nombre Completo</label>
+          <label htmlFor="identification">Cédula</label>
           <input
-            type="text"
-            id="fullName"
-            name="fullName"
-            value={formData.fullName}
+            type="number" // Use type="number" for better UX
+            id="identification"
+            name="identification"
+            value={formData.identification}
             onChange={handleChange}
             required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="firstName">Nombre</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="lastName">Primer Apellido</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="secondLastName">Segundo Apellido (Opcional)</label>
+          <input
+            type="text"
+            id="secondLastName"
+            name="secondLastName"
+            value={formData.secondLastName}
+            onChange={handleChange}
           />
         </div>
         <div className="form-group">
@@ -100,7 +150,7 @@ function RegistrationPage() {
         <div className="form-group">
           <label htmlFor="phoneNumber">Número de Teléfono (Opcional)</label>
           <input
-            type="tel" // Changed to type tel for better mobile UX
+            type="tel"
             id="phoneNumber"
             name="phoneNumber"
             value={formData.phoneNumber}

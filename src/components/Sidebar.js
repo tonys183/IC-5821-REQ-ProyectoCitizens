@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.js'; // Re-import useAuth
+import { FaCog, FaQuestionCircle } from 'react-icons/fa'; // Import icons
 import './Sidebar.css';
 
 function Sidebar() {
@@ -28,7 +29,7 @@ function Sidebar() {
       <nav className="sidebar-nav bottom-nav">
         <ul>
           <li className={isActive('/perfil') ? 'active' : ''}> 
-            <Link to="/">Perfil</Link> 
+            <Link to="/perfil">Perfil</Link>
           </li>
         </ul>
       </nav>
@@ -40,8 +41,12 @@ function Sidebar() {
           </div>
         )}
         <div className="footer-icons">
-          <span>?</span> 
-          <span>⚙️</span> 
+          <Link to="/ayuda" className="sidebar-icon-link" title="Ayuda">
+            <FaQuestionCircle />
+          </Link>
+          <Link to="/configuracion" className={`sidebar-icon-link ${isActive('/configuracion') ? 'active' : ''}`} title="Configuración">
+            <FaCog />
+          </Link>
         </div>
       </div>
     </aside>

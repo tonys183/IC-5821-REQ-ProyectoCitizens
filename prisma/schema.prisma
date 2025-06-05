@@ -11,7 +11,7 @@ datasource db {
 model alert {
   alert_id     Int           @id @default(autoincrement())
   muni_id      Int?
-  alert_title  String?       @db.VarChar(50)
+  alert_title  String?       @db.VarChar(100)
   alert_date   DateTime?     @db.Date
   alert_time   DateTime?     @db.Time(6)
   description  String?
@@ -19,31 +19,34 @@ model alert {
 }
 
 model canton {
-  canton_id   Int      @id @default(autoincrement())
-  canton_name String?  @db.VarChar(25)
+  canton_id   Int        @id @default(autoincrement())
+  canton_name String?    @db.VarChar(100)
+  district    district[]
   report      report[]
 }
 
 model district {
   district_id                      Int      @id @default(autoincrement())
-  district_name                    String?  @db.VarChar(25)
+  district_name                    String?  @db.VarChar(100)
+  canton_id                        Int?
+  canton                           canton?  @relation(fields: [canton_id], references: [canton_id], onDelete: NoAction, onUpdate: NoAction)
   report_report_districtTodistrict report[] @relation("report_districtTodistrict")
 }
 
 model municipality {
   muni_id  Int     @id @default(autoincrement())
-  email    String? @db.VarChar(50)
+  email    String?
   password String?
   alert    alert[]
 }
 
 model neighbor {
-  identification   Int      @id @default(autoincrement())
-  first_name       String?  @db.VarChar(25)
-  last_name        String?  @db.VarChar(25)
-  second_last_name String?  @db.VarChar(25)
-  email            String?  @unique @db.VarChar(50)
-  password         String?
+  identification   Int      @id
+  first_name       String   @db.VarChar(100)
+  last_name        String   @db.VarChar(100)
+  second_last_name String?  @db.VarChar(100)
+  email            String   @unique
+  password         String
   phone_number     Int?
   report           report[]
 }
@@ -51,14 +54,14 @@ model neighbor {
 model problem {
   problem_id      Int           @id @default(autoincrement())
   problem_type_id Int?
-  problem_name    String?       @db.VarChar(25)
+  problem_name    String?
   problem_type    problem_type? @relation(fields: [problem_type_id], references: [problem_type_id], onDelete: NoAction, onUpdate: NoAction)
   report          report[]
 }
 
 model problem_type {
   problem_type_id Int       @id @default(autoincrement())
-  type_name       String?   @db.VarChar(25)
+  type_name       String?
   problem         problem[]
 }
 
@@ -66,15 +69,16 @@ model problem_type {
 model report {
   report_id                          Int       @id @default(autoincrement())
   neighbor_id                        Int?
-  report_title                       String?   @db.VarChar(25)
+  report_title                       String?   @db.VarChar(100)
   problem_id                         Int?
   canton_id                          Int?
   district                           Int?
-  neighborhood                       String?   @db.VarChar(25)
-  street                             String?   @db.VarChar(25)
+  neighborhood                       String?   @db.VarChar(100)
+  street                             String?   @db.VarChar(100)
   report_date                        DateTime? @db.Date
   report_time                        DateTime? @db.Time(6)
-  status                             String?   @default("Waiting") @db.VarChar(25)
+  status                             String?   @default("Waiting") @db.VarChar(100)
+  updated_at                         DateTime? @updatedAt
   canton                             canton?   @relation(fields: [canton_id], references: [canton_id], onDelete: NoAction, onUpdate: NoAction)
   district_report_districtTodistrict district? @relation("report_districtTodistrict", fields: [district], references: [district_id], onDelete: NoAction, onUpdate: NoAction)
   neighbor                           neighbor? @relation(fields: [neighbor_id], references: [identification], onDelete: NoAction, onUpdate: NoAction)

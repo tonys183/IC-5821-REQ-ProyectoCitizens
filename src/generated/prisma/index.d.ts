@@ -316,8 +316,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.8.2
-   * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
+   * Prisma Client JS version: 6.9.0
+   * Query Engine version: 81e4af48011447c3cc503a190e86995b66d2a28e
    */
   export type PrismaVersion = {
     client: string
@@ -1506,10 +1506,12 @@ export namespace Prisma {
    */
 
   export type CantonCountOutputType = {
+    district: number
     report: number
   }
 
   export type CantonCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    district?: boolean | CantonCountOutputTypeCountDistrictArgs
     report?: boolean | CantonCountOutputTypeCountReportArgs
   }
 
@@ -1522,6 +1524,13 @@ export namespace Prisma {
      * Select specific fields to fetch from the CantonCountOutputType
      */
     select?: CantonCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CantonCountOutputType without action
+   */
+  export type CantonCountOutputTypeCountDistrictArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: districtWhereInput
   }
 
   /**
@@ -2993,6 +3002,7 @@ export namespace Prisma {
   export type cantonSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     canton_id?: boolean
     canton_name?: boolean
+    district?: boolean | canton$districtArgs<ExtArgs>
     report?: boolean | canton$reportArgs<ExtArgs>
     _count?: boolean | CantonCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["canton"]>
@@ -3014,6 +3024,7 @@ export namespace Prisma {
 
   export type cantonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"canton_id" | "canton_name", ExtArgs["result"]["canton"]>
   export type cantonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    district?: boolean | canton$districtArgs<ExtArgs>
     report?: boolean | canton$reportArgs<ExtArgs>
     _count?: boolean | CantonCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -3023,6 +3034,7 @@ export namespace Prisma {
   export type $cantonPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "canton"
     objects: {
+      district: Prisma.$districtPayload<ExtArgs>[]
       report: Prisma.$reportPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -3422,6 +3434,7 @@ export namespace Prisma {
    */
   export interface Prisma__cantonClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    district<T extends canton$districtArgs<ExtArgs> = {}>(args?: Subset<T, canton$districtArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$districtPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     report<T extends canton$reportArgs<ExtArgs> = {}>(args?: Subset<T, canton$reportArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$reportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3842,6 +3855,30 @@ export namespace Prisma {
   }
 
   /**
+   * canton.district
+   */
+  export type canton$districtArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the district
+     */
+    select?: districtSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the district
+     */
+    omit?: districtOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: districtInclude<ExtArgs> | null
+    where?: districtWhereInput
+    orderBy?: districtOrderByWithRelationInput | districtOrderByWithRelationInput[]
+    cursor?: districtWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DistrictScalarFieldEnum | DistrictScalarFieldEnum[]
+  }
+
+  /**
    * canton.report
    */
   export type canton$reportArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3898,50 +3935,60 @@ export namespace Prisma {
 
   export type DistrictAvgAggregateOutputType = {
     district_id: number | null
+    canton_id: number | null
   }
 
   export type DistrictSumAggregateOutputType = {
     district_id: number | null
+    canton_id: number | null
   }
 
   export type DistrictMinAggregateOutputType = {
     district_id: number | null
     district_name: string | null
+    canton_id: number | null
   }
 
   export type DistrictMaxAggregateOutputType = {
     district_id: number | null
     district_name: string | null
+    canton_id: number | null
   }
 
   export type DistrictCountAggregateOutputType = {
     district_id: number
     district_name: number
+    canton_id: number
     _all: number
   }
 
 
   export type DistrictAvgAggregateInputType = {
     district_id?: true
+    canton_id?: true
   }
 
   export type DistrictSumAggregateInputType = {
     district_id?: true
+    canton_id?: true
   }
 
   export type DistrictMinAggregateInputType = {
     district_id?: true
     district_name?: true
+    canton_id?: true
   }
 
   export type DistrictMaxAggregateInputType = {
     district_id?: true
     district_name?: true
+    canton_id?: true
   }
 
   export type DistrictCountAggregateInputType = {
     district_id?: true
     district_name?: true
+    canton_id?: true
     _all?: true
   }
 
@@ -4034,6 +4081,7 @@ export namespace Prisma {
   export type DistrictGroupByOutputType = {
     district_id: number
     district_name: string | null
+    canton_id: number | null
     _count: DistrictCountAggregateOutputType | null
     _avg: DistrictAvgAggregateOutputType | null
     _sum: DistrictSumAggregateOutputType | null
@@ -4058,6 +4106,8 @@ export namespace Prisma {
   export type districtSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     district_id?: boolean
     district_name?: boolean
+    canton_id?: boolean
+    canton?: boolean | district$cantonArgs<ExtArgs>
     report_report_districtTodistrict?: boolean | district$report_report_districtTodistrictArgs<ExtArgs>
     _count?: boolean | DistrictCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["district"]>
@@ -4065,34 +4115,46 @@ export namespace Prisma {
   export type districtSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     district_id?: boolean
     district_name?: boolean
+    canton_id?: boolean
+    canton?: boolean | district$cantonArgs<ExtArgs>
   }, ExtArgs["result"]["district"]>
 
   export type districtSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     district_id?: boolean
     district_name?: boolean
+    canton_id?: boolean
+    canton?: boolean | district$cantonArgs<ExtArgs>
   }, ExtArgs["result"]["district"]>
 
   export type districtSelectScalar = {
     district_id?: boolean
     district_name?: boolean
+    canton_id?: boolean
   }
 
-  export type districtOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"district_id" | "district_name", ExtArgs["result"]["district"]>
+  export type districtOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"district_id" | "district_name" | "canton_id", ExtArgs["result"]["district"]>
   export type districtInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    canton?: boolean | district$cantonArgs<ExtArgs>
     report_report_districtTodistrict?: boolean | district$report_report_districtTodistrictArgs<ExtArgs>
     _count?: boolean | DistrictCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type districtIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type districtIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type districtIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    canton?: boolean | district$cantonArgs<ExtArgs>
+  }
+  export type districtIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    canton?: boolean | district$cantonArgs<ExtArgs>
+  }
 
   export type $districtPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "district"
     objects: {
+      canton: Prisma.$cantonPayload<ExtArgs> | null
       report_report_districtTodistrict: Prisma.$reportPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       district_id: number
       district_name: string | null
+      canton_id: number | null
     }, ExtArgs["result"]["district"]>
     composites: {}
   }
@@ -4487,6 +4549,7 @@ export namespace Prisma {
    */
   export interface Prisma__districtClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    canton<T extends district$cantonArgs<ExtArgs> = {}>(args?: Subset<T, district$cantonArgs<ExtArgs>>): Prisma__cantonClient<$Result.GetResult<Prisma.$cantonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     report_report_districtTodistrict<T extends district$report_report_districtTodistrictArgs<ExtArgs> = {}>(args?: Subset<T, district$report_report_districtTodistrictArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$reportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4519,6 +4582,7 @@ export namespace Prisma {
   interface districtFieldRefs {
     readonly district_id: FieldRef<"district", 'Int'>
     readonly district_name: FieldRef<"district", 'String'>
+    readonly canton_id: FieldRef<"district", 'Int'>
   }
     
 
@@ -4768,6 +4832,10 @@ export namespace Prisma {
      */
     data: districtCreateManyInput | districtCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: districtIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -4838,6 +4906,10 @@ export namespace Prisma {
      * Limit how many districts to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: districtIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -4904,6 +4976,25 @@ export namespace Prisma {
      * Limit how many districts to delete.
      */
     limit?: number
+  }
+
+  /**
+   * district.canton
+   */
+  export type district$cantonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the canton
+     */
+    select?: cantonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the canton
+     */
+    omit?: cantonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: cantonInclude<ExtArgs> | null
+    where?: cantonWhereInput
   }
 
   /**
@@ -6210,11 +6301,11 @@ export namespace Prisma {
 
   export type NeighborGroupByOutputType = {
     identification: number
-    first_name: string | null
-    last_name: string | null
+    first_name: string
+    last_name: string
     second_last_name: string | null
-    email: string | null
-    password: string | null
+    email: string
+    password: string
     phone_number: number | null
     _count: NeighborCountAggregateOutputType | null
     _avg: NeighborAvgAggregateOutputType | null
@@ -6294,11 +6385,11 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       identification: number
-      first_name: string | null
-      last_name: string | null
+      first_name: string
+      last_name: string
       second_last_name: string | null
-      email: string | null
-      password: string | null
+      email: string
+      password: string
       phone_number: number | null
     }, ExtArgs["result"]["neighbor"]>
     composites: {}
@@ -6949,7 +7040,7 @@ export namespace Prisma {
     /**
      * The data needed to create a neighbor.
      */
-    data?: XOR<neighborCreateInput, neighborUncheckedCreateInput>
+    data: XOR<neighborCreateInput, neighborUncheckedCreateInput>
   }
 
   /**
@@ -9385,6 +9476,7 @@ export namespace Prisma {
     report_date: Date | null
     report_time: Date | null
     status: string | null
+    updated_at: Date | null
   }
 
   export type ReportMaxAggregateOutputType = {
@@ -9399,6 +9491,7 @@ export namespace Prisma {
     report_date: Date | null
     report_time: Date | null
     status: string | null
+    updated_at: Date | null
   }
 
   export type ReportCountAggregateOutputType = {
@@ -9413,6 +9506,7 @@ export namespace Prisma {
     report_date: number
     report_time: number
     status: number
+    updated_at: number
     _all: number
   }
 
@@ -9445,6 +9539,7 @@ export namespace Prisma {
     report_date?: true
     report_time?: true
     status?: true
+    updated_at?: true
   }
 
   export type ReportMaxAggregateInputType = {
@@ -9459,6 +9554,7 @@ export namespace Prisma {
     report_date?: true
     report_time?: true
     status?: true
+    updated_at?: true
   }
 
   export type ReportCountAggregateInputType = {
@@ -9473,6 +9569,7 @@ export namespace Prisma {
     report_date?: true
     report_time?: true
     status?: true
+    updated_at?: true
     _all?: true
   }
 
@@ -9574,6 +9671,7 @@ export namespace Prisma {
     report_date: Date | null
     report_time: Date | null
     status: string | null
+    updated_at: Date | null
     _count: ReportCountAggregateOutputType | null
     _avg: ReportAvgAggregateOutputType | null
     _sum: ReportSumAggregateOutputType | null
@@ -9607,6 +9705,7 @@ export namespace Prisma {
     report_date?: boolean
     report_time?: boolean
     status?: boolean
+    updated_at?: boolean
     canton?: boolean | report$cantonArgs<ExtArgs>
     district_report_districtTodistrict?: boolean | report$district_report_districtTodistrictArgs<ExtArgs>
     neighbor?: boolean | report$neighborArgs<ExtArgs>
@@ -9625,6 +9724,7 @@ export namespace Prisma {
     report_date?: boolean
     report_time?: boolean
     status?: boolean
+    updated_at?: boolean
     canton?: boolean | report$cantonArgs<ExtArgs>
     district_report_districtTodistrict?: boolean | report$district_report_districtTodistrictArgs<ExtArgs>
     neighbor?: boolean | report$neighborArgs<ExtArgs>
@@ -9643,6 +9743,7 @@ export namespace Prisma {
     report_date?: boolean
     report_time?: boolean
     status?: boolean
+    updated_at?: boolean
     canton?: boolean | report$cantonArgs<ExtArgs>
     district_report_districtTodistrict?: boolean | report$district_report_districtTodistrictArgs<ExtArgs>
     neighbor?: boolean | report$neighborArgs<ExtArgs>
@@ -9661,9 +9762,10 @@ export namespace Prisma {
     report_date?: boolean
     report_time?: boolean
     status?: boolean
+    updated_at?: boolean
   }
 
-  export type reportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"report_id" | "neighbor_id" | "report_title" | "problem_id" | "canton_id" | "district" | "neighborhood" | "street" | "report_date" | "report_time" | "status", ExtArgs["result"]["report"]>
+  export type reportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"report_id" | "neighbor_id" | "report_title" | "problem_id" | "canton_id" | "district" | "neighborhood" | "street" | "report_date" | "report_time" | "status" | "updated_at", ExtArgs["result"]["report"]>
   export type reportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     canton?: boolean | report$cantonArgs<ExtArgs>
     district_report_districtTodistrict?: boolean | report$district_report_districtTodistrictArgs<ExtArgs>
@@ -9703,6 +9805,7 @@ export namespace Prisma {
       report_date: Date | null
       report_time: Date | null
       status: string | null
+      updated_at: Date | null
     }, ExtArgs["result"]["report"]>
     composites: {}
   }
@@ -10141,6 +10244,7 @@ export namespace Prisma {
     readonly report_date: FieldRef<"report", 'DateTime'>
     readonly report_time: FieldRef<"report", 'DateTime'>
     readonly status: FieldRef<"report", 'String'>
+    readonly updated_at: FieldRef<"report", 'DateTime'>
   }
     
 
@@ -10667,7 +10771,8 @@ export namespace Prisma {
 
   export const DistrictScalarFieldEnum: {
     district_id: 'district_id',
-    district_name: 'district_name'
+    district_name: 'district_name',
+    canton_id: 'canton_id'
   };
 
   export type DistrictScalarFieldEnum = (typeof DistrictScalarFieldEnum)[keyof typeof DistrictScalarFieldEnum]
@@ -10723,7 +10828,8 @@ export namespace Prisma {
     street: 'street',
     report_date: 'report_date',
     report_time: 'report_time',
-    status: 'status'
+    status: 'status',
+    updated_at: 'updated_at'
   };
 
   export type ReportScalarFieldEnum = (typeof ReportScalarFieldEnum)[keyof typeof ReportScalarFieldEnum]
@@ -10885,12 +10991,14 @@ export namespace Prisma {
     NOT?: cantonWhereInput | cantonWhereInput[]
     canton_id?: IntFilter<"canton"> | number
     canton_name?: StringNullableFilter<"canton"> | string | null
+    district?: DistrictListRelationFilter
     report?: ReportListRelationFilter
   }
 
   export type cantonOrderByWithRelationInput = {
     canton_id?: SortOrder
     canton_name?: SortOrderInput | SortOrder
+    district?: districtOrderByRelationAggregateInput
     report?: reportOrderByRelationAggregateInput
   }
 
@@ -10900,6 +11008,7 @@ export namespace Prisma {
     OR?: cantonWhereInput[]
     NOT?: cantonWhereInput | cantonWhereInput[]
     canton_name?: StringNullableFilter<"canton"> | string | null
+    district?: DistrictListRelationFilter
     report?: ReportListRelationFilter
   }, "canton_id">
 
@@ -10927,12 +11036,16 @@ export namespace Prisma {
     NOT?: districtWhereInput | districtWhereInput[]
     district_id?: IntFilter<"district"> | number
     district_name?: StringNullableFilter<"district"> | string | null
+    canton_id?: IntNullableFilter<"district"> | number | null
+    canton?: XOR<CantonNullableScalarRelationFilter, cantonWhereInput> | null
     report_report_districtTodistrict?: ReportListRelationFilter
   }
 
   export type districtOrderByWithRelationInput = {
     district_id?: SortOrder
     district_name?: SortOrderInput | SortOrder
+    canton_id?: SortOrderInput | SortOrder
+    canton?: cantonOrderByWithRelationInput
     report_report_districtTodistrict?: reportOrderByRelationAggregateInput
   }
 
@@ -10942,12 +11055,15 @@ export namespace Prisma {
     OR?: districtWhereInput[]
     NOT?: districtWhereInput | districtWhereInput[]
     district_name?: StringNullableFilter<"district"> | string | null
+    canton_id?: IntNullableFilter<"district"> | number | null
+    canton?: XOR<CantonNullableScalarRelationFilter, cantonWhereInput> | null
     report_report_districtTodistrict?: ReportListRelationFilter
   }, "district_id">
 
   export type districtOrderByWithAggregationInput = {
     district_id?: SortOrder
     district_name?: SortOrderInput | SortOrder
+    canton_id?: SortOrderInput | SortOrder
     _count?: districtCountOrderByAggregateInput
     _avg?: districtAvgOrderByAggregateInput
     _max?: districtMaxOrderByAggregateInput
@@ -10961,6 +11077,7 @@ export namespace Prisma {
     NOT?: districtScalarWhereWithAggregatesInput | districtScalarWhereWithAggregatesInput[]
     district_id?: IntWithAggregatesFilter<"district"> | number
     district_name?: StringNullableWithAggregatesFilter<"district"> | string | null
+    canton_id?: IntNullableWithAggregatesFilter<"district"> | number | null
   }
 
   export type municipalityWhereInput = {
@@ -11015,22 +11132,22 @@ export namespace Prisma {
     OR?: neighborWhereInput[]
     NOT?: neighborWhereInput | neighborWhereInput[]
     identification?: IntFilter<"neighbor"> | number
-    first_name?: StringNullableFilter<"neighbor"> | string | null
-    last_name?: StringNullableFilter<"neighbor"> | string | null
+    first_name?: StringFilter<"neighbor"> | string
+    last_name?: StringFilter<"neighbor"> | string
     second_last_name?: StringNullableFilter<"neighbor"> | string | null
-    email?: StringNullableFilter<"neighbor"> | string | null
-    password?: StringNullableFilter<"neighbor"> | string | null
+    email?: StringFilter<"neighbor"> | string
+    password?: StringFilter<"neighbor"> | string
     phone_number?: IntNullableFilter<"neighbor"> | number | null
     report?: ReportListRelationFilter
   }
 
   export type neighborOrderByWithRelationInput = {
     identification?: SortOrder
-    first_name?: SortOrderInput | SortOrder
-    last_name?: SortOrderInput | SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
     second_last_name?: SortOrderInput | SortOrder
-    email?: SortOrderInput | SortOrder
-    password?: SortOrderInput | SortOrder
+    email?: SortOrder
+    password?: SortOrder
     phone_number?: SortOrderInput | SortOrder
     report?: reportOrderByRelationAggregateInput
   }
@@ -11041,21 +11158,21 @@ export namespace Prisma {
     AND?: neighborWhereInput | neighborWhereInput[]
     OR?: neighborWhereInput[]
     NOT?: neighborWhereInput | neighborWhereInput[]
-    first_name?: StringNullableFilter<"neighbor"> | string | null
-    last_name?: StringNullableFilter<"neighbor"> | string | null
+    first_name?: StringFilter<"neighbor"> | string
+    last_name?: StringFilter<"neighbor"> | string
     second_last_name?: StringNullableFilter<"neighbor"> | string | null
-    password?: StringNullableFilter<"neighbor"> | string | null
+    password?: StringFilter<"neighbor"> | string
     phone_number?: IntNullableFilter<"neighbor"> | number | null
     report?: ReportListRelationFilter
   }, "identification" | "email">
 
   export type neighborOrderByWithAggregationInput = {
     identification?: SortOrder
-    first_name?: SortOrderInput | SortOrder
-    last_name?: SortOrderInput | SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
     second_last_name?: SortOrderInput | SortOrder
-    email?: SortOrderInput | SortOrder
-    password?: SortOrderInput | SortOrder
+    email?: SortOrder
+    password?: SortOrder
     phone_number?: SortOrderInput | SortOrder
     _count?: neighborCountOrderByAggregateInput
     _avg?: neighborAvgOrderByAggregateInput
@@ -11069,11 +11186,11 @@ export namespace Prisma {
     OR?: neighborScalarWhereWithAggregatesInput[]
     NOT?: neighborScalarWhereWithAggregatesInput | neighborScalarWhereWithAggregatesInput[]
     identification?: IntWithAggregatesFilter<"neighbor"> | number
-    first_name?: StringNullableWithAggregatesFilter<"neighbor"> | string | null
-    last_name?: StringNullableWithAggregatesFilter<"neighbor"> | string | null
+    first_name?: StringWithAggregatesFilter<"neighbor"> | string
+    last_name?: StringWithAggregatesFilter<"neighbor"> | string
     second_last_name?: StringNullableWithAggregatesFilter<"neighbor"> | string | null
-    email?: StringNullableWithAggregatesFilter<"neighbor"> | string | null
-    password?: StringNullableWithAggregatesFilter<"neighbor"> | string | null
+    email?: StringWithAggregatesFilter<"neighbor"> | string
+    password?: StringWithAggregatesFilter<"neighbor"> | string
     phone_number?: IntNullableWithAggregatesFilter<"neighbor"> | number | null
   }
 
@@ -11184,6 +11301,7 @@ export namespace Prisma {
     report_date?: DateTimeNullableFilter<"report"> | Date | string | null
     report_time?: DateTimeNullableFilter<"report"> | Date | string | null
     status?: StringNullableFilter<"report"> | string | null
+    updated_at?: DateTimeNullableFilter<"report"> | Date | string | null
     canton?: XOR<CantonNullableScalarRelationFilter, cantonWhereInput> | null
     district_report_districtTodistrict?: XOR<DistrictNullableScalarRelationFilter, districtWhereInput> | null
     neighbor?: XOR<NeighborNullableScalarRelationFilter, neighborWhereInput> | null
@@ -11202,6 +11320,7 @@ export namespace Prisma {
     report_date?: SortOrderInput | SortOrder
     report_time?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
+    updated_at?: SortOrderInput | SortOrder
     canton?: cantonOrderByWithRelationInput
     district_report_districtTodistrict?: districtOrderByWithRelationInput
     neighbor?: neighborOrderByWithRelationInput
@@ -11223,6 +11342,7 @@ export namespace Prisma {
     report_date?: DateTimeNullableFilter<"report"> | Date | string | null
     report_time?: DateTimeNullableFilter<"report"> | Date | string | null
     status?: StringNullableFilter<"report"> | string | null
+    updated_at?: DateTimeNullableFilter<"report"> | Date | string | null
     canton?: XOR<CantonNullableScalarRelationFilter, cantonWhereInput> | null
     district_report_districtTodistrict?: XOR<DistrictNullableScalarRelationFilter, districtWhereInput> | null
     neighbor?: XOR<NeighborNullableScalarRelationFilter, neighborWhereInput> | null
@@ -11241,6 +11361,7 @@ export namespace Prisma {
     report_date?: SortOrderInput | SortOrder
     report_time?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
+    updated_at?: SortOrderInput | SortOrder
     _count?: reportCountOrderByAggregateInput
     _avg?: reportAvgOrderByAggregateInput
     _max?: reportMaxOrderByAggregateInput
@@ -11263,6 +11384,7 @@ export namespace Prisma {
     report_date?: DateTimeNullableWithAggregatesFilter<"report"> | Date | string | null
     report_time?: DateTimeNullableWithAggregatesFilter<"report"> | Date | string | null
     status?: StringNullableWithAggregatesFilter<"report"> | string | null
+    updated_at?: DateTimeNullableWithAggregatesFilter<"report"> | Date | string | null
   }
 
   export type alertCreateInput = {
@@ -11326,23 +11448,27 @@ export namespace Prisma {
 
   export type cantonCreateInput = {
     canton_name?: string | null
+    district?: districtCreateNestedManyWithoutCantonInput
     report?: reportCreateNestedManyWithoutCantonInput
   }
 
   export type cantonUncheckedCreateInput = {
     canton_id?: number
     canton_name?: string | null
+    district?: districtUncheckedCreateNestedManyWithoutCantonInput
     report?: reportUncheckedCreateNestedManyWithoutCantonInput
   }
 
   export type cantonUpdateInput = {
     canton_name?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: districtUpdateManyWithoutCantonNestedInput
     report?: reportUpdateManyWithoutCantonNestedInput
   }
 
   export type cantonUncheckedUpdateInput = {
     canton_id?: IntFieldUpdateOperationsInput | number
     canton_name?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: districtUncheckedUpdateManyWithoutCantonNestedInput
     report?: reportUncheckedUpdateManyWithoutCantonNestedInput
   }
 
@@ -11362,29 +11488,34 @@ export namespace Prisma {
 
   export type districtCreateInput = {
     district_name?: string | null
+    canton?: cantonCreateNestedOneWithoutDistrictInput
     report_report_districtTodistrict?: reportCreateNestedManyWithoutDistrict_report_districtTodistrictInput
   }
 
   export type districtUncheckedCreateInput = {
     district_id?: number
     district_name?: string | null
+    canton_id?: number | null
     report_report_districtTodistrict?: reportUncheckedCreateNestedManyWithoutDistrict_report_districtTodistrictInput
   }
 
   export type districtUpdateInput = {
     district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    canton?: cantonUpdateOneWithoutDistrictNestedInput
     report_report_districtTodistrict?: reportUpdateManyWithoutDistrict_report_districtTodistrictNestedInput
   }
 
   export type districtUncheckedUpdateInput = {
     district_id?: IntFieldUpdateOperationsInput | number
     district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    canton_id?: NullableIntFieldUpdateOperationsInput | number | null
     report_report_districtTodistrict?: reportUncheckedUpdateManyWithoutDistrict_report_districtTodistrictNestedInput
   }
 
   export type districtCreateManyInput = {
     district_id?: number
     district_name?: string | null
+    canton_id?: number | null
   }
 
   export type districtUpdateManyMutationInput = {
@@ -11394,6 +11525,7 @@ export namespace Prisma {
   export type districtUncheckedUpdateManyInput = {
     district_id?: IntFieldUpdateOperationsInput | number
     district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    canton_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type municipalityCreateInput = {
@@ -11440,73 +11572,76 @@ export namespace Prisma {
   }
 
   export type neighborCreateInput = {
-    first_name?: string | null
-    last_name?: string | null
+    identification: number
+    first_name: string
+    last_name: string
     second_last_name?: string | null
-    email?: string | null
-    password?: string | null
+    email: string
+    password: string
     phone_number?: number | null
     report?: reportCreateNestedManyWithoutNeighborInput
   }
 
   export type neighborUncheckedCreateInput = {
-    identification?: number
-    first_name?: string | null
-    last_name?: string | null
+    identification: number
+    first_name: string
+    last_name: string
     second_last_name?: string | null
-    email?: string | null
-    password?: string | null
+    email: string
+    password: string
     phone_number?: number | null
     report?: reportUncheckedCreateNestedManyWithoutNeighborInput
   }
 
   export type neighborUpdateInput = {
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    identification?: IntFieldUpdateOperationsInput | number
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     second_last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableIntFieldUpdateOperationsInput | number | null
     report?: reportUpdateManyWithoutNeighborNestedInput
   }
 
   export type neighborUncheckedUpdateInput = {
     identification?: IntFieldUpdateOperationsInput | number
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     second_last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableIntFieldUpdateOperationsInput | number | null
     report?: reportUncheckedUpdateManyWithoutNeighborNestedInput
   }
 
   export type neighborCreateManyInput = {
-    identification?: number
-    first_name?: string | null
-    last_name?: string | null
+    identification: number
+    first_name: string
+    last_name: string
     second_last_name?: string | null
-    email?: string | null
-    password?: string | null
+    email: string
+    password: string
     phone_number?: number | null
   }
 
   export type neighborUpdateManyMutationInput = {
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    identification?: IntFieldUpdateOperationsInput | number
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     second_last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type neighborUncheckedUpdateManyInput = {
     identification?: IntFieldUpdateOperationsInput | number
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     second_last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -11595,6 +11730,7 @@ export namespace Prisma {
     report_date?: Date | string | null
     report_time?: Date | string | null
     status?: string | null
+    updated_at?: Date | string | null
     canton?: cantonCreateNestedOneWithoutReportInput
     district_report_districtTodistrict?: districtCreateNestedOneWithoutReport_report_districtTodistrictInput
     neighbor?: neighborCreateNestedOneWithoutReportInput
@@ -11613,6 +11749,7 @@ export namespace Prisma {
     report_date?: Date | string | null
     report_time?: Date | string | null
     status?: string | null
+    updated_at?: Date | string | null
   }
 
   export type reportUpdateInput = {
@@ -11622,6 +11759,7 @@ export namespace Prisma {
     report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canton?: cantonUpdateOneWithoutReportNestedInput
     district_report_districtTodistrict?: districtUpdateOneWithoutReport_report_districtTodistrictNestedInput
     neighbor?: neighborUpdateOneWithoutReportNestedInput
@@ -11640,6 +11778,7 @@ export namespace Prisma {
     report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type reportCreateManyInput = {
@@ -11654,6 +11793,7 @@ export namespace Prisma {
     report_date?: Date | string | null
     report_time?: Date | string | null
     status?: string | null
+    updated_at?: Date | string | null
   }
 
   export type reportUpdateManyMutationInput = {
@@ -11663,6 +11803,7 @@ export namespace Prisma {
     report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type reportUncheckedUpdateManyInput = {
@@ -11677,6 +11818,7 @@ export namespace Prisma {
     report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -11838,10 +11980,20 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type DistrictListRelationFilter = {
+    every?: districtWhereInput
+    some?: districtWhereInput
+    none?: districtWhereInput
+  }
+
   export type ReportListRelationFilter = {
     every?: reportWhereInput
     some?: reportWhereInput
     none?: reportWhereInput
+  }
+
+  export type districtOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type reportOrderByRelationAggregateInput = {
@@ -11871,27 +12023,37 @@ export namespace Prisma {
     canton_id?: SortOrder
   }
 
+  export type CantonNullableScalarRelationFilter = {
+    is?: cantonWhereInput | null
+    isNot?: cantonWhereInput | null
+  }
+
   export type districtCountOrderByAggregateInput = {
     district_id?: SortOrder
     district_name?: SortOrder
+    canton_id?: SortOrder
   }
 
   export type districtAvgOrderByAggregateInput = {
     district_id?: SortOrder
+    canton_id?: SortOrder
   }
 
   export type districtMaxOrderByAggregateInput = {
     district_id?: SortOrder
     district_name?: SortOrder
+    canton_id?: SortOrder
   }
 
   export type districtMinOrderByAggregateInput = {
     district_id?: SortOrder
     district_name?: SortOrder
+    canton_id?: SortOrder
   }
 
   export type districtSumOrderByAggregateInput = {
     district_id?: SortOrder
+    canton_id?: SortOrder
   }
 
   export type AlertListRelationFilter = {
@@ -11928,6 +12090,21 @@ export namespace Prisma {
 
   export type municipalitySumOrderByAggregateInput = {
     muni_id?: SortOrder
+  }
+
+  export type StringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringFilter<$PrismaModel> | string
   }
 
   export type neighborCountOrderByAggregateInput = {
@@ -11968,6 +12145,24 @@ export namespace Prisma {
   export type neighborSumOrderByAggregateInput = {
     identification?: SortOrder
     phone_number?: SortOrder
+  }
+
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type Problem_typeNullableScalarRelationFilter = {
@@ -12036,11 +12231,6 @@ export namespace Prisma {
     problem_type_id?: SortOrder
   }
 
-  export type CantonNullableScalarRelationFilter = {
-    is?: cantonWhereInput | null
-    isNot?: cantonWhereInput | null
-  }
-
   export type DistrictNullableScalarRelationFilter = {
     is?: districtWhereInput | null
     isNot?: districtWhereInput | null
@@ -12068,6 +12258,7 @@ export namespace Prisma {
     report_date?: SortOrder
     report_time?: SortOrder
     status?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type reportAvgOrderByAggregateInput = {
@@ -12090,6 +12281,7 @@ export namespace Prisma {
     report_date?: SortOrder
     report_time?: SortOrder
     status?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type reportMinOrderByAggregateInput = {
@@ -12104,6 +12296,7 @@ export namespace Prisma {
     report_date?: SortOrder
     report_time?: SortOrder
     status?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type reportSumOrderByAggregateInput = {
@@ -12154,6 +12347,13 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type districtCreateNestedManyWithoutCantonInput = {
+    create?: XOR<districtCreateWithoutCantonInput, districtUncheckedCreateWithoutCantonInput> | districtCreateWithoutCantonInput[] | districtUncheckedCreateWithoutCantonInput[]
+    connectOrCreate?: districtCreateOrConnectWithoutCantonInput | districtCreateOrConnectWithoutCantonInput[]
+    createMany?: districtCreateManyCantonInputEnvelope
+    connect?: districtWhereUniqueInput | districtWhereUniqueInput[]
+  }
+
   export type reportCreateNestedManyWithoutCantonInput = {
     create?: XOR<reportCreateWithoutCantonInput, reportUncheckedCreateWithoutCantonInput> | reportCreateWithoutCantonInput[] | reportUncheckedCreateWithoutCantonInput[]
     connectOrCreate?: reportCreateOrConnectWithoutCantonInput | reportCreateOrConnectWithoutCantonInput[]
@@ -12161,11 +12361,32 @@ export namespace Prisma {
     connect?: reportWhereUniqueInput | reportWhereUniqueInput[]
   }
 
+  export type districtUncheckedCreateNestedManyWithoutCantonInput = {
+    create?: XOR<districtCreateWithoutCantonInput, districtUncheckedCreateWithoutCantonInput> | districtCreateWithoutCantonInput[] | districtUncheckedCreateWithoutCantonInput[]
+    connectOrCreate?: districtCreateOrConnectWithoutCantonInput | districtCreateOrConnectWithoutCantonInput[]
+    createMany?: districtCreateManyCantonInputEnvelope
+    connect?: districtWhereUniqueInput | districtWhereUniqueInput[]
+  }
+
   export type reportUncheckedCreateNestedManyWithoutCantonInput = {
     create?: XOR<reportCreateWithoutCantonInput, reportUncheckedCreateWithoutCantonInput> | reportCreateWithoutCantonInput[] | reportUncheckedCreateWithoutCantonInput[]
     connectOrCreate?: reportCreateOrConnectWithoutCantonInput | reportCreateOrConnectWithoutCantonInput[]
     createMany?: reportCreateManyCantonInputEnvelope
     connect?: reportWhereUniqueInput | reportWhereUniqueInput[]
+  }
+
+  export type districtUpdateManyWithoutCantonNestedInput = {
+    create?: XOR<districtCreateWithoutCantonInput, districtUncheckedCreateWithoutCantonInput> | districtCreateWithoutCantonInput[] | districtUncheckedCreateWithoutCantonInput[]
+    connectOrCreate?: districtCreateOrConnectWithoutCantonInput | districtCreateOrConnectWithoutCantonInput[]
+    upsert?: districtUpsertWithWhereUniqueWithoutCantonInput | districtUpsertWithWhereUniqueWithoutCantonInput[]
+    createMany?: districtCreateManyCantonInputEnvelope
+    set?: districtWhereUniqueInput | districtWhereUniqueInput[]
+    disconnect?: districtWhereUniqueInput | districtWhereUniqueInput[]
+    delete?: districtWhereUniqueInput | districtWhereUniqueInput[]
+    connect?: districtWhereUniqueInput | districtWhereUniqueInput[]
+    update?: districtUpdateWithWhereUniqueWithoutCantonInput | districtUpdateWithWhereUniqueWithoutCantonInput[]
+    updateMany?: districtUpdateManyWithWhereWithoutCantonInput | districtUpdateManyWithWhereWithoutCantonInput[]
+    deleteMany?: districtScalarWhereInput | districtScalarWhereInput[]
   }
 
   export type reportUpdateManyWithoutCantonNestedInput = {
@@ -12182,6 +12403,20 @@ export namespace Prisma {
     deleteMany?: reportScalarWhereInput | reportScalarWhereInput[]
   }
 
+  export type districtUncheckedUpdateManyWithoutCantonNestedInput = {
+    create?: XOR<districtCreateWithoutCantonInput, districtUncheckedCreateWithoutCantonInput> | districtCreateWithoutCantonInput[] | districtUncheckedCreateWithoutCantonInput[]
+    connectOrCreate?: districtCreateOrConnectWithoutCantonInput | districtCreateOrConnectWithoutCantonInput[]
+    upsert?: districtUpsertWithWhereUniqueWithoutCantonInput | districtUpsertWithWhereUniqueWithoutCantonInput[]
+    createMany?: districtCreateManyCantonInputEnvelope
+    set?: districtWhereUniqueInput | districtWhereUniqueInput[]
+    disconnect?: districtWhereUniqueInput | districtWhereUniqueInput[]
+    delete?: districtWhereUniqueInput | districtWhereUniqueInput[]
+    connect?: districtWhereUniqueInput | districtWhereUniqueInput[]
+    update?: districtUpdateWithWhereUniqueWithoutCantonInput | districtUpdateWithWhereUniqueWithoutCantonInput[]
+    updateMany?: districtUpdateManyWithWhereWithoutCantonInput | districtUpdateManyWithWhereWithoutCantonInput[]
+    deleteMany?: districtScalarWhereInput | districtScalarWhereInput[]
+  }
+
   export type reportUncheckedUpdateManyWithoutCantonNestedInput = {
     create?: XOR<reportCreateWithoutCantonInput, reportUncheckedCreateWithoutCantonInput> | reportCreateWithoutCantonInput[] | reportUncheckedCreateWithoutCantonInput[]
     connectOrCreate?: reportCreateOrConnectWithoutCantonInput | reportCreateOrConnectWithoutCantonInput[]
@@ -12196,6 +12431,12 @@ export namespace Prisma {
     deleteMany?: reportScalarWhereInput | reportScalarWhereInput[]
   }
 
+  export type cantonCreateNestedOneWithoutDistrictInput = {
+    create?: XOR<cantonCreateWithoutDistrictInput, cantonUncheckedCreateWithoutDistrictInput>
+    connectOrCreate?: cantonCreateOrConnectWithoutDistrictInput
+    connect?: cantonWhereUniqueInput
+  }
+
   export type reportCreateNestedManyWithoutDistrict_report_districtTodistrictInput = {
     create?: XOR<reportCreateWithoutDistrict_report_districtTodistrictInput, reportUncheckedCreateWithoutDistrict_report_districtTodistrictInput> | reportCreateWithoutDistrict_report_districtTodistrictInput[] | reportUncheckedCreateWithoutDistrict_report_districtTodistrictInput[]
     connectOrCreate?: reportCreateOrConnectWithoutDistrict_report_districtTodistrictInput | reportCreateOrConnectWithoutDistrict_report_districtTodistrictInput[]
@@ -12208,6 +12449,16 @@ export namespace Prisma {
     connectOrCreate?: reportCreateOrConnectWithoutDistrict_report_districtTodistrictInput | reportCreateOrConnectWithoutDistrict_report_districtTodistrictInput[]
     createMany?: reportCreateManyDistrict_report_districtTodistrictInputEnvelope
     connect?: reportWhereUniqueInput | reportWhereUniqueInput[]
+  }
+
+  export type cantonUpdateOneWithoutDistrictNestedInput = {
+    create?: XOR<cantonCreateWithoutDistrictInput, cantonUncheckedCreateWithoutDistrictInput>
+    connectOrCreate?: cantonCreateOrConnectWithoutDistrictInput
+    upsert?: cantonUpsertWithoutDistrictInput
+    disconnect?: cantonWhereInput | boolean
+    delete?: cantonWhereInput | boolean
+    connect?: cantonWhereUniqueInput
+    update?: XOR<XOR<cantonUpdateToOneWithWhereWithoutDistrictInput, cantonUpdateWithoutDistrictInput>, cantonUncheckedUpdateWithoutDistrictInput>
   }
 
   export type reportUpdateManyWithoutDistrict_report_districtTodistrictNestedInput = {
@@ -12292,6 +12543,10 @@ export namespace Prisma {
     connectOrCreate?: reportCreateOrConnectWithoutNeighborInput | reportCreateOrConnectWithoutNeighborInput[]
     createMany?: reportCreateManyNeighborInputEnvelope
     connect?: reportWhereUniqueInput | reportWhereUniqueInput[]
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
   }
 
   export type reportUpdateManyWithoutNeighborNestedInput = {
@@ -12618,6 +12873,37 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedStringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
   export type municipalityCreateWithoutAlertInput = {
     email?: string | null
     password?: string | null
@@ -12656,6 +12942,27 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type districtCreateWithoutCantonInput = {
+    district_name?: string | null
+    report_report_districtTodistrict?: reportCreateNestedManyWithoutDistrict_report_districtTodistrictInput
+  }
+
+  export type districtUncheckedCreateWithoutCantonInput = {
+    district_id?: number
+    district_name?: string | null
+    report_report_districtTodistrict?: reportUncheckedCreateNestedManyWithoutDistrict_report_districtTodistrictInput
+  }
+
+  export type districtCreateOrConnectWithoutCantonInput = {
+    where: districtWhereUniqueInput
+    create: XOR<districtCreateWithoutCantonInput, districtUncheckedCreateWithoutCantonInput>
+  }
+
+  export type districtCreateManyCantonInputEnvelope = {
+    data: districtCreateManyCantonInput | districtCreateManyCantonInput[]
+    skipDuplicates?: boolean
+  }
+
   export type reportCreateWithoutCantonInput = {
     report_title?: string | null
     neighborhood?: string | null
@@ -12663,6 +12970,7 @@ export namespace Prisma {
     report_date?: Date | string | null
     report_time?: Date | string | null
     status?: string | null
+    updated_at?: Date | string | null
     district_report_districtTodistrict?: districtCreateNestedOneWithoutReport_report_districtTodistrictInput
     neighbor?: neighborCreateNestedOneWithoutReportInput
     problem?: problemCreateNestedOneWithoutReportInput
@@ -12679,6 +12987,7 @@ export namespace Prisma {
     report_date?: Date | string | null
     report_time?: Date | string | null
     status?: string | null
+    updated_at?: Date | string | null
   }
 
   export type reportCreateOrConnectWithoutCantonInput = {
@@ -12689,6 +12998,31 @@ export namespace Prisma {
   export type reportCreateManyCantonInputEnvelope = {
     data: reportCreateManyCantonInput | reportCreateManyCantonInput[]
     skipDuplicates?: boolean
+  }
+
+  export type districtUpsertWithWhereUniqueWithoutCantonInput = {
+    where: districtWhereUniqueInput
+    update: XOR<districtUpdateWithoutCantonInput, districtUncheckedUpdateWithoutCantonInput>
+    create: XOR<districtCreateWithoutCantonInput, districtUncheckedCreateWithoutCantonInput>
+  }
+
+  export type districtUpdateWithWhereUniqueWithoutCantonInput = {
+    where: districtWhereUniqueInput
+    data: XOR<districtUpdateWithoutCantonInput, districtUncheckedUpdateWithoutCantonInput>
+  }
+
+  export type districtUpdateManyWithWhereWithoutCantonInput = {
+    where: districtScalarWhereInput
+    data: XOR<districtUpdateManyMutationInput, districtUncheckedUpdateManyWithoutCantonInput>
+  }
+
+  export type districtScalarWhereInput = {
+    AND?: districtScalarWhereInput | districtScalarWhereInput[]
+    OR?: districtScalarWhereInput[]
+    NOT?: districtScalarWhereInput | districtScalarWhereInput[]
+    district_id?: IntFilter<"district"> | number
+    district_name?: StringNullableFilter<"district"> | string | null
+    canton_id?: IntNullableFilter<"district"> | number | null
   }
 
   export type reportUpsertWithWhereUniqueWithoutCantonInput = {
@@ -12722,6 +13056,23 @@ export namespace Prisma {
     report_date?: DateTimeNullableFilter<"report"> | Date | string | null
     report_time?: DateTimeNullableFilter<"report"> | Date | string | null
     status?: StringNullableFilter<"report"> | string | null
+    updated_at?: DateTimeNullableFilter<"report"> | Date | string | null
+  }
+
+  export type cantonCreateWithoutDistrictInput = {
+    canton_name?: string | null
+    report?: reportCreateNestedManyWithoutCantonInput
+  }
+
+  export type cantonUncheckedCreateWithoutDistrictInput = {
+    canton_id?: number
+    canton_name?: string | null
+    report?: reportUncheckedCreateNestedManyWithoutCantonInput
+  }
+
+  export type cantonCreateOrConnectWithoutDistrictInput = {
+    where: cantonWhereUniqueInput
+    create: XOR<cantonCreateWithoutDistrictInput, cantonUncheckedCreateWithoutDistrictInput>
   }
 
   export type reportCreateWithoutDistrict_report_districtTodistrictInput = {
@@ -12731,6 +13082,7 @@ export namespace Prisma {
     report_date?: Date | string | null
     report_time?: Date | string | null
     status?: string | null
+    updated_at?: Date | string | null
     canton?: cantonCreateNestedOneWithoutReportInput
     neighbor?: neighborCreateNestedOneWithoutReportInput
     problem?: problemCreateNestedOneWithoutReportInput
@@ -12747,6 +13099,7 @@ export namespace Prisma {
     report_date?: Date | string | null
     report_time?: Date | string | null
     status?: string | null
+    updated_at?: Date | string | null
   }
 
   export type reportCreateOrConnectWithoutDistrict_report_districtTodistrictInput = {
@@ -12757,6 +13110,28 @@ export namespace Prisma {
   export type reportCreateManyDistrict_report_districtTodistrictInputEnvelope = {
     data: reportCreateManyDistrict_report_districtTodistrictInput | reportCreateManyDistrict_report_districtTodistrictInput[]
     skipDuplicates?: boolean
+  }
+
+  export type cantonUpsertWithoutDistrictInput = {
+    update: XOR<cantonUpdateWithoutDistrictInput, cantonUncheckedUpdateWithoutDistrictInput>
+    create: XOR<cantonCreateWithoutDistrictInput, cantonUncheckedCreateWithoutDistrictInput>
+    where?: cantonWhereInput
+  }
+
+  export type cantonUpdateToOneWithWhereWithoutDistrictInput = {
+    where?: cantonWhereInput
+    data: XOR<cantonUpdateWithoutDistrictInput, cantonUncheckedUpdateWithoutDistrictInput>
+  }
+
+  export type cantonUpdateWithoutDistrictInput = {
+    canton_name?: NullableStringFieldUpdateOperationsInput | string | null
+    report?: reportUpdateManyWithoutCantonNestedInput
+  }
+
+  export type cantonUncheckedUpdateWithoutDistrictInput = {
+    canton_id?: IntFieldUpdateOperationsInput | number
+    canton_name?: NullableStringFieldUpdateOperationsInput | string | null
+    report?: reportUncheckedUpdateManyWithoutCantonNestedInput
   }
 
   export type reportUpsertWithWhereUniqueWithoutDistrict_report_districtTodistrictInput = {
@@ -12835,6 +13210,7 @@ export namespace Prisma {
     report_date?: Date | string | null
     report_time?: Date | string | null
     status?: string | null
+    updated_at?: Date | string | null
     canton?: cantonCreateNestedOneWithoutReportInput
     district_report_districtTodistrict?: districtCreateNestedOneWithoutReport_report_districtTodistrictInput
     problem?: problemCreateNestedOneWithoutReportInput
@@ -12851,6 +13227,7 @@ export namespace Prisma {
     report_date?: Date | string | null
     report_time?: Date | string | null
     status?: string | null
+    updated_at?: Date | string | null
   }
 
   export type reportCreateOrConnectWithoutNeighborInput = {
@@ -12900,6 +13277,7 @@ export namespace Prisma {
     report_date?: Date | string | null
     report_time?: Date | string | null
     status?: string | null
+    updated_at?: Date | string | null
     canton?: cantonCreateNestedOneWithoutReportInput
     district_report_districtTodistrict?: districtCreateNestedOneWithoutReport_report_districtTodistrictInput
     neighbor?: neighborCreateNestedOneWithoutReportInput
@@ -12916,6 +13294,7 @@ export namespace Prisma {
     report_date?: Date | string | null
     report_time?: Date | string | null
     status?: string | null
+    updated_at?: Date | string | null
   }
 
   export type reportCreateOrConnectWithoutProblemInput = {
@@ -13012,11 +13391,13 @@ export namespace Prisma {
 
   export type cantonCreateWithoutReportInput = {
     canton_name?: string | null
+    district?: districtCreateNestedManyWithoutCantonInput
   }
 
   export type cantonUncheckedCreateWithoutReportInput = {
     canton_id?: number
     canton_name?: string | null
+    district?: districtUncheckedCreateNestedManyWithoutCantonInput
   }
 
   export type cantonCreateOrConnectWithoutReportInput = {
@@ -13026,11 +13407,13 @@ export namespace Prisma {
 
   export type districtCreateWithoutReport_report_districtTodistrictInput = {
     district_name?: string | null
+    canton?: cantonCreateNestedOneWithoutDistrictInput
   }
 
   export type districtUncheckedCreateWithoutReport_report_districtTodistrictInput = {
     district_id?: number
     district_name?: string | null
+    canton_id?: number | null
   }
 
   export type districtCreateOrConnectWithoutReport_report_districtTodistrictInput = {
@@ -13039,21 +13422,22 @@ export namespace Prisma {
   }
 
   export type neighborCreateWithoutReportInput = {
-    first_name?: string | null
-    last_name?: string | null
+    identification: number
+    first_name: string
+    last_name: string
     second_last_name?: string | null
-    email?: string | null
-    password?: string | null
+    email: string
+    password: string
     phone_number?: number | null
   }
 
   export type neighborUncheckedCreateWithoutReportInput = {
-    identification?: number
-    first_name?: string | null
-    last_name?: string | null
+    identification: number
+    first_name: string
+    last_name: string
     second_last_name?: string | null
-    email?: string | null
-    password?: string | null
+    email: string
+    password: string
     phone_number?: number | null
   }
 
@@ -13091,11 +13475,13 @@ export namespace Prisma {
 
   export type cantonUpdateWithoutReportInput = {
     canton_name?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: districtUpdateManyWithoutCantonNestedInput
   }
 
   export type cantonUncheckedUpdateWithoutReportInput = {
     canton_id?: IntFieldUpdateOperationsInput | number
     canton_name?: NullableStringFieldUpdateOperationsInput | string | null
+    district?: districtUncheckedUpdateManyWithoutCantonNestedInput
   }
 
   export type districtUpsertWithoutReport_report_districtTodistrictInput = {
@@ -13111,11 +13497,13 @@ export namespace Prisma {
 
   export type districtUpdateWithoutReport_report_districtTodistrictInput = {
     district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    canton?: cantonUpdateOneWithoutDistrictNestedInput
   }
 
   export type districtUncheckedUpdateWithoutReport_report_districtTodistrictInput = {
     district_id?: IntFieldUpdateOperationsInput | number
     district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    canton_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type neighborUpsertWithoutReportInput = {
@@ -13130,21 +13518,22 @@ export namespace Prisma {
   }
 
   export type neighborUpdateWithoutReportInput = {
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    identification?: IntFieldUpdateOperationsInput | number
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     second_last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type neighborUncheckedUpdateWithoutReportInput = {
     identification?: IntFieldUpdateOperationsInput | number
-    first_name?: NullableStringFieldUpdateOperationsInput | string | null
-    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     second_last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     phone_number?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -13170,6 +13559,11 @@ export namespace Prisma {
     problem_name?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type districtCreateManyCantonInput = {
+    district_id?: number
+    district_name?: string | null
+  }
+
   export type reportCreateManyCantonInput = {
     report_id?: number
     neighbor_id?: number | null
@@ -13181,6 +13575,23 @@ export namespace Prisma {
     report_date?: Date | string | null
     report_time?: Date | string | null
     status?: string | null
+    updated_at?: Date | string | null
+  }
+
+  export type districtUpdateWithoutCantonInput = {
+    district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    report_report_districtTodistrict?: reportUpdateManyWithoutDistrict_report_districtTodistrictNestedInput
+  }
+
+  export type districtUncheckedUpdateWithoutCantonInput = {
+    district_id?: IntFieldUpdateOperationsInput | number
+    district_name?: NullableStringFieldUpdateOperationsInput | string | null
+    report_report_districtTodistrict?: reportUncheckedUpdateManyWithoutDistrict_report_districtTodistrictNestedInput
+  }
+
+  export type districtUncheckedUpdateManyWithoutCantonInput = {
+    district_id?: IntFieldUpdateOperationsInput | number
+    district_name?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type reportUpdateWithoutCantonInput = {
@@ -13190,6 +13601,7 @@ export namespace Prisma {
     report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     district_report_districtTodistrict?: districtUpdateOneWithoutReport_report_districtTodistrictNestedInput
     neighbor?: neighborUpdateOneWithoutReportNestedInput
     problem?: problemUpdateOneWithoutReportNestedInput
@@ -13206,6 +13618,7 @@ export namespace Prisma {
     report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type reportUncheckedUpdateManyWithoutCantonInput = {
@@ -13219,6 +13632,7 @@ export namespace Prisma {
     report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type reportCreateManyDistrict_report_districtTodistrictInput = {
@@ -13232,6 +13646,7 @@ export namespace Prisma {
     report_date?: Date | string | null
     report_time?: Date | string | null
     status?: string | null
+    updated_at?: Date | string | null
   }
 
   export type reportUpdateWithoutDistrict_report_districtTodistrictInput = {
@@ -13241,6 +13656,7 @@ export namespace Prisma {
     report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canton?: cantonUpdateOneWithoutReportNestedInput
     neighbor?: neighborUpdateOneWithoutReportNestedInput
     problem?: problemUpdateOneWithoutReportNestedInput
@@ -13257,6 +13673,7 @@ export namespace Prisma {
     report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type reportUncheckedUpdateManyWithoutDistrict_report_districtTodistrictInput = {
@@ -13270,6 +13687,7 @@ export namespace Prisma {
     report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type alertCreateManyMunicipalityInput = {
@@ -13314,6 +13732,7 @@ export namespace Prisma {
     report_date?: Date | string | null
     report_time?: Date | string | null
     status?: string | null
+    updated_at?: Date | string | null
   }
 
   export type reportUpdateWithoutNeighborInput = {
@@ -13323,6 +13742,7 @@ export namespace Prisma {
     report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canton?: cantonUpdateOneWithoutReportNestedInput
     district_report_districtTodistrict?: districtUpdateOneWithoutReport_report_districtTodistrictNestedInput
     problem?: problemUpdateOneWithoutReportNestedInput
@@ -13339,6 +13759,7 @@ export namespace Prisma {
     report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type reportUncheckedUpdateManyWithoutNeighborInput = {
@@ -13352,6 +13773,7 @@ export namespace Prisma {
     report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type reportCreateManyProblemInput = {
@@ -13365,6 +13787,7 @@ export namespace Prisma {
     report_date?: Date | string | null
     report_time?: Date | string | null
     status?: string | null
+    updated_at?: Date | string | null
   }
 
   export type reportUpdateWithoutProblemInput = {
@@ -13374,6 +13797,7 @@ export namespace Prisma {
     report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canton?: cantonUpdateOneWithoutReportNestedInput
     district_report_districtTodistrict?: districtUpdateOneWithoutReport_report_districtTodistrictNestedInput
     neighbor?: neighborUpdateOneWithoutReportNestedInput
@@ -13390,6 +13814,7 @@ export namespace Prisma {
     report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type reportUncheckedUpdateManyWithoutProblemInput = {
@@ -13403,6 +13828,7 @@ export namespace Prisma {
     report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type problemCreateManyProblem_typeInput = {

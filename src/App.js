@@ -8,6 +8,9 @@ import LoginPage from './pages/LoginPage.js';
 import RegistrationPage from './pages/RegistrationPage.js';
 import DashboardPage from './pages/DashboardPage.js';
 import ReportListPage from './pages/ReportListPage.js';
+import SettingsPage from './pages/SettingsPage.js';
+import ProfilePage from './pages/ProfilePage.js';
+import EditReportPage from './pages/EditReportPage.js';
 
 // Layout for authenticated users (with Sidebar)
 const MainLayout = ({ children }) => (
@@ -52,14 +55,29 @@ function App() {
         <Route path="/dashboard" element={<ProtectedRoute><MainLayout><DashboardPage /></MainLayout></ProtectedRoute>} />
         <Route path="/reportes" element={<ProtectedRoute><MainLayout><ReportListPage /></MainLayout></ProtectedRoute>} />
         <Route path="/reportes/nuevo" element={<ProtectedRoute><MainLayout><ReportFormPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/reportes/:reportId/editar" element={<ProtectedRoute><MainLayout><EditReportPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/configuracion" element={<ProtectedRoute><MainLayout><SettingsPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/perfil" element={<ProtectedRoute><MainLayout><ProfilePage /></MainLayout></ProtectedRoute>} />
         
-        {/* Redirect root to dashboard if authenticated, else to login */}
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        {/* Fallback for any other route can be a 404 page or redirect to dashboard */}
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        {/* Redirect root based on auth state */}
+        <Route 
+          path="/"
+          element={ <NavigateToDashboardOrLogin /> }
+        />
+
+        {/* Fallback for any other route can be a 404 page or redirect */}
+        {/* For now, redirecting to dashboard, but a 404 component would be better for unkown paths */}
+        <Route path="*" element={<Navigate to="/dashboard" replace />} /> 
       </Routes>
     </Router>
   );
 }
+
+// Helper component to decide initial redirect
+const NavigateToDashboardOrLogin = () => {
+  const { isAuthenticated, isLoading } = useAuth();
+  if (isLoading) return <div>Loading...</div>; // Or your global loader
+  return isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />;
+};
 
 export default App; 

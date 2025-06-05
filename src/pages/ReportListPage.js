@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'; // For the "Crear Reporte" button
 import ReportCard from '../components/ReportCard.js'; // Added .js extension
+import ReportDetailModal from '../components/ReportDetailModal.js'; // Import the modal
+import { useAuth } from '../context/AuthContext.js'; // Import useAuth
 import './ReportListPage.css';
 
 function ReportListPage() {
@@ -8,6 +10,10 @@ function ReportListPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const { user } = useAuth(); // Get the authenticated user
+
+  const [selectedReport, setSelectedReport] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchReports = async () => {
@@ -33,15 +39,35 @@ function ReportListPage() {
 
   // Filter reports based on searchTerm (simple title/description search)
   const filteredReports = reports.filter(report => {
-    const problemDescription = report.problem?.description?.toLowerCase() || '';
-    const problemType = report.problem?.problem_type?.name?.toLowerCase() || '';
-    const reportTitle = report.title?.toLowerCase() || ''; // If reports have a direct title field
+    const problemName = report.problem?.problem_name?.toLowerCase() || '';
+    const problemTypeName = report.problem?.problem_type?.type_name?.toLowerCase() || '';
+    const currentReportTitle = report.report_title?.toLowerCase() || '';
     const lowerSearchTerm = searchTerm.toLowerCase();
 
-    return problemDescription.includes(lowerSearchTerm) || 
-           problemType.includes(lowerSearchTerm) ||
-           reportTitle.includes(lowerSearchTerm);
+    // Add other fields to search if desired, e.g., status, neighbor name, canton, district
+    const status = report.status?.toLowerCase() || '';
+    const canton = report.canton?.canton_name?.toLowerCase() || '';
+    const district = report.district_report_districtTodistrict?.district_name?.toLowerCase() || '';
+    const neighborhood = report.neighborhood?.toLowerCase() || '';
+
+    return problemName.includes(lowerSearchTerm) || 
+           problemTypeName.includes(lowerSearchTerm) ||
+           currentReportTitle.includes(lowerSearchTerm) ||
+           status.includes(lowerSearchTerm) ||
+           canton.includes(lowerSearchTerm) ||
+           district.includes(lowerSearchTerm) ||
+           neighborhood.includes(lowerSearchTerm);
   });
+
+  const handleCardClick = (report) => {
+    setSelectedReport(report);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedReport(null);
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="report-list-page-container">
@@ -50,7 +76,7 @@ function ReportListPage() {
         <div className="search-bar-container">
           <input
             type="text"
-              placeholder="Buscar reportes... (por tipo, descripción)"
+              placeholder="Buscar reportes... (título, problema, estado, ubicación)"
               className="search-input"
             value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -69,7 +95,12 @@ function ReportListPage() {
           filteredReports.length > 0 ? (
         <div className="reports-grid">
           {filteredReports.map(report => (
-                <ReportCard key={report.id_report} report={report} />
+                <ReportCard 
+                  key={report.report_id} 
+                  report={report} 
+                  currentUserId={user?.identification} 
+                  onCardClick={handleCardClick}
+                />
           ))}
         </div>
       ) : (
@@ -86,6 +117,13 @@ function ReportListPage() {
         <p>Aquí se mostrarán los avisos más recientes o importantes.</p>
         {/* Placeholder content or future dynamic content */}
       </aside>
+
+      <ReportDetailModal 
+        show={isModalOpen} 
+        report={selectedReport} 
+        currentUserId={user?.identification}
+        onClose={handleCloseModal} 
+      />
     </div>
   );
 }

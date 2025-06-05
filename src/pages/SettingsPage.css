@@ -1,0 +1,96 @@
+.settings-page-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff; /* Light background for the content area */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: #333; /* Darker text for readability */
+}
+
+.settings-title {
+  text-align: center;
+  color: #2c3e50; /* Similar to other titles */
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.settings-section {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #ecf0f1; /* Light separator for sections */
+}
+
+.settings-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.settings-section-title {
+  font-size: 1.5rem;
+  color: #34495e;
+  margin-bottom: 1rem;
+}
+
+.settings-options-list {
+  list-style: none;
+  padding: 0;
+}
+
+.settings-option-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.settings-option-item:hover {
+  background-color: #f8f9fa; /* Slight hover effect for items */
+}
+
+.settings-option-item span {
+  font-size: 1rem;
+}
+
+/* General button styling for settings actions */
+.settings-action-button, 
+.settings-logout-button {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid transparent;
+  text-align: center;
+}
+
+.settings-action-button {
+  background-color: #3498db; /* Blue for general actions */
+  color: white;
+  border-color: #2980b9;
+}
+
+.settings-action-button:hover {
+  background-color: #2980b9;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.settings-logout-button {
+  background-color: #e74c3c; /* Red for destructive actions like logout */
+  color: white;
+  border-color: #c0392b;
+}
+
+.settings-logout-button:hover {
+  background-color: #c0392b;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* If you want the logout button to be less prominent or aligned differently */
+.settings-option-item .settings-logout-button {
+  /* Example: make it take full width or align differently if needed */
+  /* width: auto; */ 
+} 

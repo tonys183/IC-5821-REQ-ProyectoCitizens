@@ -34,7 +34,7 @@ function LoginPage() {
 
       // Call the login function from AuthContext with user data from backend
       // The backend should return user data (excluding password) and optionally a token
-      login(data.user); // Assuming data.user contains the user object
+      login(data); // Pass the whole data object { user, token, message }
       
       navigate('/dashboard'); // Navigate to dashboard on successful login
 

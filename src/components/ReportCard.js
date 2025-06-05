@@ -1,43 +1,64 @@
 import React from 'react';
-import './ReportCard.css'; // Make sure this CSS file exists or create it
+// Link is no longer needed here directly
+import './ReportCard.css';
 
-function ReportCard({ report }) {
-  // Destructure with safe defaults for nested properties
-  const { 
-    title, // Assuming reports might have a direct title, otherwise it comes from problem type
+function ReportCard({ report, currentUserId, onCardClick }) { // Add onCardClick, remove currentUserId if not used elsewhere in card
+  const {
+    report_id,
+    report_title,
     problem,
     neighbor,
     status,
-    creation_date,
-    update_date
+    report_date,
+    canton,
+    district_report_districtTodistrict,
+    neighborhood,
+    street
   } = report || {};
 
-  const problemType = problem?.problem_type?.name || 'Tipo no especificado';
-  const description = problem?.description || 'Sin descripción.';
-  const reporterName = neighbor ? `${neighbor.first_name || ''} ${neighbor.last_name || ''}`.trim() : 'Anónimo';
-  const reporterEmail = neighbor?.email || '-';
+  const problemTypeName = problem?.problem_type?.type_name || 'Tipo no especificado';
+  const problemName = problem?.problem_name || 'Problemática no especificada';
+  const fullProblemDescription = `${problemTypeName} - ${problemName}`;
 
-  // Format dates (simple formatting)
+  const reporterName = neighbor ? `${neighbor.first_name || ''} ${neighbor.last_name || ''}`.trim() : 'Anónimo';
+  const cantonName = canton?.canton_name || 'Cantón no especificado';
+  const districtName = district_report_districtTodistrict?.district_name || 'Distrito no especificado';
+
   const formatDate = (dateString) => {
     if (!dateString) return '-';
     try {
-      return new Date(dateString).toLocaleDateString();
+      // Using a simpler approach for date formatting directly, assuming report_date is a valid date string or Date object
+      const date = new Date(dateString);
+      return date.toLocaleDateString('es-CR', { 
+        day: '2-digit', 
+        month: '2-digit', 
+        year: 'numeric', 
+        timeZone: 'UTC' // Important if your dates are stored/handled as UTC
+      });
     } catch (e) {
-      return dateString; // Return original if parsing fails
+      console.error("Error formatting date in ReportCard:", dateString, e);
+      return dateString; 
+    }
+  };
+
+  const handleCardClick = () => {
+    if (onCardClick) {
+      onCardClick(report);
     }
   };
 
   return (
-    <div className="report-card">
-      <h4 className="report-card-title">{title || problemType}</h4>
-      <p className="report-card-description">{description}</p>
+    <div className="report-card" onClick={handleCardClick} style={{ cursor: 'pointer' }}>
+      <h4 className="report-card-title">{report_title || 'Reporte Sin Título'}</h4>
+      <p className="report-card-description"><strong>Problema:</strong> {fullProblemDescription}</p>
       <div className="report-card-details">
-        <p><strong>Estado:</strong> {status || 'No especificado'}</p>
-        <p><strong>Reportado por:</strong> {reporterName} ({reporterEmail})</p>
-        <p><strong>Fecha Creación:</strong> {formatDate(creation_date)}</p>
-        {update_date && <p><strong>Última Actualización:</strong> {formatDate(update_date)}</p>}
+        <p><strong>Ubicación:</strong> {`${street || '-'}, ${neighborhood || '-'}, ${districtName}, ${cantonName}`}</p>
+        <p><strong>Estado:</strong> <span className={`status status-${(status || 'Desconocido').toLowerCase().replace(' ', '-')}`}>{status || 'Desconocido'}</span></p>
+        <p><strong>Reportado por:</strong> {reporterName}</p>
+        <p><strong>Fecha:</strong> {formatDate(report_date)}</p>
+        {/* ID del Reporte can be shown in the modal if needed */}
       </div>
-      {/* Future: Add actions like 'View Details', 'Edit', 'Delete' based on user role */}
+      {/* Edit button is removed from here and placed in the modal */}
     </div>
   );
 }
