@@ -61,6 +61,20 @@ app.post('/api/auth/register', async (req, res) => {
     return res.status(400).json({ message: 'Email and password are required.' });
   }
 
+  // --- Password Strength Validation ---
+  if (password.length < 8) {
+    return res.status(400).json({ message: "La contraseña debe tener al menos 8 caracteres." });
+  }
+  if (!/[a-z]/.test(password)) {
+    return res.status(400).json({ message: "La contraseña debe contener al menos una letra minúscula." });
+  }
+  if (!/[A-Z]/.test(password)) {
+    return res.status(400).json({ message: "La contraseña debe contener al menos una letra mayúscula." });
+  }
+  if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+    return res.status(400).json({ message: "La contraseña debe contener al menos un carácter especial." });
+  }
+
   // Role-specific validation
   if (!isMuniUser) {
     if (!identification || !firstName || !lastName) {

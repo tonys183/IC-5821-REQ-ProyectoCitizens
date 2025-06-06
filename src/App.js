@@ -13,6 +13,7 @@ import ProfilePage from './pages/ProfilePage.js';
 import AlertsPage from './pages/AlertsPage.js';
 import EditReportPage from './pages/EditReportPage.js';
 import AlertFormPage from './pages/AlertFormPage.js';
+import MunicipalityRegistrationPage from './pages/MunicipalityRegistrationPage.js';
 
 // Layout for authenticated users (with Sidebar)
 const MainLayout = ({ children }) => (
@@ -51,7 +52,8 @@ function App() {
       <Routes>
         {/* Public Routes - use AuthLayout */}
         <Route path="/login" element={<PublicRoute><AuthLayout><LoginPage /></AuthLayout></PublicRoute>} />
-        <Route path="/registrarse" element={<PublicRoute><AuthLayout><RegistrationPage /></AuthLayout></PublicRoute>} />
+        <Route path="/register" element={<PublicRoute><AuthLayout><RegistrationPage /></AuthLayout></PublicRoute>} />
+        <Route path="/registro-municipalidad" element={<PublicRoute><AuthLayout><MunicipalityRegistrationPage /></AuthLayout></PublicRoute>} />
 
         {/* Protected Routes - use MainLayout */}
         <Route path="/dashboard" element={<ProtectedRoute><MainLayout><DashboardPage /></MainLayout></ProtectedRoute>} />

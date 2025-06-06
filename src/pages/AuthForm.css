@@ -128,4 +128,44 @@ body {
 
 .form-container-styles p a:hover {
   color: white;
+}
+
+.registration-links {
+  display: flex;
+  flex-direction: column; /* Keep this to stack the title and the button row */
+  align-items: center;
+  gap: 10px; /* Space between the <p> tag and the buttons */
+  margin-top: 25px;
+}
+
+.registration-links p {
+  margin: 0;
+  font-weight: 500;
+  margin-bottom: 5px; /* Add some space above the buttons */
+}
+
+.registration-links .button-row {
+  display: flex;
+  flex-direction: row; /* This will place buttons in a row */
+  justify-content: center;
+  gap: 10px; /* This will create space between the buttons */
+}
+
+.register-link-button {
+  display: inline-block;
+  padding: 8px 16px; /* Reduced padding to make buttons smaller */
+  background-color: #065f6d; /* Darker teal, same as input background */
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  border: 1px solid #054e58;
+  font-size: 14px; /* Slightly smaller font */
+}
+
+.register-link-button:hover {
+  background-color: #076d7b; /* Slightly lighter teal on hover */
+  color: white;
+  transform: translateY(-2px);
 } 

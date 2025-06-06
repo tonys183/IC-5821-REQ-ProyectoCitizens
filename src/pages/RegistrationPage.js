@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './AuthForm.css'; // Import the shared CSS file
 // import './RegistrationPage.css'; // You can create and import this for styling
@@ -18,6 +18,16 @@ function RegistrationPage() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  const passwordRequirements = useMemo(() => {
+    const password = formData.password;
+    return [
+      { text: "Al menos 8 caracteres", met: password.length >= 8 },
+      { text: "Al menos una letra minúscula (a-z)", met: /[a-z]/.test(password) },
+      { text: "Al menos una letra mayúscula (A-Z)", met: /[A-Z]/.test(password) },
+      { text: "Al menos un carácter especial (!@#$...)", met: /[!@#$%^&*(),.?":{}|<>]/.test(password) }
+    ];
+  }, [formData.password]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -28,9 +38,22 @@ function RegistrationPage() {
     setError(null);
     setSuccessMessage('');
 
-    // Basic client-side validation for password length (example)
-    if (formData.password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres.');
+    // --- Client-side validation ---
+    const MUNI_DOMAIN = '@munialajuela.go.cr';
+    if (formData.email.endsWith(MUNI_DOMAIN)) {
+      setError(
+        <span>
+          Este formulario es para vecinos. Para registrar una cuenta de municipalidad, usa el 
+          <Link to="/registro-municipalidad" className="register-link-button" style={{display: 'inline-block', margin: '0 5px', textDecoration: 'none'}}>formulario de registro municipal</Link>.
+        </span>
+      );
+      setIsLoading(false);
+      return;
+    }
+    
+    const isPasswordValid = passwordRequirements.every(req => req.met);
+    if (!isPasswordValid) {
+      setError('La contraseña no cumple con todos los requisitos.');
       setIsLoading(false);
       return;
     }
@@ -146,6 +169,13 @@ function RegistrationPage() {
             onChange={handleChange}
             required
           />
+          <div className="password-requirements" style={{ fontSize: '0.8rem', marginTop: '5px' }}>
+            {passwordRequirements.map((req, index) => (
+              <div key={index} style={{ color: req.met ? 'green' : '#a9a9a9' }}>
+                {req.met ? '✓' : '•'} {req.text}
+              </div>
+            ))}
+          </div>
         </div>
         <div className="form-group">
           <label htmlFor="phoneNumber">Número de Teléfono (Opcional)</label>
@@ -166,6 +196,10 @@ function RegistrationPage() {
       <p style={{ textAlign: 'center', marginTop: '20px' }}> {/* Adjusted margin */}
         ¿Ya tienes cuenta? <Link to="/login">Iniciar Sesión</Link>
       </p>
+      <div className="registration-links">
+        <p>¿Eres empleado municipal?</p>
+        <Link to="/registro-municipalidad" className="register-link-button">Regístrate aquí</Link>
+      </div>
     </div>
   );
 }

@@ -75,9 +75,13 @@ function LoginPage() {
           {isLoading ? 'Ingresando...' : 'Ingresar'}
         </button>
       </form>
-      <p style={{ textAlign: 'center', marginTop: '20px' }}> {/* Adjusted margin */}
-        ¿Sin cuenta? <Link to="/registrarse">Registrarse</Link>
-      </p>
+      <div className="registration-links">
+        <p>¿Sin cuenta? Regístrate como:</p>
+        <div className="button-row">
+          <Link to="/register" className="register-link-button">Vecino</Link>
+          <Link to="/registro-municipalidad" className="register-link-button">Municipalidad</Link>
+        </div>
+      </div>
     </div>
   );
 }
