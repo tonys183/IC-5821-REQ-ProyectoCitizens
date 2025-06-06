@@ -69,6 +69,15 @@ function ReportListPage() {
     setIsModalOpen(false);
   };
 
+  // Function to update a single report in the list
+  const handleReportUpdate = (updatedReport) => {
+    setReports(prevReports => 
+      prevReports.map(report => 
+        report.report_id === updatedReport.report_id ? updatedReport : report
+      )
+    );
+  };
+
   return (
     <div className="report-list-page-container">
       <div className="report-list-main-content">
@@ -98,7 +107,7 @@ function ReportListPage() {
                 <ReportCard 
                   key={report.report_id} 
                   report={report} 
-                  currentUserId={user?.identification} 
+                  currentUserId={user?.id}
                   onCardClick={handleCardClick}
                 />
           ))}
@@ -121,8 +130,9 @@ function ReportListPage() {
       <ReportDetailModal 
         show={isModalOpen} 
         report={selectedReport} 
-        currentUserId={user?.identification}
+        user={user}
         onClose={handleCloseModal} 
+        onReportUpdate={handleReportUpdate}
       />
     </div>
   );

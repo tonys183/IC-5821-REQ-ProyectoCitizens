@@ -19,7 +19,7 @@ function Sidebar() {
             <Link to="/reportes">Reportes</Link>
           </li>
           <li className={isActive('/alertas') ? 'active' : ''}> 
-            <Link to="/">Alertas</Link> 
+            <Link to="/alertas">Alertas</Link> 
           </li>
         </ul>
       </nav>
@@ -37,7 +37,11 @@ function Sidebar() {
       <div className="sidebar-footer">
         {user && (
           <div className="user-info">
-            <p>{user.first_name || user.email}</p> 
+            <p>
+              {(user.role === 'NEIGHBOR' && user.profile?.first_name) ||
+               (user.role === 'MUNICIPALITY' && user.profile?.name) ||
+               user.email}
+            </p> 
           </div>
         )}
         <div className="footer-icons">

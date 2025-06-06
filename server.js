@@ -41,98 +41,109 @@ app.get('/api', (req, res) => {
   res.json({ message: 'Hello from the backend API!' });
 });
 
-// Registration Route
+// Registration Route (Refactored for User/Profile model)
 app.post('/api/auth/register', async (req, res) => {
   const {
-    identification, // Added: User-provided ID (cédula)
-    firstName: req_firstName,
-    lastName: req_lastName,
-    secondLastName: req_secondLastName,
-    fullName, // Keep for fallback
+    identification,
+    firstName,
+    lastName,
+    secondLastName,
     email,
     password,
     phoneNumber
   } = req.body;
 
-  let firstName = req_firstName;
-  let lastName = req_lastName;
-  let secondLastName = req_secondLastName;
+  const MUNI_DOMAIN = '@munialajuela.go.cr';
+  const isMuniUser = email && email.endsWith(MUNI_DOMAIN);
 
-  // Basic validation
-  if (!identification || !email || !password) {
-    return res.status(400).json({ message: 'Identification (cédula), email, and password are required.' });
+  // --- Basic Validation ---
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required.' });
   }
 
-  if (!firstName && !lastName && fullName) {
-    console.warn('Registration: Received fullName, splitting into parts. Frontend should be updated to send separate name fields.');
-    const nameParts = fullName.split(' ');
-    firstName = nameParts[0];
-    lastName = nameParts.length > 1 ? nameParts[1] : '';
-    secondLastName = nameParts.length > 2 ? nameParts.slice(2).join(' ') : '';
-  }
-  
-  if (!firstName || !lastName) {
-    return res.status(400).json({ message: 'First name, last name, identification, email, and password are required.' });
+  // Role-specific validation
+  if (!isMuniUser) {
+    if (!identification || !firstName || !lastName) {
+      return res.status(400).json({ message: 'Identification (cédula), first name, and last name are required for neighbors.' });
+    }
   }
 
   try {
-    // Check if user already exists by email or identification
-    const existingNeighborByEmail = await prisma.neighbor.findUnique({
-      where: { email: email },
-    });
-
-    if (existingNeighborByEmail) {
+    // Check if user with this email already exists
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) {
       return res.status(400).json({ message: 'Email already in use.' });
     }
-
-    const existingNeighborById = await prisma.neighbor.findUnique({
-        where: { identification: parseInt(identification) }, // Ensure identification is an Int
-    });
-
-    if (existingNeighborById) {
-        return res.status(400).json({ message: 'Identification (cédula) already in use.' });
+    
+    // Check if identification is already in use (only for neighbors)
+    if (!isMuniUser) {
+        const existingProfile = await prisma.neighborProfile.findUnique({
+            where: { identification: parseInt(identification) }
+        });
+        if(existingProfile) {
+            return res.status(400).json({ message: 'Identification (cédula) already in use.' });
+        }
     }
 
-    // Hash password
+    // --- Create User and Profile in a Transaction ---
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Create new neighbor
-    const newNeighbor = await prisma.neighbor.create({
-      data: {
-        identification: parseInt(identification), // Added: Use provided identification
-        first_name: firstName,
-        last_name: lastName,
-        second_last_name: secondLastName || null,
-        email: email,
-        password: hashedPassword,
-        phone_number: phoneNumber ? parseInt(phoneNumber) : null,
-      },
-    });
+    const newUser = await prisma.$transaction(async (tx) => {
+      // Step 1: Create the core User
+      const user = await tx.user.create({
+        data: {
+          email: email,
+          password: hashedPassword,
+          role: isMuniUser ? 'MUNICIPALITY' : 'NEIGHBOR',
+        },
+      });
 
-    // Don't send back the password hash
-    const { password: _, ...neighborWithoutPassword } = newNeighbor;
-    res.status(201).json({ message: 'User registered successfully', user: neighborWithoutPassword });
+      // Step 2: Create the role-specific profile and link it
+      if (isMuniUser) {
+        await tx.municipalityProfile.create({
+          data: {
+            userId: user.id,
+            name: 'Municipalidad de Alajuela', // This could be derived or set from a config
+            canton: 'Alajuela', // Example value
+          },
+        });
+      } else {
+        await tx.neighborProfile.create({
+          data: {
+            userId: user.id,
+            identification: parseInt(identification),
+            first_name: firstName,
+            last_name: lastName,
+            second_last_name: secondLastName || null,
+            phone_number: phoneNumber ? parseInt(phoneNumber) : null,
+          },
+        });
+      }
+      
+      // Return the created user for the response
+      return user;
+    });
+    
+    // Exclude password from the returned user object
+    const { password: _, ...userWithoutPassword } = newUser;
+    res.status(201).json({ message: 'User registered successfully', user: userWithoutPassword });
 
   } catch (error) {
     console.error('Registration error:', error);
-    if (error.code === 'P2002') { // Unique constraint failed
-        // error.meta.target is an array of fields that caused the violation
-        if (error.meta?.target?.includes('email')) {
-            return res.status(400).json({ message: 'Email already in use (from db constraint).' });
-        }
-        if (error.meta?.target?.includes('identification')) {
-            return res.status(400).json({ message: 'Identification (cédula) already in use (from db constraint).' });
-        }
+    // Handle specific Prisma errors
+    if (error.code === 'P2002') { // Unique constraint violation
+      return res.status(400).json({ message: 'A user with this email or identification already exists.' });
     }
     if (error instanceof prisma.PrismaClientValidationError) {
-        return res.status(400).json({ message: 'Invalid data provided for registration.', details: error.message });
+      return res.status(400).json({ message: 'Invalid data provided for registration.', details: error.message });
     }
+    // Generic error for anything else
     res.status(500).json({ message: 'Internal server error during registration.' });
   }
 });
 
-// Login Route
+// Login Route (Refactored for User/Profile model)
 app.post('/api/auth/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -141,33 +152,52 @@ app.post('/api/auth/login', async (req, res) => {
   }
 
   try {
-    const neighbor = await prisma.neighbor.findUnique({
-      where: { email: email },
+    // Step 1: Find the user by email
+    const user = await prisma.user.findUnique({
+      where: { email },
+      include: {
+        neighborProfile: true,     // Include neighbor profile
+        municipalityProfile: true, // Include municipality profile
+      },
     });
 
-    if (!neighbor) {
+    if (!user) {
       return res.status(401).json({ message: 'Invalid credentials. User not found.' });
     }
 
-    const isMatch = await bcrypt.compare(password, neighbor.password || '');
+    // Step 2: Verify the password
+    const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid credentials. Password incorrect.' });
     }
 
-    const { password: _, ...neighborWithoutPassword } = neighbor;
-
-    // Generate JWT
+    // Step 3: Generate JWT
+    // The payload now includes the user's primary ID and their role
     const token = jwt.sign(
-      { userId: neighbor.identification, email: neighbor.email },
+      { userId: user.id, email: user.email, role: user.role },
       JWT_SECRET,
       { expiresIn: '1h' }
     );
 
+    // Step 4: Prepare the user object for the frontend
+    // We combine the core user info with their specific profile
+    const { password: _, ...userWithoutPassword } = user;
+    const userForFrontend = {
+      ...userWithoutPassword,
+      // The profile data is nested under its type for clarity on the frontend
+      profile: user.neighborProfile || user.municipalityProfile, 
+    };
+    
+    // Cleanup to avoid sending both profiles
+    delete userForFrontend.neighborProfile;
+    delete userForFrontend.municipalityProfile;
+
+
     res.status(200).json({ 
       message: 'Login successful', 
-      user: neighborWithoutPassword,
-      token: token // Send token to client
+      user: userForFrontend,
+      token: token
     });
 
   } catch (error) {
@@ -176,7 +206,7 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
-// Get All Reports Route
+// Get All Reports Route (Refactored for User/Author model)
 app.get('/api/reports', async (req, res) => {
   try {
     const reports = await prisma.report.findMany({
@@ -184,13 +214,20 @@ app.get('/api/reports', async (req, res) => {
         report_date: 'desc',
       },
       include: {
-        neighbor: { // Include the neighbor who reported
-          select: {
-            identification: true, // This is the neighbor_id
-            first_name: true,
-            last_name: true,
-            // email: true, // Optional: include if you want to display it on the card
-          },
+        author: { // Changed from neighbor
+          include: {
+            neighborProfile: { // We want the name from the profile
+              select: {
+                first_name: true,
+                last_name: true,
+              }
+            },
+            municipalityProfile: { // Or the name from this profile
+              select: {
+                name: true,
+              }
+            }
+          }
         },
         problem: { // Include problem details
           include: {
@@ -234,7 +271,7 @@ app.get('/api/reports/:reportId', authenticateToken, async (req, res) => {
         },
         canton: true,
         district_report_districtTodistrict: true, // Using the relation name from schema
-        // We don't need to include neighbor here as we're verifying ownership
+        // We don't need to include author here as we're verifying ownership
       },
     });
 
@@ -243,7 +280,7 @@ app.get('/api/reports/:reportId', authenticateToken, async (req, res) => {
     }
 
     // Verify ownership
-    if (report.neighbor_id !== authenticatedUserId) {
+    if (report.author_id !== authenticatedUserId) {
       return res.status(403).json({ message: 'Access denied. You are not the owner of this report.' });
     }
 
@@ -389,7 +426,7 @@ app.post('/api/reports', authenticateToken, async (req, res) => {
   const authenticatedUserId = req.user.userId; // Get user ID from token payload
 
   const {
-    // neighbor_id is NO LONGER taken from body
+    // author_id is NO LONGER taken from body
     report_title,
     problem_id,
     canton_id,
@@ -398,7 +435,7 @@ app.post('/api/reports', authenticateToken, async (req, res) => {
     street
   } = req.body;
 
-  // Updated validation: neighbor_id is from token, not body
+  // Updated validation: author_id is from token, not body
   if (!report_title || !problem_id || !canton_id || !district_id || !neighborhood || !street) {
     return res.status(400).json({
       message: 'Missing required fields: report_title, problem_id, canton_id, district_id, neighborhood, street.',
@@ -409,7 +446,7 @@ app.post('/api/reports', authenticateToken, async (req, res) => {
   try {
     const newReport = await prisma.report.create({
       data: {
-        neighbor_id: parseInt(authenticatedUserId), // Use ID from token
+        author_id: authenticatedUserId, // Changed from neighbor_id and removed parseInt
         report_title: report_title,
         problem_id: parseInt(problem_id),
         canton_id: parseInt(canton_id),
@@ -431,7 +468,7 @@ app.post('/api/reports', authenticateToken, async (req, res) => {
     console.error('Error creating report:', error);
     if (error.code === 'P2003') { // Foreign key constraint failed
         // error.meta.field_name will tell which foreign key failed e.g. "report_problem_id_fkey (index)"
-        return res.status(400).json({ message: `Invalid ID for foreign key. Check if IDs for problem, canton, district, or neighbor are correct. Field: ${error.meta?.field_name}` });
+        return res.status(400).json({ message: `Invalid ID for foreign key. Check if IDs for problem, canton, district, or author are correct. Field: ${error.meta?.field_name}` });
     }
     if (error.code === 'P2025') { // Related record not found
         const cause = error.meta?.cause || 'Unknown related record.';
@@ -444,109 +481,92 @@ app.post('/api/reports', authenticateToken, async (req, res) => {
   }
 });
 
-// Get Neighbor Profile by ID
-app.get('/api/neighbors/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    const neighbor = await prisma.neighbor.findUnique({
-      where: { identification: parseInt(id) },
-      select: { // Explicitly select fields to exclude password
-        identification: true,
-        first_name: true,
-        last_name: true,
-        second_last_name: true,
-        email: true,
-        phone_number: true,
-        // Do not include password or other sensitive fields directly
-      }
-    });
-    if (!neighbor) {
-      return res.status(404).json({ message: 'Neighbor not found.' });
-    }
-    res.status(200).json(neighbor);
-  } catch (error) {
-    console.error(`Error fetching neighbor ${id}:`, error);
-    if (error instanceof SyntaxError || error.name === 'SyntaxError') {
-      return res.status(400).json({ message: 'Invalid neighbor ID format.' });
-    }
-    res.status(500).json({ message: 'Internal server error while fetching neighbor profile.' });
-  }
-});
-
-// Update Neighbor Profile by ID
-app.put('/api/neighbors/:id', async (req, res) => {
-  const { id } = req.params;
-  const { firstName, lastName, secondLastName, phoneNumber } = req.body;
-
-  // Basic validation
-  if (!firstName || !lastName) {
-    return res.status(400).json({ message: 'First name and last name are required.' });
-  }
+// Get Current User's Profile
+app.get('/api/profile', authenticateToken, async (req, res) => {
+  const userId = req.user.userId;
 
   try {
-    const updatedNeighbor = await prisma.neighbor.update({
-      where: { identification: parseInt(id) },
-      data: {
-        first_name: firstName,
-        last_name: lastName,
-        second_last_name: secondLastName || null,
-        phone_number: phoneNumber ? parseInt(phoneNumber) : null,
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        neighborProfile: true,
+        municipalityProfile: true,
       },
-      select: { // Return updated data, excluding password
-        identification: true,
-        first_name: true,
-        last_name: true,
-        second_last_name: true,
-        email: true,
-        phone_number: true,
-      }
     });
-    res.status(200).json({ message: 'Profile updated successfully', user: updatedNeighbor });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+    
+    // Combine user and profile info for a clean response
+    const { password, ...userWithoutPassword } = user;
+    const userForFrontend = {
+      ...userWithoutPassword,
+      profile: user.neighborProfile || user.municipalityProfile,
+    };
+    delete userForFrontend.neighborProfile;
+    delete userForFrontend.municipalityProfile;
+
+    res.status(200).json(userForFrontend);
   } catch (error) {
-    console.error(`Error updating neighbor ${id}:`, error);
-    if (error.code === 'P2025') { // Record to update not found
-      return res.status(404).json({ message: 'Neighbor not found for update.' });
-    }
-    if (error instanceof prisma.PrismaClientValidationError) {
-      return res.status(400).json({ message: 'Invalid data provided for update.', details: error.message });
-    }
-    res.status(500).json({ message: 'Internal server error while updating profile.' });
+    console.error(`Error fetching profile for user ${userId}:`, error);
+    res.status(500).json({ message: 'Internal server error while fetching profile.' });
   }
 });
 
-// Delete Neighbor Account by ID
-app.delete('/api/neighbors/:id', async (req, res) => {
-  const { id } = req.params;
-  const neighborId = parseInt(id);
+// Update Current User's Profile
+app.put('/api/profile', authenticateToken, async (req, res) => {
+    const userId = req.user.userId;
+    const userRole = req.user.role;
+    const { firstName, lastName, secondLastName, phoneNumber } = req.body; // Add other fields for muni if they can edit them
 
-  if (isNaN(neighborId)) {
-    return res.status(400).json({ message: 'Invalid neighbor ID format.' });
-  }
+    // Since only neighbors have these fields, we check the role
+    if (userRole !== 'NEIGHBOR') {
+        // For now, municipality profiles can't be updated. This can be expanded later.
+        return res.status(403).json({ message: 'Profile updates are only enabled for neighbor accounts.' });
+    }
+
+    if (!firstName || !lastName) {
+        return res.status(400).json({ message: 'First name and last name are required.' });
+    }
+
+    try {
+        const updatedProfile = await prisma.neighborProfile.update({
+            where: { userId: userId },
+            data: {
+                first_name: firstName,
+                last_name: lastName,
+                second_last_name: secondLastName || null,
+                phone_number: phoneNumber ? parseInt(phoneNumber) : null,
+            },
+        });
+
+        res.status(200).json({ message: 'Profile updated successfully', profile: updatedProfile });
+    } catch (error) {
+        console.error(`Error updating profile for user ${userId}:`, error);
+        if (error.code === 'P2025') { // Record to update not found
+            return res.status(404).json({ message: 'Profile not found for update.' });
+        }
+        res.status(500).json({ message: 'Internal server error while updating profile.' });
+    }
+});
+
+// Delete Current User's Account
+app.delete('/api/profile', authenticateToken, async (req, res) => {
+  const userId = req.user.userId;
 
   try {
-    // Use a transaction to ensure atomicity
-    await prisma.$transaction(async (tx) => {
-      // Step 1: Disassociate reports from the neighbor (set neighbor_id to null)
-      await tx.report.updateMany({
-        where: { neighbor_id: neighborId },
-        data: { neighbor_id: null },
-      });
-
-      // Step 2: Delete the neighbor
-      const deletedNeighbor = await tx.neighbor.delete({
-        where: { identification: neighborId },
-      });
-      // Note: deletedNeighbor will contain the data of the deleted record if needed for logging
+    // Prisma's 'Cascade' onDelete will handle deleting the associated profile.
+    // We already set reports to have their author_id set to NULL on delete.
+    await prisma.user.delete({
+      where: { id: userId },
     });
 
     res.status(200).json({ message: 'Account deleted successfully.' });
-
   } catch (error) {
-    console.error(`Error deleting neighbor ${neighborId}:`, error);
-    if (error.code === 'P2025') { // Record to delete not found
-      // This might occur if the user was already deleted in a rapid double-click scenario, for example.
-      // Or if reports update failed and transaction rolled back, then neighbor delete fails.
-      return res.status(404).json({ message: 'Neighbor not found for deletion, or associated data handling failed.' });
+    console.error(`Error deleting user ${userId}:`, error);
+    if (error.code === 'P2025') {
+      return res.status(404).json({ message: 'User not found for deletion.' });
     }
     res.status(500).json({ message: 'Internal server error while deleting account.' });
   }
@@ -583,7 +603,7 @@ app.put('/api/reports/:reportId', authenticateToken, async (req, res) => {
     }
 
     // Verify ownership
-    if (reportToUpdate.neighbor_id !== authenticatedUserId) {
+    if (reportToUpdate.author_id !== authenticatedUserId) {
       return res.status(403).json({ message: 'Access denied. You are not the owner of this report and cannot update it.' });
     }
 
@@ -616,6 +636,166 @@ app.put('/api/reports/:reportId', authenticateToken, async (req, res) => {
       return res.status(400).json({ message: 'Invalid report ID or other numeric field format.' });
     }
     res.status(500).json({ message: 'Internal server error while updating report.' });
+  }
+});
+
+// Update Report Status (Municipality Only)
+app.patch('/api/reports/:reportId/status', authenticateToken, async (req, res) => {
+  const { reportId } = req.params;
+  const { status } = req.body;
+  const { role: userRole } = req.user;
+
+  // 1. Authorization: Check if the user is a municipality user
+  if (userRole !== 'MUNICIPALITY') {
+    return res.status(403).json({ message: 'Access denied. Only municipality users can change report statuses.' });
+  }
+
+  // 2. Validation: Check if the status is a valid choice
+  const allowedStatuses = ['Waiting', 'In Progress', 'Resolved', 'Rejected'];
+  if (!status || !allowedStatuses.includes(status)) {
+    return res.status(400).json({ message: `Invalid status. Must be one of: ${allowedStatuses.join(', ')}` });
+  }
+
+  try {
+    // 3. Update the report status
+    const updatedReport = await prisma.report.update({
+      where: { report_id: parseInt(reportId) },
+      data: { 
+        status: status,
+        updated_at: new Date(),
+      },
+      // Include author and other details to return the full report object for the frontend
+      include: {
+        author: {
+          include: {
+            neighborProfile: true,
+            municipalityProfile: true,
+          }
+        },
+        problem: { include: { problem_type: true } },
+        canton: true,
+        district_report_districtTodistrict: true,
+      }
+    });
+
+    res.status(200).json({ message: 'Report status updated successfully', report: updatedReport });
+
+  } catch (error) {
+    console.error(`Error updating status for report ${reportId}:`, error);
+    if (error.code === 'P2025') { // Record to update not found
+      return res.status(404).json({ message: 'Report not found for status update.' });
+    }
+    res.status(500).json({ message: 'Internal server error while updating report status.' });
+  }
+});
+
+// --- ALERTS API ENDPOINTS ---
+
+// GET all alerts (public)
+app.get('/api/alerts', async (req, res) => {
+  try {
+    const alerts = await prisma.alert.findMany({
+      orderBy: {
+        updated_at: 'desc', // Most recently updated first
+      },
+      include: {
+        author: { // Include author to show who published it
+          include: {
+            municipalityProfile: {
+              select: { name: true }
+            }
+          }
+        }
+      }
+    });
+    res.status(200).json(alerts);
+  } catch (error) {
+    console.error('Error fetching alerts:', error);
+    res.status(500).json({ message: 'Internal server error while fetching alerts.' });
+  }
+});
+
+// POST a new alert (municipality only)
+app.post('/api/alerts', authenticateToken, async (req, res) => {
+  const { title, content } = req.body;
+  const { userId, role } = req.user;
+
+  if (role !== 'MUNICIPALITY') {
+    return res.status(403).json({ message: 'Access denied. Only municipality users can create alerts.' });
+  }
+
+  if (!title || !content) {
+    return res.status(400).json({ message: 'Title and content are required.' });
+  }
+
+  try {
+    const newAlert = await prisma.alert.create({
+      data: {
+        title,
+        content,
+        authorId: userId,
+      },
+    });
+    res.status(201).json(newAlert);
+  } catch (error) {
+    console.error('Error creating alert:', error);
+    res.status(500).json({ message: 'Internal server error while creating alert.' });
+  }
+});
+
+// PUT (update) an alert (municipality only)
+app.put('/api/alerts/:alertId', authenticateToken, async (req, res) => {
+  const { alertId } = req.params;
+  const { title, content } = req.body;
+  const { role } = req.user;
+
+  if (role !== 'MUNICIPALITY') {
+    return res.status(403).json({ message: 'Access denied. Only municipality users can update alerts.' });
+  }
+
+  if (!title || !content) {
+    return res.status(400).json({ message: 'Title and content are required for update.' });
+  }
+
+  try {
+    const updatedAlert = await prisma.alert.update({
+      where: { id: parseInt(alertId) },
+      data: {
+        title,
+        content,
+        // updated_at is handled automatically by Prisma
+      },
+    });
+    res.status(200).json(updatedAlert);
+  } catch (error) {
+    console.error(`Error updating alert ${alertId}:`, error);
+    if (error.code === 'P2025') {
+      return res.status(404).json({ message: 'Alert not found.' });
+    }
+    res.status(500).json({ message: 'Internal server error while updating alert.' });
+  }
+});
+
+// DELETE an alert (municipality only)
+app.delete('/api/alerts/:alertId', authenticateToken, async (req, res) => {
+  const { alertId } = req.params;
+  const { role } = req.user;
+
+  if (role !== 'MUNICIPALITY') {
+    return res.status(403).json({ message: 'Access denied. Only municipality users can delete alerts.' });
+  }
+
+  try {
+    await prisma.alert.delete({
+      where: { id: parseInt(alertId) },
+    });
+    res.status(204).send(); // No content
+  } catch (error) {
+    console.error(`Error deleting alert ${alertId}:`, error);
+    if (error.code === 'P2025') {
+      return res.status(404).json({ message: 'Alert not found.' });
+    }
+    res.status(500).json({ message: 'Internal server error while deleting alert.' });
   }
 });
 

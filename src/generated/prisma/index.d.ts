@@ -14,10 +14,25 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
- * Model alert
+ * Model User
  * 
  */
-export type alert = $Result.DefaultSelection<Prisma.$alertPayload>
+export type User = $Result.DefaultSelection<Prisma.$UserPayload>
+/**
+ * Model NeighborProfile
+ * 
+ */
+export type NeighborProfile = $Result.DefaultSelection<Prisma.$NeighborProfilePayload>
+/**
+ * Model MunicipalityProfile
+ * 
+ */
+export type MunicipalityProfile = $Result.DefaultSelection<Prisma.$MunicipalityProfilePayload>
+/**
+ * Model Alert
+ * 
+ */
+export type Alert = $Result.DefaultSelection<Prisma.$AlertPayload>
 /**
  * Model canton
  * 
@@ -28,16 +43,6 @@ export type canton = $Result.DefaultSelection<Prisma.$cantonPayload>
  * 
  */
 export type district = $Result.DefaultSelection<Prisma.$districtPayload>
-/**
- * Model municipality
- * 
- */
-export type municipality = $Result.DefaultSelection<Prisma.$municipalityPayload>
-/**
- * Model neighbor
- * 
- */
-export type neighbor = $Result.DefaultSelection<Prisma.$neighborPayload>
 /**
  * Model problem
  * 
@@ -55,14 +60,31 @@ export type problem_type = $Result.DefaultSelection<Prisma.$problem_typePayload>
 export type report = $Result.DefaultSelection<Prisma.$reportPayload>
 
 /**
+ * Enums
+ */
+export namespace $Enums {
+  export const Role: {
+  NEIGHBOR: 'NEIGHBOR',
+  MUNICIPALITY: 'MUNICIPALITY'
+};
+
+export type Role = (typeof Role)[keyof typeof Role]
+
+}
+
+export type Role = $Enums.Role
+
+export const Role: typeof $Enums.Role
+
+/**
  * ##  Prisma Client ʲˢ
  *
  * Type-safe database client for TypeScript & Node.js
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Alerts
- * const alerts = await prisma.alert.findMany()
+ * // Fetch zero or more Users
+ * const users = await prisma.user.findMany()
  * ```
  *
  *
@@ -82,8 +104,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Alerts
-   * const alerts = await prisma.alert.findMany()
+   * // Fetch zero or more Users
+   * const users = await prisma.user.findMany()
    * ```
    *
    *
@@ -180,14 +202,44 @@ export class PrismaClient<
   }>>
 
       /**
-   * `prisma.alert`: Exposes CRUD operations for the **alert** model.
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
+    * ```
+    */
+  get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.neighborProfile`: Exposes CRUD operations for the **NeighborProfile** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more NeighborProfiles
+    * const neighborProfiles = await prisma.neighborProfile.findMany()
+    * ```
+    */
+  get neighborProfile(): Prisma.NeighborProfileDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.municipalityProfile`: Exposes CRUD operations for the **MunicipalityProfile** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MunicipalityProfiles
+    * const municipalityProfiles = await prisma.municipalityProfile.findMany()
+    * ```
+    */
+  get municipalityProfile(): Prisma.MunicipalityProfileDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.alert`: Exposes CRUD operations for the **Alert** model.
     * Example usage:
     * ```ts
     * // Fetch zero or more Alerts
     * const alerts = await prisma.alert.findMany()
     * ```
     */
-  get alert(): Prisma.alertDelegate<ExtArgs, ClientOptions>;
+  get alert(): Prisma.AlertDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.canton`: Exposes CRUD operations for the **canton** model.
@@ -208,26 +260,6 @@ export class PrismaClient<
     * ```
     */
   get district(): Prisma.districtDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.municipality`: Exposes CRUD operations for the **municipality** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Municipalities
-    * const municipalities = await prisma.municipality.findMany()
-    * ```
-    */
-  get municipality(): Prisma.municipalityDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.neighbor`: Exposes CRUD operations for the **neighbor** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Neighbors
-    * const neighbors = await prisma.neighbor.findMany()
-    * ```
-    */
-  get neighbor(): Prisma.neighborDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.problem`: Exposes CRUD operations for the **problem** model.
@@ -698,11 +730,12 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    alert: 'alert',
+    User: 'User',
+    NeighborProfile: 'NeighborProfile',
+    MunicipalityProfile: 'MunicipalityProfile',
+    Alert: 'Alert',
     canton: 'canton',
     district: 'district',
-    municipality: 'municipality',
-    neighbor: 'neighbor',
     problem: 'problem',
     problem_type: 'problem_type',
     report: 'report'
@@ -724,80 +757,302 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "alert" | "canton" | "district" | "municipality" | "neighbor" | "problem" | "problem_type" | "report"
+      modelProps: "user" | "neighborProfile" | "municipalityProfile" | "alert" | "canton" | "district" | "problem" | "problem_type" | "report"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
-      alert: {
-        payload: Prisma.$alertPayload<ExtArgs>
-        fields: Prisma.alertFieldRefs
+      User: {
+        payload: Prisma.$UserPayload<ExtArgs>
+        fields: Prisma.UserFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.alertFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$alertPayload> | null
+            args: Prisma.UserFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.alertFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$alertPayload>
+            args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           findFirst: {
-            args: Prisma.alertFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$alertPayload> | null
+            args: Prisma.UserFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.alertFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$alertPayload>
+            args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           findMany: {
-            args: Prisma.alertFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$alertPayload>[]
+            args: Prisma.UserFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           create: {
-            args: Prisma.alertCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$alertPayload>
+            args: Prisma.UserCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           createMany: {
-            args: Prisma.alertCreateManyArgs<ExtArgs>
+            args: Prisma.UserCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.alertCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$alertPayload>[]
+            args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           delete: {
-            args: Prisma.alertDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$alertPayload>
+            args: Prisma.UserDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           update: {
-            args: Prisma.alertUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$alertPayload>
+            args: Prisma.UserUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
           }
           deleteMany: {
-            args: Prisma.alertDeleteManyArgs<ExtArgs>
+            args: Prisma.UserDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.alertUpdateManyArgs<ExtArgs>
+            args: Prisma.UserUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.alertUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$alertPayload>[]
+            args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
           }
           upsert: {
-            args: Prisma.alertUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$alertPayload>
+            args: Prisma.UserUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          aggregate: {
+            args: Prisma.UserAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUser>
+          }
+          groupBy: {
+            args: Prisma.UserGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserCountArgs<ExtArgs>
+            result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      NeighborProfile: {
+        payload: Prisma.$NeighborProfilePayload<ExtArgs>
+        fields: Prisma.NeighborProfileFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.NeighborProfileFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NeighborProfilePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.NeighborProfileFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NeighborProfilePayload>
+          }
+          findFirst: {
+            args: Prisma.NeighborProfileFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NeighborProfilePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.NeighborProfileFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NeighborProfilePayload>
+          }
+          findMany: {
+            args: Prisma.NeighborProfileFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NeighborProfilePayload>[]
+          }
+          create: {
+            args: Prisma.NeighborProfileCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NeighborProfilePayload>
+          }
+          createMany: {
+            args: Prisma.NeighborProfileCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.NeighborProfileCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NeighborProfilePayload>[]
+          }
+          delete: {
+            args: Prisma.NeighborProfileDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NeighborProfilePayload>
+          }
+          update: {
+            args: Prisma.NeighborProfileUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NeighborProfilePayload>
+          }
+          deleteMany: {
+            args: Prisma.NeighborProfileDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.NeighborProfileUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.NeighborProfileUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NeighborProfilePayload>[]
+          }
+          upsert: {
+            args: Prisma.NeighborProfileUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NeighborProfilePayload>
+          }
+          aggregate: {
+            args: Prisma.NeighborProfileAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateNeighborProfile>
+          }
+          groupBy: {
+            args: Prisma.NeighborProfileGroupByArgs<ExtArgs>
+            result: $Utils.Optional<NeighborProfileGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.NeighborProfileCountArgs<ExtArgs>
+            result: $Utils.Optional<NeighborProfileCountAggregateOutputType> | number
+          }
+        }
+      }
+      MunicipalityProfile: {
+        payload: Prisma.$MunicipalityProfilePayload<ExtArgs>
+        fields: Prisma.MunicipalityProfileFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MunicipalityProfileFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MunicipalityProfilePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MunicipalityProfileFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MunicipalityProfilePayload>
+          }
+          findFirst: {
+            args: Prisma.MunicipalityProfileFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MunicipalityProfilePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MunicipalityProfileFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MunicipalityProfilePayload>
+          }
+          findMany: {
+            args: Prisma.MunicipalityProfileFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MunicipalityProfilePayload>[]
+          }
+          create: {
+            args: Prisma.MunicipalityProfileCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MunicipalityProfilePayload>
+          }
+          createMany: {
+            args: Prisma.MunicipalityProfileCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MunicipalityProfileCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MunicipalityProfilePayload>[]
+          }
+          delete: {
+            args: Prisma.MunicipalityProfileDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MunicipalityProfilePayload>
+          }
+          update: {
+            args: Prisma.MunicipalityProfileUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MunicipalityProfilePayload>
+          }
+          deleteMany: {
+            args: Prisma.MunicipalityProfileDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MunicipalityProfileUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MunicipalityProfileUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MunicipalityProfilePayload>[]
+          }
+          upsert: {
+            args: Prisma.MunicipalityProfileUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MunicipalityProfilePayload>
+          }
+          aggregate: {
+            args: Prisma.MunicipalityProfileAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMunicipalityProfile>
+          }
+          groupBy: {
+            args: Prisma.MunicipalityProfileGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MunicipalityProfileGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MunicipalityProfileCountArgs<ExtArgs>
+            result: $Utils.Optional<MunicipalityProfileCountAggregateOutputType> | number
+          }
+        }
+      }
+      Alert: {
+        payload: Prisma.$AlertPayload<ExtArgs>
+        fields: Prisma.AlertFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AlertFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AlertPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AlertFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AlertPayload>
+          }
+          findFirst: {
+            args: Prisma.AlertFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AlertPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AlertFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AlertPayload>
+          }
+          findMany: {
+            args: Prisma.AlertFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AlertPayload>[]
+          }
+          create: {
+            args: Prisma.AlertCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AlertPayload>
+          }
+          createMany: {
+            args: Prisma.AlertCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AlertCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AlertPayload>[]
+          }
+          delete: {
+            args: Prisma.AlertDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AlertPayload>
+          }
+          update: {
+            args: Prisma.AlertUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AlertPayload>
+          }
+          deleteMany: {
+            args: Prisma.AlertDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AlertUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AlertUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AlertPayload>[]
+          }
+          upsert: {
+            args: Prisma.AlertUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AlertPayload>
           }
           aggregate: {
             args: Prisma.AlertAggregateArgs<ExtArgs>
             result: $Utils.Optional<AggregateAlert>
           }
           groupBy: {
-            args: Prisma.alertGroupByArgs<ExtArgs>
+            args: Prisma.AlertGroupByArgs<ExtArgs>
             result: $Utils.Optional<AlertGroupByOutputType>[]
           }
           count: {
-            args: Prisma.alertCountArgs<ExtArgs>
+            args: Prisma.AlertCountArgs<ExtArgs>
             result: $Utils.Optional<AlertCountAggregateOutputType> | number
           }
         }
@@ -947,154 +1202,6 @@ export namespace Prisma {
           count: {
             args: Prisma.districtCountArgs<ExtArgs>
             result: $Utils.Optional<DistrictCountAggregateOutputType> | number
-          }
-        }
-      }
-      municipality: {
-        payload: Prisma.$municipalityPayload<ExtArgs>
-        fields: Prisma.municipalityFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.municipalityFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$municipalityPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.municipalityFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$municipalityPayload>
-          }
-          findFirst: {
-            args: Prisma.municipalityFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$municipalityPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.municipalityFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$municipalityPayload>
-          }
-          findMany: {
-            args: Prisma.municipalityFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$municipalityPayload>[]
-          }
-          create: {
-            args: Prisma.municipalityCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$municipalityPayload>
-          }
-          createMany: {
-            args: Prisma.municipalityCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.municipalityCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$municipalityPayload>[]
-          }
-          delete: {
-            args: Prisma.municipalityDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$municipalityPayload>
-          }
-          update: {
-            args: Prisma.municipalityUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$municipalityPayload>
-          }
-          deleteMany: {
-            args: Prisma.municipalityDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.municipalityUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.municipalityUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$municipalityPayload>[]
-          }
-          upsert: {
-            args: Prisma.municipalityUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$municipalityPayload>
-          }
-          aggregate: {
-            args: Prisma.MunicipalityAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateMunicipality>
-          }
-          groupBy: {
-            args: Prisma.municipalityGroupByArgs<ExtArgs>
-            result: $Utils.Optional<MunicipalityGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.municipalityCountArgs<ExtArgs>
-            result: $Utils.Optional<MunicipalityCountAggregateOutputType> | number
-          }
-        }
-      }
-      neighbor: {
-        payload: Prisma.$neighborPayload<ExtArgs>
-        fields: Prisma.neighborFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.neighborFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$neighborPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.neighborFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$neighborPayload>
-          }
-          findFirst: {
-            args: Prisma.neighborFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$neighborPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.neighborFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$neighborPayload>
-          }
-          findMany: {
-            args: Prisma.neighborFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$neighborPayload>[]
-          }
-          create: {
-            args: Prisma.neighborCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$neighborPayload>
-          }
-          createMany: {
-            args: Prisma.neighborCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.neighborCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$neighborPayload>[]
-          }
-          delete: {
-            args: Prisma.neighborDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$neighborPayload>
-          }
-          update: {
-            args: Prisma.neighborUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$neighborPayload>
-          }
-          deleteMany: {
-            args: Prisma.neighborDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.neighborUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.neighborUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$neighborPayload>[]
-          }
-          upsert: {
-            args: Prisma.neighborUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$neighborPayload>
-          }
-          aggregate: {
-            args: Prisma.NeighborAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateNeighbor>
-          }
-          groupBy: {
-            args: Prisma.neighborGroupByArgs<ExtArgs>
-            result: $Utils.Optional<NeighborGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.neighborCountArgs<ExtArgs>
-            result: $Utils.Optional<NeighborCountAggregateOutputType> | number
           }
         }
       }
@@ -1404,11 +1511,12 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
-    alert?: alertOmit
+    user?: UserOmit
+    neighborProfile?: NeighborProfileOmit
+    municipalityProfile?: MunicipalityProfileOmit
+    alert?: AlertOmit
     canton?: cantonOmit
     district?: districtOmit
-    municipality?: municipalityOmit
-    neighbor?: neighborOmit
     problem?: problemOmit
     problem_type?: problem_typeOmit
     report?: reportOmit
@@ -1502,6 +1610,46 @@ export namespace Prisma {
 
 
   /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    alerts: number
+    reports: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    alerts?: boolean | UserCountOutputTypeCountAlertsArgs
+    reports?: boolean | UserCountOutputTypeCountReportsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountAlertsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AlertWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: reportWhereInput
+  }
+
+
+  /**
    * Count Type CantonCountOutputType
    */
 
@@ -1573,68 +1721,6 @@ export namespace Prisma {
 
 
   /**
-   * Count Type MunicipalityCountOutputType
-   */
-
-  export type MunicipalityCountOutputType = {
-    alert: number
-  }
-
-  export type MunicipalityCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    alert?: boolean | MunicipalityCountOutputTypeCountAlertArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * MunicipalityCountOutputType without action
-   */
-  export type MunicipalityCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the MunicipalityCountOutputType
-     */
-    select?: MunicipalityCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * MunicipalityCountOutputType without action
-   */
-  export type MunicipalityCountOutputTypeCountAlertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: alertWhereInput
-  }
-
-
-  /**
-   * Count Type NeighborCountOutputType
-   */
-
-  export type NeighborCountOutputType = {
-    report: number
-  }
-
-  export type NeighborCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    report?: boolean | NeighborCountOutputTypeCountReportArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * NeighborCountOutputType without action
-   */
-  export type NeighborCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the NeighborCountOutputType
-     */
-    select?: NeighborCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * NeighborCountOutputType without action
-   */
-  export type NeighborCountOutputTypeCountReportArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: reportWhereInput
-  }
-
-
-  /**
    * Count Type ProblemCountOutputType
    */
 
@@ -1701,401 +1787,390 @@ export namespace Prisma {
    */
 
   /**
-   * Model alert
+   * Model User
    */
 
-  export type AggregateAlert = {
-    _count: AlertCountAggregateOutputType | null
-    _avg: AlertAvgAggregateOutputType | null
-    _sum: AlertSumAggregateOutputType | null
-    _min: AlertMinAggregateOutputType | null
-    _max: AlertMaxAggregateOutputType | null
+  export type AggregateUser = {
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
   }
 
-  export type AlertAvgAggregateOutputType = {
-    alert_id: number | null
-    muni_id: number | null
+  export type UserAvgAggregateOutputType = {
+    id: number | null
   }
 
-  export type AlertSumAggregateOutputType = {
-    alert_id: number | null
-    muni_id: number | null
+  export type UserSumAggregateOutputType = {
+    id: number | null
   }
 
-  export type AlertMinAggregateOutputType = {
-    alert_id: number | null
-    muni_id: number | null
-    alert_title: string | null
-    alert_date: Date | null
-    alert_time: Date | null
-    description: string | null
+  export type UserMinAggregateOutputType = {
+    id: number | null
+    email: string | null
+    password: string | null
+    role: $Enums.Role | null
+    created_at: Date | null
   }
 
-  export type AlertMaxAggregateOutputType = {
-    alert_id: number | null
-    muni_id: number | null
-    alert_title: string | null
-    alert_date: Date | null
-    alert_time: Date | null
-    description: string | null
+  export type UserMaxAggregateOutputType = {
+    id: number | null
+    email: string | null
+    password: string | null
+    role: $Enums.Role | null
+    created_at: Date | null
   }
 
-  export type AlertCountAggregateOutputType = {
-    alert_id: number
-    muni_id: number
-    alert_title: number
-    alert_date: number
-    alert_time: number
-    description: number
+  export type UserCountAggregateOutputType = {
+    id: number
+    email: number
+    password: number
+    role: number
+    created_at: number
     _all: number
   }
 
 
-  export type AlertAvgAggregateInputType = {
-    alert_id?: true
-    muni_id?: true
+  export type UserAvgAggregateInputType = {
+    id?: true
   }
 
-  export type AlertSumAggregateInputType = {
-    alert_id?: true
-    muni_id?: true
+  export type UserSumAggregateInputType = {
+    id?: true
   }
 
-  export type AlertMinAggregateInputType = {
-    alert_id?: true
-    muni_id?: true
-    alert_title?: true
-    alert_date?: true
-    alert_time?: true
-    description?: true
+  export type UserMinAggregateInputType = {
+    id?: true
+    email?: true
+    password?: true
+    role?: true
+    created_at?: true
   }
 
-  export type AlertMaxAggregateInputType = {
-    alert_id?: true
-    muni_id?: true
-    alert_title?: true
-    alert_date?: true
-    alert_time?: true
-    description?: true
+  export type UserMaxAggregateInputType = {
+    id?: true
+    email?: true
+    password?: true
+    role?: true
+    created_at?: true
   }
 
-  export type AlertCountAggregateInputType = {
-    alert_id?: true
-    muni_id?: true
-    alert_title?: true
-    alert_date?: true
-    alert_time?: true
-    description?: true
+  export type UserCountAggregateInputType = {
+    id?: true
+    email?: true
+    password?: true
+    role?: true
+    created_at?: true
     _all?: true
   }
 
-  export type AlertAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which alert to aggregate.
+     * Filter which User to aggregate.
      */
-    where?: alertWhereInput
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of alerts to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: alertOrderByWithRelationInput | alertOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: alertWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` alerts from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` alerts.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned alerts
+     * Count returned Users
     **/
-    _count?: true | AlertCountAggregateInputType
+    _count?: true | UserCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: AlertAvgAggregateInputType
+    _avg?: UserAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: AlertSumAggregateInputType
+    _sum?: UserSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: AlertMinAggregateInputType
+    _min?: UserMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: AlertMaxAggregateInputType
+    _max?: UserMaxAggregateInputType
   }
 
-  export type GetAlertAggregateType<T extends AlertAggregateArgs> = {
-        [P in keyof T & keyof AggregateAlert]: P extends '_count' | 'count'
+  export type GetUserAggregateType<T extends UserAggregateArgs> = {
+        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateAlert[P]>
-      : GetScalarType<T[P], AggregateAlert[P]>
+        : GetScalarType<T[P], AggregateUser[P]>
+      : GetScalarType<T[P], AggregateUser[P]>
   }
 
 
 
 
-  export type alertGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: alertWhereInput
-    orderBy?: alertOrderByWithAggregationInput | alertOrderByWithAggregationInput[]
-    by: AlertScalarFieldEnum[] | AlertScalarFieldEnum
-    having?: alertScalarWhereWithAggregatesInput
+  export type UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithAggregationInput | UserOrderByWithAggregationInput[]
+    by: UserScalarFieldEnum[] | UserScalarFieldEnum
+    having?: UserScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: AlertCountAggregateInputType | true
-    _avg?: AlertAvgAggregateInputType
-    _sum?: AlertSumAggregateInputType
-    _min?: AlertMinAggregateInputType
-    _max?: AlertMaxAggregateInputType
+    _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
+    _min?: UserMinAggregateInputType
+    _max?: UserMaxAggregateInputType
   }
 
-  export type AlertGroupByOutputType = {
-    alert_id: number
-    muni_id: number | null
-    alert_title: string | null
-    alert_date: Date | null
-    alert_time: Date | null
-    description: string | null
-    _count: AlertCountAggregateOutputType | null
-    _avg: AlertAvgAggregateOutputType | null
-    _sum: AlertSumAggregateOutputType | null
-    _min: AlertMinAggregateOutputType | null
-    _max: AlertMaxAggregateOutputType | null
+  export type UserGroupByOutputType = {
+    id: number
+    email: string
+    password: string
+    role: $Enums.Role
+    created_at: Date
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
   }
 
-  type GetAlertGroupByPayload<T extends alertGroupByArgs> = Prisma.PrismaPromise<
+  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<AlertGroupByOutputType, T['by']> &
+      PickEnumerable<UserGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof AlertGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], AlertGroupByOutputType[P]>
-            : GetScalarType<T[P], AlertGroupByOutputType[P]>
+              : GetScalarType<T[P], UserGroupByOutputType[P]>
+            : GetScalarType<T[P], UserGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type alertSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    alert_id?: boolean
-    muni_id?: boolean
-    alert_title?: boolean
-    alert_date?: boolean
-    alert_time?: boolean
-    description?: boolean
-    municipality?: boolean | alert$municipalityArgs<ExtArgs>
-  }, ExtArgs["result"]["alert"]>
+  export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    password?: boolean
+    role?: boolean
+    created_at?: boolean
+    neighborProfile?: boolean | User$neighborProfileArgs<ExtArgs>
+    municipalityProfile?: boolean | User$municipalityProfileArgs<ExtArgs>
+    alerts?: boolean | User$alertsArgs<ExtArgs>
+    reports?: boolean | User$reportsArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["user"]>
 
-  export type alertSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    alert_id?: boolean
-    muni_id?: boolean
-    alert_title?: boolean
-    alert_date?: boolean
-    alert_time?: boolean
-    description?: boolean
-    municipality?: boolean | alert$municipalityArgs<ExtArgs>
-  }, ExtArgs["result"]["alert"]>
+  export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    password?: boolean
+    role?: boolean
+    created_at?: boolean
+  }, ExtArgs["result"]["user"]>
 
-  export type alertSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    alert_id?: boolean
-    muni_id?: boolean
-    alert_title?: boolean
-    alert_date?: boolean
-    alert_time?: boolean
-    description?: boolean
-    municipality?: boolean | alert$municipalityArgs<ExtArgs>
-  }, ExtArgs["result"]["alert"]>
+  export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    password?: boolean
+    role?: boolean
+    created_at?: boolean
+  }, ExtArgs["result"]["user"]>
 
-  export type alertSelectScalar = {
-    alert_id?: boolean
-    muni_id?: boolean
-    alert_title?: boolean
-    alert_date?: boolean
-    alert_time?: boolean
-    description?: boolean
+  export type UserSelectScalar = {
+    id?: boolean
+    email?: boolean
+    password?: boolean
+    role?: boolean
+    created_at?: boolean
   }
 
-  export type alertOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"alert_id" | "muni_id" | "alert_title" | "alert_date" | "alert_time" | "description", ExtArgs["result"]["alert"]>
-  export type alertInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    municipality?: boolean | alert$municipalityArgs<ExtArgs>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "role" | "created_at", ExtArgs["result"]["user"]>
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    neighborProfile?: boolean | User$neighborProfileArgs<ExtArgs>
+    municipalityProfile?: boolean | User$municipalityProfileArgs<ExtArgs>
+    alerts?: boolean | User$alertsArgs<ExtArgs>
+    reports?: boolean | User$reportsArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type alertIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    municipality?: boolean | alert$municipalityArgs<ExtArgs>
-  }
-  export type alertIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    municipality?: boolean | alert$municipalityArgs<ExtArgs>
-  }
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
-  export type $alertPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "alert"
+  export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "User"
     objects: {
-      municipality: Prisma.$municipalityPayload<ExtArgs> | null
+      neighborProfile: Prisma.$NeighborProfilePayload<ExtArgs> | null
+      municipalityProfile: Prisma.$MunicipalityProfilePayload<ExtArgs> | null
+      alerts: Prisma.$AlertPayload<ExtArgs>[]
+      reports: Prisma.$reportPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      alert_id: number
-      muni_id: number | null
-      alert_title: string | null
-      alert_date: Date | null
-      alert_time: Date | null
-      description: string | null
-    }, ExtArgs["result"]["alert"]>
+      id: number
+      email: string
+      password: string
+      role: $Enums.Role
+      created_at: Date
+    }, ExtArgs["result"]["user"]>
     composites: {}
   }
 
-  type alertGetPayload<S extends boolean | null | undefined | alertDefaultArgs> = $Result.GetResult<Prisma.$alertPayload, S>
+  type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
 
-  type alertCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<alertFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: AlertCountAggregateInputType | true
+  type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserCountAggregateInputType | true
     }
 
-  export interface alertDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['alert'], meta: { name: 'alert' } }
+  export interface UserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['User'], meta: { name: 'User' } }
     /**
-     * Find zero or one Alert that matches the filter.
-     * @param {alertFindUniqueArgs} args - Arguments to find a Alert
+     * Find zero or one User that matches the filter.
+     * @param {UserFindUniqueArgs} args - Arguments to find a User
      * @example
-     * // Get one Alert
-     * const alert = await prisma.alert.findUnique({
+     * // Get one User
+     * const user = await prisma.user.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends alertFindUniqueArgs>(args: SelectSubset<T, alertFindUniqueArgs<ExtArgs>>): Prisma__alertClient<$Result.GetResult<Prisma.$alertPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends UserFindUniqueArgs>(args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Alert that matches the filter or throw an error with `error.code='P2025'`
+     * Find one User that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {alertFindUniqueOrThrowArgs} args - Arguments to find a Alert
+     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
      * @example
-     * // Get one Alert
-     * const alert = await prisma.alert.findUniqueOrThrow({
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends alertFindUniqueOrThrowArgs>(args: SelectSubset<T, alertFindUniqueOrThrowArgs<ExtArgs>>): Prisma__alertClient<$Result.GetResult<Prisma.$alertPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Alert that matches the filter.
+     * Find the first User that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {alertFindFirstArgs} args - Arguments to find a Alert
+     * @param {UserFindFirstArgs} args - Arguments to find a User
      * @example
-     * // Get one Alert
-     * const alert = await prisma.alert.findFirst({
+     * // Get one User
+     * const user = await prisma.user.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends alertFindFirstArgs>(args?: SelectSubset<T, alertFindFirstArgs<ExtArgs>>): Prisma__alertClient<$Result.GetResult<Prisma.$alertPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends UserFindFirstArgs>(args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Alert that matches the filter or
+     * Find the first User that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {alertFindFirstOrThrowArgs} args - Arguments to find a Alert
+     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
      * @example
-     * // Get one Alert
-     * const alert = await prisma.alert.findFirstOrThrow({
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends alertFindFirstOrThrowArgs>(args?: SelectSubset<T, alertFindFirstOrThrowArgs<ExtArgs>>): Prisma__alertClient<$Result.GetResult<Prisma.$alertPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Alerts that matches the filter.
+     * Find zero or more Users that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {alertFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {UserFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Alerts
-     * const alerts = await prisma.alert.findMany()
+     * // Get all Users
+     * const users = await prisma.user.findMany()
      * 
-     * // Get first 10 Alerts
-     * const alerts = await prisma.alert.findMany({ take: 10 })
+     * // Get first 10 Users
+     * const users = await prisma.user.findMany({ take: 10 })
      * 
-     * // Only select the `alert_id`
-     * const alertWithAlert_idOnly = await prisma.alert.findMany({ select: { alert_id: true } })
+     * // Only select the `id`
+     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends alertFindManyArgs>(args?: SelectSubset<T, alertFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$alertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends UserFindManyArgs>(args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Alert.
-     * @param {alertCreateArgs} args - Arguments to create a Alert.
+     * Create a User.
+     * @param {UserCreateArgs} args - Arguments to create a User.
      * @example
-     * // Create one Alert
-     * const Alert = await prisma.alert.create({
+     * // Create one User
+     * const User = await prisma.user.create({
      *   data: {
-     *     // ... data to create a Alert
+     *     // ... data to create a User
      *   }
      * })
      * 
      */
-    create<T extends alertCreateArgs>(args: SelectSubset<T, alertCreateArgs<ExtArgs>>): Prisma__alertClient<$Result.GetResult<Prisma.$alertPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends UserCreateArgs>(args: SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Alerts.
-     * @param {alertCreateManyArgs} args - Arguments to create many Alerts.
+     * Create many Users.
+     * @param {UserCreateManyArgs} args - Arguments to create many Users.
      * @example
-     * // Create many Alerts
-     * const alert = await prisma.alert.createMany({
+     * // Create many Users
+     * const user = await prisma.user.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends alertCreateManyArgs>(args?: SelectSubset<T, alertCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends UserCreateManyArgs>(args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Alerts and returns the data saved in the database.
-     * @param {alertCreateManyAndReturnArgs} args - Arguments to create many Alerts.
+     * Create many Users and returns the data saved in the database.
+     * @param {UserCreateManyAndReturnArgs} args - Arguments to create many Users.
      * @example
-     * // Create many Alerts
-     * const alert = await prisma.alert.createManyAndReturn({
+     * // Create many Users
+     * const user = await prisma.user.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Alerts and only return the `alert_id`
-     * const alertWithAlert_idOnly = await prisma.alert.createManyAndReturn({
-     *   select: { alert_id: true },
+     * // Create many Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.createManyAndReturn({
+     *   select: { id: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -2104,28 +2179,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends alertCreateManyAndReturnArgs>(args?: SelectSubset<T, alertCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$alertPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends UserCreateManyAndReturnArgs>(args?: SelectSubset<T, UserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Alert.
-     * @param {alertDeleteArgs} args - Arguments to delete one Alert.
+     * Delete a User.
+     * @param {UserDeleteArgs} args - Arguments to delete one User.
      * @example
-     * // Delete one Alert
-     * const Alert = await prisma.alert.delete({
+     * // Delete one User
+     * const User = await prisma.user.delete({
      *   where: {
-     *     // ... filter to delete one Alert
+     *     // ... filter to delete one User
      *   }
      * })
      * 
      */
-    delete<T extends alertDeleteArgs>(args: SelectSubset<T, alertDeleteArgs<ExtArgs>>): Prisma__alertClient<$Result.GetResult<Prisma.$alertPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends UserDeleteArgs>(args: SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Alert.
-     * @param {alertUpdateArgs} args - Arguments to update one Alert.
+     * Update one User.
+     * @param {UserUpdateArgs} args - Arguments to update one User.
      * @example
-     * // Update one Alert
-     * const alert = await prisma.alert.update({
+     * // Update one User
+     * const user = await prisma.user.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2135,30 +2210,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends alertUpdateArgs>(args: SelectSubset<T, alertUpdateArgs<ExtArgs>>): Prisma__alertClient<$Result.GetResult<Prisma.$alertPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends UserUpdateArgs>(args: SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Alerts.
-     * @param {alertDeleteManyArgs} args - Arguments to filter Alerts to delete.
+     * Delete zero or more Users.
+     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
      * @example
-     * // Delete a few Alerts
-     * const { count } = await prisma.alert.deleteMany({
+     * // Delete a few Users
+     * const { count } = await prisma.user.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends alertDeleteManyArgs>(args?: SelectSubset<T, alertDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends UserDeleteManyArgs>(args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Alerts.
+     * Update zero or more Users.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {alertUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Alerts
-     * const alert = await prisma.alert.updateMany({
+     * // Update many Users
+     * const user = await prisma.user.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2168,14 +2243,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends alertUpdateManyArgs>(args: SelectSubset<T, alertUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends UserUpdateManyArgs>(args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Alerts and returns the data updated in the database.
-     * @param {alertUpdateManyAndReturnArgs} args - Arguments to update many Alerts.
+     * Update zero or more Users and returns the data updated in the database.
+     * @param {UserUpdateManyAndReturnArgs} args - Arguments to update many Users.
      * @example
-     * // Update many Alerts
-     * const alert = await prisma.alert.updateManyAndReturn({
+     * // Update many Users
+     * const user = await prisma.user.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2184,9 +2259,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Alerts and only return the `alert_id`
-     * const alertWithAlert_idOnly = await prisma.alert.updateManyAndReturn({
-     *   select: { alert_id: true },
+     * // Update zero or more Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.updateManyAndReturn({
+     *   select: { id: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2198,56 +2273,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends alertUpdateManyAndReturnArgs>(args: SelectSubset<T, alertUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$alertPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends UserUpdateManyAndReturnArgs>(args: SelectSubset<T, UserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Alert.
-     * @param {alertUpsertArgs} args - Arguments to update or create a Alert.
+     * Create or update one User.
+     * @param {UserUpsertArgs} args - Arguments to update or create a User.
      * @example
-     * // Update or create a Alert
-     * const alert = await prisma.alert.upsert({
+     * // Update or create a User
+     * const user = await prisma.user.upsert({
      *   create: {
-     *     // ... data to create a Alert
+     *     // ... data to create a User
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Alert we want to update
+     *     // ... the filter for the User we want to update
      *   }
      * })
      */
-    upsert<T extends alertUpsertArgs>(args: SelectSubset<T, alertUpsertArgs<ExtArgs>>): Prisma__alertClient<$Result.GetResult<Prisma.$alertPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends UserUpsertArgs>(args: SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Alerts.
+     * Count the number of Users.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {alertCountArgs} args - Arguments to filter Alerts to count.
+     * @param {UserCountArgs} args - Arguments to filter Users to count.
      * @example
-     * // Count the number of Alerts
-     * const count = await prisma.alert.count({
+     * // Count the number of Users
+     * const count = await prisma.user.count({
      *   where: {
-     *     // ... the filter for the Alerts we want to count
+     *     // ... the filter for the Users we want to count
      *   }
      * })
     **/
-    count<T extends alertCountArgs>(
-      args?: Subset<T, alertCountArgs>,
+    count<T extends UserCountArgs>(
+      args?: Subset<T, UserCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], AlertCountAggregateOutputType>
+          : GetScalarType<T['select'], UserCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Alert.
+     * Allows you to perform aggregations operations on a User.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {AlertAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -2267,13 +2342,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends AlertAggregateArgs>(args: Subset<T, AlertAggregateArgs>): Prisma.PrismaPromise<GetAlertAggregateType<T>>
+    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
 
     /**
-     * Group by Alert.
+     * Group by User.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {alertGroupByArgs} args - Group by arguments.
+     * @param {UserGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -2288,14 +2363,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends alertGroupByArgs,
+      T extends UserGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: alertGroupByArgs['orderBy'] }
-        : { orderBy?: alertGroupByArgs['orderBy'] },
+        ? { orderBy: UserGroupByArgs['orderBy'] }
+        : { orderBy?: UserGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -2344,22 +2419,25 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, alertGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAlertGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the alert model
+   * Fields of the User model
    */
-  readonly fields: alertFieldRefs;
+  readonly fields: UserFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for alert.
+   * The delegate class that acts as a "Promise-like" for User.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__alertClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    municipality<T extends alert$municipalityArgs<ExtArgs> = {}>(args?: Subset<T, alert$municipalityArgs<ExtArgs>>): Prisma__municipalityClient<$Result.GetResult<Prisma.$municipalityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    neighborProfile<T extends User$neighborProfileArgs<ExtArgs> = {}>(args?: Subset<T, User$neighborProfileArgs<ExtArgs>>): Prisma__NeighborProfileClient<$Result.GetResult<Prisma.$NeighborProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    municipalityProfile<T extends User$municipalityProfileArgs<ExtArgs> = {}>(args?: Subset<T, User$municipalityProfileArgs<ExtArgs>>): Prisma__MunicipalityProfileClient<$Result.GetResult<Prisma.$MunicipalityProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    alerts<T extends User$alertsArgs<ExtArgs> = {}>(args?: Subset<T, User$alertsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    reports<T extends User$reportsArgs<ExtArgs> = {}>(args?: Subset<T, User$reportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$reportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2386,445 +2464,3825 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the alert model
+   * Fields of the User model
    */
-  interface alertFieldRefs {
-    readonly alert_id: FieldRef<"alert", 'Int'>
-    readonly muni_id: FieldRef<"alert", 'Int'>
-    readonly alert_title: FieldRef<"alert", 'String'>
-    readonly alert_date: FieldRef<"alert", 'DateTime'>
-    readonly alert_time: FieldRef<"alert", 'DateTime'>
-    readonly description: FieldRef<"alert", 'String'>
+  interface UserFieldRefs {
+    readonly id: FieldRef<"User", 'Int'>
+    readonly email: FieldRef<"User", 'String'>
+    readonly password: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'Role'>
+    readonly created_at: FieldRef<"User", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * alert findUnique
+   * User findUnique
    */
-  export type alertFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the alert
+     * Select specific fields to fetch from the User
      */
-    select?: alertSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the alert
+     * Omit specific fields from the User
      */
-    omit?: alertOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: alertInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * Filter, which alert to fetch.
+     * Filter, which User to fetch.
      */
-    where: alertWhereUniqueInput
+    where: UserWhereUniqueInput
   }
 
   /**
-   * alert findUniqueOrThrow
+   * User findUniqueOrThrow
    */
-  export type alertFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the alert
+     * Select specific fields to fetch from the User
      */
-    select?: alertSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the alert
+     * Omit specific fields from the User
      */
-    omit?: alertOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: alertInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * Filter, which alert to fetch.
+     * Filter, which User to fetch.
      */
-    where: alertWhereUniqueInput
+    where: UserWhereUniqueInput
   }
 
   /**
-   * alert findFirst
+   * User findFirst
    */
-  export type alertFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the alert
+     * Select specific fields to fetch from the User
      */
-    select?: alertSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the alert
+     * Omit specific fields from the User
      */
-    omit?: alertOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: alertInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * Filter, which alert to fetch.
+     * Filter, which User to fetch.
      */
-    where?: alertWhereInput
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of alerts to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: alertOrderByWithRelationInput | alertOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for alerts.
+     * Sets the position for searching for Users.
      */
-    cursor?: alertWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` alerts from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` alerts.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of alerts.
+     * Filter by unique combinations of Users.
      */
-    distinct?: AlertScalarFieldEnum | AlertScalarFieldEnum[]
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
-   * alert findFirstOrThrow
+   * User findFirstOrThrow
    */
-  export type alertFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the alert
+     * Select specific fields to fetch from the User
      */
-    select?: alertSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the alert
+     * Omit specific fields from the User
      */
-    omit?: alertOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: alertInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * Filter, which alert to fetch.
+     * Filter, which User to fetch.
      */
-    where?: alertWhereInput
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of alerts to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: alertOrderByWithRelationInput | alertOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for alerts.
+     * Sets the position for searching for Users.
      */
-    cursor?: alertWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` alerts from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` alerts.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of alerts.
+     * Filter by unique combinations of Users.
      */
-    distinct?: AlertScalarFieldEnum | AlertScalarFieldEnum[]
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
-   * alert findMany
+   * User findMany
    */
-  export type alertFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the alert
+     * Select specific fields to fetch from the User
      */
-    select?: alertSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the alert
+     * Omit specific fields from the User
      */
-    omit?: alertOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: alertInclude<ExtArgs> | null
+    include?: UserInclude<ExtArgs> | null
     /**
-     * Filter, which alerts to fetch.
+     * Filter, which Users to fetch.
      */
-    where?: alertWhereInput
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of alerts to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: alertOrderByWithRelationInput | alertOrderByWithRelationInput[]
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing alerts.
+     * Sets the position for listing Users.
      */
-    cursor?: alertWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` alerts from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` alerts.
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User create
+   */
+  export type UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The data needed to create a User.
+     */
+    data: XOR<UserCreateInput, UserUncheckedCreateInput>
+  }
+
+  /**
+   * User createMany
+   */
+  export type UserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Users.
+     */
+    data: UserCreateManyInput | UserCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * User createManyAndReturn
+   */
+  export type UserCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data used to create many Users.
+     */
+    data: UserCreateManyInput | UserCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * User update
+   */
+  export type UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The data needed to update a User.
+     */
+    data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+    /**
+     * Choose, which User to update.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User updateMany
+   */
+  export type UserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Users.
+     */
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    /**
+     * Filter which Users to update
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * User updateManyAndReturn
+   */
+  export type UserUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data used to update Users.
+     */
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    /**
+     * Filter which Users to update
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * User upsert
+   */
+  export type UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The filter to search for the User to update in case it exists.
+     */
+    where: UserWhereUniqueInput
+    /**
+     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
+     */
+    create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    /**
+     * In case the User was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+  }
+
+  /**
+   * User delete
+   */
+  export type UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter which User to delete.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User deleteMany
+   */
+  export type UserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Users to delete
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * User.neighborProfile
+   */
+  export type User$neighborProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NeighborProfile
+     */
+    select?: NeighborProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NeighborProfile
+     */
+    omit?: NeighborProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NeighborProfileInclude<ExtArgs> | null
+    where?: NeighborProfileWhereInput
+  }
+
+  /**
+   * User.municipalityProfile
+   */
+  export type User$municipalityProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MunicipalityProfile
+     */
+    select?: MunicipalityProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MunicipalityProfile
+     */
+    omit?: MunicipalityProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MunicipalityProfileInclude<ExtArgs> | null
+    where?: MunicipalityProfileWhereInput
+  }
+
+  /**
+   * User.alerts
+   */
+  export type User$alertsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Alert
+     */
+    select?: AlertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Alert
+     */
+    omit?: AlertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AlertInclude<ExtArgs> | null
+    where?: AlertWhereInput
+    orderBy?: AlertOrderByWithRelationInput | AlertOrderByWithRelationInput[]
+    cursor?: AlertWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AlertScalarFieldEnum | AlertScalarFieldEnum[]
+  }
+
+  /**
+   * User.reports
+   */
+  export type User$reportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the report
+     */
+    select?: reportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the report
+     */
+    omit?: reportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: reportInclude<ExtArgs> | null
+    where?: reportWhereInput
+    orderBy?: reportOrderByWithRelationInput | reportOrderByWithRelationInput[]
+    cursor?: reportWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReportScalarFieldEnum | ReportScalarFieldEnum[]
+  }
+
+  /**
+   * User without action
+   */
+  export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model NeighborProfile
+   */
+
+  export type AggregateNeighborProfile = {
+    _count: NeighborProfileCountAggregateOutputType | null
+    _avg: NeighborProfileAvgAggregateOutputType | null
+    _sum: NeighborProfileSumAggregateOutputType | null
+    _min: NeighborProfileMinAggregateOutputType | null
+    _max: NeighborProfileMaxAggregateOutputType | null
+  }
+
+  export type NeighborProfileAvgAggregateOutputType = {
+    id: number | null
+    identification: number | null
+    phone_number: number | null
+    userId: number | null
+  }
+
+  export type NeighborProfileSumAggregateOutputType = {
+    id: number | null
+    identification: number | null
+    phone_number: number | null
+    userId: number | null
+  }
+
+  export type NeighborProfileMinAggregateOutputType = {
+    id: number | null
+    first_name: string | null
+    last_name: string | null
+    second_last_name: string | null
+    identification: number | null
+    phone_number: number | null
+    userId: number | null
+  }
+
+  export type NeighborProfileMaxAggregateOutputType = {
+    id: number | null
+    first_name: string | null
+    last_name: string | null
+    second_last_name: string | null
+    identification: number | null
+    phone_number: number | null
+    userId: number | null
+  }
+
+  export type NeighborProfileCountAggregateOutputType = {
+    id: number
+    first_name: number
+    last_name: number
+    second_last_name: number
+    identification: number
+    phone_number: number
+    userId: number
+    _all: number
+  }
+
+
+  export type NeighborProfileAvgAggregateInputType = {
+    id?: true
+    identification?: true
+    phone_number?: true
+    userId?: true
+  }
+
+  export type NeighborProfileSumAggregateInputType = {
+    id?: true
+    identification?: true
+    phone_number?: true
+    userId?: true
+  }
+
+  export type NeighborProfileMinAggregateInputType = {
+    id?: true
+    first_name?: true
+    last_name?: true
+    second_last_name?: true
+    identification?: true
+    phone_number?: true
+    userId?: true
+  }
+
+  export type NeighborProfileMaxAggregateInputType = {
+    id?: true
+    first_name?: true
+    last_name?: true
+    second_last_name?: true
+    identification?: true
+    phone_number?: true
+    userId?: true
+  }
+
+  export type NeighborProfileCountAggregateInputType = {
+    id?: true
+    first_name?: true
+    last_name?: true
+    second_last_name?: true
+    identification?: true
+    phone_number?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type NeighborProfileAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which NeighborProfile to aggregate.
+     */
+    where?: NeighborProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NeighborProfiles to fetch.
+     */
+    orderBy?: NeighborProfileOrderByWithRelationInput | NeighborProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: NeighborProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NeighborProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NeighborProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned NeighborProfiles
+    **/
+    _count?: true | NeighborProfileCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: NeighborProfileAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: NeighborProfileSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: NeighborProfileMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: NeighborProfileMaxAggregateInputType
+  }
+
+  export type GetNeighborProfileAggregateType<T extends NeighborProfileAggregateArgs> = {
+        [P in keyof T & keyof AggregateNeighborProfile]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateNeighborProfile[P]>
+      : GetScalarType<T[P], AggregateNeighborProfile[P]>
+  }
+
+
+
+
+  export type NeighborProfileGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NeighborProfileWhereInput
+    orderBy?: NeighborProfileOrderByWithAggregationInput | NeighborProfileOrderByWithAggregationInput[]
+    by: NeighborProfileScalarFieldEnum[] | NeighborProfileScalarFieldEnum
+    having?: NeighborProfileScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: NeighborProfileCountAggregateInputType | true
+    _avg?: NeighborProfileAvgAggregateInputType
+    _sum?: NeighborProfileSumAggregateInputType
+    _min?: NeighborProfileMinAggregateInputType
+    _max?: NeighborProfileMaxAggregateInputType
+  }
+
+  export type NeighborProfileGroupByOutputType = {
+    id: number
+    first_name: string
+    last_name: string
+    second_last_name: string | null
+    identification: number
+    phone_number: number | null
+    userId: number
+    _count: NeighborProfileCountAggregateOutputType | null
+    _avg: NeighborProfileAvgAggregateOutputType | null
+    _sum: NeighborProfileSumAggregateOutputType | null
+    _min: NeighborProfileMinAggregateOutputType | null
+    _max: NeighborProfileMaxAggregateOutputType | null
+  }
+
+  type GetNeighborProfileGroupByPayload<T extends NeighborProfileGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<NeighborProfileGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof NeighborProfileGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], NeighborProfileGroupByOutputType[P]>
+            : GetScalarType<T[P], NeighborProfileGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type NeighborProfileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    second_last_name?: boolean
+    identification?: boolean
+    phone_number?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["neighborProfile"]>
+
+  export type NeighborProfileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    second_last_name?: boolean
+    identification?: boolean
+    phone_number?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["neighborProfile"]>
+
+  export type NeighborProfileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    second_last_name?: boolean
+    identification?: boolean
+    phone_number?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["neighborProfile"]>
+
+  export type NeighborProfileSelectScalar = {
+    id?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    second_last_name?: boolean
+    identification?: boolean
+    phone_number?: boolean
+    userId?: boolean
+  }
+
+  export type NeighborProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "first_name" | "last_name" | "second_last_name" | "identification" | "phone_number" | "userId", ExtArgs["result"]["neighborProfile"]>
+  export type NeighborProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type NeighborProfileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type NeighborProfileIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $NeighborProfilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "NeighborProfile"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      first_name: string
+      last_name: string
+      second_last_name: string | null
+      identification: number
+      phone_number: number | null
+      userId: number
+    }, ExtArgs["result"]["neighborProfile"]>
+    composites: {}
+  }
+
+  type NeighborProfileGetPayload<S extends boolean | null | undefined | NeighborProfileDefaultArgs> = $Result.GetResult<Prisma.$NeighborProfilePayload, S>
+
+  type NeighborProfileCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<NeighborProfileFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: NeighborProfileCountAggregateInputType | true
+    }
+
+  export interface NeighborProfileDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['NeighborProfile'], meta: { name: 'NeighborProfile' } }
+    /**
+     * Find zero or one NeighborProfile that matches the filter.
+     * @param {NeighborProfileFindUniqueArgs} args - Arguments to find a NeighborProfile
+     * @example
+     * // Get one NeighborProfile
+     * const neighborProfile = await prisma.neighborProfile.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends NeighborProfileFindUniqueArgs>(args: SelectSubset<T, NeighborProfileFindUniqueArgs<ExtArgs>>): Prisma__NeighborProfileClient<$Result.GetResult<Prisma.$NeighborProfilePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one NeighborProfile that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {NeighborProfileFindUniqueOrThrowArgs} args - Arguments to find a NeighborProfile
+     * @example
+     * // Get one NeighborProfile
+     * const neighborProfile = await prisma.neighborProfile.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends NeighborProfileFindUniqueOrThrowArgs>(args: SelectSubset<T, NeighborProfileFindUniqueOrThrowArgs<ExtArgs>>): Prisma__NeighborProfileClient<$Result.GetResult<Prisma.$NeighborProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first NeighborProfile that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NeighborProfileFindFirstArgs} args - Arguments to find a NeighborProfile
+     * @example
+     * // Get one NeighborProfile
+     * const neighborProfile = await prisma.neighborProfile.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends NeighborProfileFindFirstArgs>(args?: SelectSubset<T, NeighborProfileFindFirstArgs<ExtArgs>>): Prisma__NeighborProfileClient<$Result.GetResult<Prisma.$NeighborProfilePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first NeighborProfile that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NeighborProfileFindFirstOrThrowArgs} args - Arguments to find a NeighborProfile
+     * @example
+     * // Get one NeighborProfile
+     * const neighborProfile = await prisma.neighborProfile.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends NeighborProfileFindFirstOrThrowArgs>(args?: SelectSubset<T, NeighborProfileFindFirstOrThrowArgs<ExtArgs>>): Prisma__NeighborProfileClient<$Result.GetResult<Prisma.$NeighborProfilePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more NeighborProfiles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NeighborProfileFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all NeighborProfiles
+     * const neighborProfiles = await prisma.neighborProfile.findMany()
+     * 
+     * // Get first 10 NeighborProfiles
+     * const neighborProfiles = await prisma.neighborProfile.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const neighborProfileWithIdOnly = await prisma.neighborProfile.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends NeighborProfileFindManyArgs>(args?: SelectSubset<T, NeighborProfileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NeighborProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a NeighborProfile.
+     * @param {NeighborProfileCreateArgs} args - Arguments to create a NeighborProfile.
+     * @example
+     * // Create one NeighborProfile
+     * const NeighborProfile = await prisma.neighborProfile.create({
+     *   data: {
+     *     // ... data to create a NeighborProfile
+     *   }
+     * })
+     * 
+     */
+    create<T extends NeighborProfileCreateArgs>(args: SelectSubset<T, NeighborProfileCreateArgs<ExtArgs>>): Prisma__NeighborProfileClient<$Result.GetResult<Prisma.$NeighborProfilePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many NeighborProfiles.
+     * @param {NeighborProfileCreateManyArgs} args - Arguments to create many NeighborProfiles.
+     * @example
+     * // Create many NeighborProfiles
+     * const neighborProfile = await prisma.neighborProfile.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends NeighborProfileCreateManyArgs>(args?: SelectSubset<T, NeighborProfileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many NeighborProfiles and returns the data saved in the database.
+     * @param {NeighborProfileCreateManyAndReturnArgs} args - Arguments to create many NeighborProfiles.
+     * @example
+     * // Create many NeighborProfiles
+     * const neighborProfile = await prisma.neighborProfile.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many NeighborProfiles and only return the `id`
+     * const neighborProfileWithIdOnly = await prisma.neighborProfile.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends NeighborProfileCreateManyAndReturnArgs>(args?: SelectSubset<T, NeighborProfileCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NeighborProfilePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a NeighborProfile.
+     * @param {NeighborProfileDeleteArgs} args - Arguments to delete one NeighborProfile.
+     * @example
+     * // Delete one NeighborProfile
+     * const NeighborProfile = await prisma.neighborProfile.delete({
+     *   where: {
+     *     // ... filter to delete one NeighborProfile
+     *   }
+     * })
+     * 
+     */
+    delete<T extends NeighborProfileDeleteArgs>(args: SelectSubset<T, NeighborProfileDeleteArgs<ExtArgs>>): Prisma__NeighborProfileClient<$Result.GetResult<Prisma.$NeighborProfilePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one NeighborProfile.
+     * @param {NeighborProfileUpdateArgs} args - Arguments to update one NeighborProfile.
+     * @example
+     * // Update one NeighborProfile
+     * const neighborProfile = await prisma.neighborProfile.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends NeighborProfileUpdateArgs>(args: SelectSubset<T, NeighborProfileUpdateArgs<ExtArgs>>): Prisma__NeighborProfileClient<$Result.GetResult<Prisma.$NeighborProfilePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more NeighborProfiles.
+     * @param {NeighborProfileDeleteManyArgs} args - Arguments to filter NeighborProfiles to delete.
+     * @example
+     * // Delete a few NeighborProfiles
+     * const { count } = await prisma.neighborProfile.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends NeighborProfileDeleteManyArgs>(args?: SelectSubset<T, NeighborProfileDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more NeighborProfiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NeighborProfileUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many NeighborProfiles
+     * const neighborProfile = await prisma.neighborProfile.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends NeighborProfileUpdateManyArgs>(args: SelectSubset<T, NeighborProfileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more NeighborProfiles and returns the data updated in the database.
+     * @param {NeighborProfileUpdateManyAndReturnArgs} args - Arguments to update many NeighborProfiles.
+     * @example
+     * // Update many NeighborProfiles
+     * const neighborProfile = await prisma.neighborProfile.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more NeighborProfiles and only return the `id`
+     * const neighborProfileWithIdOnly = await prisma.neighborProfile.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends NeighborProfileUpdateManyAndReturnArgs>(args: SelectSubset<T, NeighborProfileUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NeighborProfilePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one NeighborProfile.
+     * @param {NeighborProfileUpsertArgs} args - Arguments to update or create a NeighborProfile.
+     * @example
+     * // Update or create a NeighborProfile
+     * const neighborProfile = await prisma.neighborProfile.upsert({
+     *   create: {
+     *     // ... data to create a NeighborProfile
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the NeighborProfile we want to update
+     *   }
+     * })
+     */
+    upsert<T extends NeighborProfileUpsertArgs>(args: SelectSubset<T, NeighborProfileUpsertArgs<ExtArgs>>): Prisma__NeighborProfileClient<$Result.GetResult<Prisma.$NeighborProfilePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of NeighborProfiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NeighborProfileCountArgs} args - Arguments to filter NeighborProfiles to count.
+     * @example
+     * // Count the number of NeighborProfiles
+     * const count = await prisma.neighborProfile.count({
+     *   where: {
+     *     // ... the filter for the NeighborProfiles we want to count
+     *   }
+     * })
+    **/
+    count<T extends NeighborProfileCountArgs>(
+      args?: Subset<T, NeighborProfileCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], NeighborProfileCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a NeighborProfile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NeighborProfileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends NeighborProfileAggregateArgs>(args: Subset<T, NeighborProfileAggregateArgs>): Prisma.PrismaPromise<GetNeighborProfileAggregateType<T>>
+
+    /**
+     * Group by NeighborProfile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NeighborProfileGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends NeighborProfileGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: NeighborProfileGroupByArgs['orderBy'] }
+        : { orderBy?: NeighborProfileGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, NeighborProfileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetNeighborProfileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the NeighborProfile model
+   */
+  readonly fields: NeighborProfileFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for NeighborProfile.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__NeighborProfileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the NeighborProfile model
+   */
+  interface NeighborProfileFieldRefs {
+    readonly id: FieldRef<"NeighborProfile", 'Int'>
+    readonly first_name: FieldRef<"NeighborProfile", 'String'>
+    readonly last_name: FieldRef<"NeighborProfile", 'String'>
+    readonly second_last_name: FieldRef<"NeighborProfile", 'String'>
+    readonly identification: FieldRef<"NeighborProfile", 'Int'>
+    readonly phone_number: FieldRef<"NeighborProfile", 'Int'>
+    readonly userId: FieldRef<"NeighborProfile", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * NeighborProfile findUnique
+   */
+  export type NeighborProfileFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NeighborProfile
+     */
+    select?: NeighborProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NeighborProfile
+     */
+    omit?: NeighborProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NeighborProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which NeighborProfile to fetch.
+     */
+    where: NeighborProfileWhereUniqueInput
+  }
+
+  /**
+   * NeighborProfile findUniqueOrThrow
+   */
+  export type NeighborProfileFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NeighborProfile
+     */
+    select?: NeighborProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NeighborProfile
+     */
+    omit?: NeighborProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NeighborProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which NeighborProfile to fetch.
+     */
+    where: NeighborProfileWhereUniqueInput
+  }
+
+  /**
+   * NeighborProfile findFirst
+   */
+  export type NeighborProfileFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NeighborProfile
+     */
+    select?: NeighborProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NeighborProfile
+     */
+    omit?: NeighborProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NeighborProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which NeighborProfile to fetch.
+     */
+    where?: NeighborProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NeighborProfiles to fetch.
+     */
+    orderBy?: NeighborProfileOrderByWithRelationInput | NeighborProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for NeighborProfiles.
+     */
+    cursor?: NeighborProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NeighborProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NeighborProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of NeighborProfiles.
+     */
+    distinct?: NeighborProfileScalarFieldEnum | NeighborProfileScalarFieldEnum[]
+  }
+
+  /**
+   * NeighborProfile findFirstOrThrow
+   */
+  export type NeighborProfileFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NeighborProfile
+     */
+    select?: NeighborProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NeighborProfile
+     */
+    omit?: NeighborProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NeighborProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which NeighborProfile to fetch.
+     */
+    where?: NeighborProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NeighborProfiles to fetch.
+     */
+    orderBy?: NeighborProfileOrderByWithRelationInput | NeighborProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for NeighborProfiles.
+     */
+    cursor?: NeighborProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NeighborProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NeighborProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of NeighborProfiles.
+     */
+    distinct?: NeighborProfileScalarFieldEnum | NeighborProfileScalarFieldEnum[]
+  }
+
+  /**
+   * NeighborProfile findMany
+   */
+  export type NeighborProfileFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NeighborProfile
+     */
+    select?: NeighborProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NeighborProfile
+     */
+    omit?: NeighborProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NeighborProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which NeighborProfiles to fetch.
+     */
+    where?: NeighborProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NeighborProfiles to fetch.
+     */
+    orderBy?: NeighborProfileOrderByWithRelationInput | NeighborProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing NeighborProfiles.
+     */
+    cursor?: NeighborProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NeighborProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NeighborProfiles.
+     */
+    skip?: number
+    distinct?: NeighborProfileScalarFieldEnum | NeighborProfileScalarFieldEnum[]
+  }
+
+  /**
+   * NeighborProfile create
+   */
+  export type NeighborProfileCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NeighborProfile
+     */
+    select?: NeighborProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NeighborProfile
+     */
+    omit?: NeighborProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NeighborProfileInclude<ExtArgs> | null
+    /**
+     * The data needed to create a NeighborProfile.
+     */
+    data: XOR<NeighborProfileCreateInput, NeighborProfileUncheckedCreateInput>
+  }
+
+  /**
+   * NeighborProfile createMany
+   */
+  export type NeighborProfileCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many NeighborProfiles.
+     */
+    data: NeighborProfileCreateManyInput | NeighborProfileCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * NeighborProfile createManyAndReturn
+   */
+  export type NeighborProfileCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NeighborProfile
+     */
+    select?: NeighborProfileSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the NeighborProfile
+     */
+    omit?: NeighborProfileOmit<ExtArgs> | null
+    /**
+     * The data used to create many NeighborProfiles.
+     */
+    data: NeighborProfileCreateManyInput | NeighborProfileCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NeighborProfileIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * NeighborProfile update
+   */
+  export type NeighborProfileUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NeighborProfile
+     */
+    select?: NeighborProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NeighborProfile
+     */
+    omit?: NeighborProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NeighborProfileInclude<ExtArgs> | null
+    /**
+     * The data needed to update a NeighborProfile.
+     */
+    data: XOR<NeighborProfileUpdateInput, NeighborProfileUncheckedUpdateInput>
+    /**
+     * Choose, which NeighborProfile to update.
+     */
+    where: NeighborProfileWhereUniqueInput
+  }
+
+  /**
+   * NeighborProfile updateMany
+   */
+  export type NeighborProfileUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update NeighborProfiles.
+     */
+    data: XOR<NeighborProfileUpdateManyMutationInput, NeighborProfileUncheckedUpdateManyInput>
+    /**
+     * Filter which NeighborProfiles to update
+     */
+    where?: NeighborProfileWhereInput
+    /**
+     * Limit how many NeighborProfiles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * NeighborProfile updateManyAndReturn
+   */
+  export type NeighborProfileUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NeighborProfile
+     */
+    select?: NeighborProfileSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the NeighborProfile
+     */
+    omit?: NeighborProfileOmit<ExtArgs> | null
+    /**
+     * The data used to update NeighborProfiles.
+     */
+    data: XOR<NeighborProfileUpdateManyMutationInput, NeighborProfileUncheckedUpdateManyInput>
+    /**
+     * Filter which NeighborProfiles to update
+     */
+    where?: NeighborProfileWhereInput
+    /**
+     * Limit how many NeighborProfiles to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NeighborProfileIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * NeighborProfile upsert
+   */
+  export type NeighborProfileUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NeighborProfile
+     */
+    select?: NeighborProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NeighborProfile
+     */
+    omit?: NeighborProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NeighborProfileInclude<ExtArgs> | null
+    /**
+     * The filter to search for the NeighborProfile to update in case it exists.
+     */
+    where: NeighborProfileWhereUniqueInput
+    /**
+     * In case the NeighborProfile found by the `where` argument doesn't exist, create a new NeighborProfile with this data.
+     */
+    create: XOR<NeighborProfileCreateInput, NeighborProfileUncheckedCreateInput>
+    /**
+     * In case the NeighborProfile was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<NeighborProfileUpdateInput, NeighborProfileUncheckedUpdateInput>
+  }
+
+  /**
+   * NeighborProfile delete
+   */
+  export type NeighborProfileDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NeighborProfile
+     */
+    select?: NeighborProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NeighborProfile
+     */
+    omit?: NeighborProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NeighborProfileInclude<ExtArgs> | null
+    /**
+     * Filter which NeighborProfile to delete.
+     */
+    where: NeighborProfileWhereUniqueInput
+  }
+
+  /**
+   * NeighborProfile deleteMany
+   */
+  export type NeighborProfileDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which NeighborProfiles to delete
+     */
+    where?: NeighborProfileWhereInput
+    /**
+     * Limit how many NeighborProfiles to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * NeighborProfile without action
+   */
+  export type NeighborProfileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NeighborProfile
+     */
+    select?: NeighborProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NeighborProfile
+     */
+    omit?: NeighborProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NeighborProfileInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MunicipalityProfile
+   */
+
+  export type AggregateMunicipalityProfile = {
+    _count: MunicipalityProfileCountAggregateOutputType | null
+    _avg: MunicipalityProfileAvgAggregateOutputType | null
+    _sum: MunicipalityProfileSumAggregateOutputType | null
+    _min: MunicipalityProfileMinAggregateOutputType | null
+    _max: MunicipalityProfileMaxAggregateOutputType | null
+  }
+
+  export type MunicipalityProfileAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+  }
+
+  export type MunicipalityProfileSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+  }
+
+  export type MunicipalityProfileMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    canton: string | null
+    userId: number | null
+  }
+
+  export type MunicipalityProfileMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    canton: string | null
+    userId: number | null
+  }
+
+  export type MunicipalityProfileCountAggregateOutputType = {
+    id: number
+    name: number
+    canton: number
+    userId: number
+    _all: number
+  }
+
+
+  export type MunicipalityProfileAvgAggregateInputType = {
+    id?: true
+    userId?: true
+  }
+
+  export type MunicipalityProfileSumAggregateInputType = {
+    id?: true
+    userId?: true
+  }
+
+  export type MunicipalityProfileMinAggregateInputType = {
+    id?: true
+    name?: true
+    canton?: true
+    userId?: true
+  }
+
+  export type MunicipalityProfileMaxAggregateInputType = {
+    id?: true
+    name?: true
+    canton?: true
+    userId?: true
+  }
+
+  export type MunicipalityProfileCountAggregateInputType = {
+    id?: true
+    name?: true
+    canton?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type MunicipalityProfileAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MunicipalityProfile to aggregate.
+     */
+    where?: MunicipalityProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MunicipalityProfiles to fetch.
+     */
+    orderBy?: MunicipalityProfileOrderByWithRelationInput | MunicipalityProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MunicipalityProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MunicipalityProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MunicipalityProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MunicipalityProfiles
+    **/
+    _count?: true | MunicipalityProfileCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MunicipalityProfileAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MunicipalityProfileSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MunicipalityProfileMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MunicipalityProfileMaxAggregateInputType
+  }
+
+  export type GetMunicipalityProfileAggregateType<T extends MunicipalityProfileAggregateArgs> = {
+        [P in keyof T & keyof AggregateMunicipalityProfile]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMunicipalityProfile[P]>
+      : GetScalarType<T[P], AggregateMunicipalityProfile[P]>
+  }
+
+
+
+
+  export type MunicipalityProfileGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MunicipalityProfileWhereInput
+    orderBy?: MunicipalityProfileOrderByWithAggregationInput | MunicipalityProfileOrderByWithAggregationInput[]
+    by: MunicipalityProfileScalarFieldEnum[] | MunicipalityProfileScalarFieldEnum
+    having?: MunicipalityProfileScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MunicipalityProfileCountAggregateInputType | true
+    _avg?: MunicipalityProfileAvgAggregateInputType
+    _sum?: MunicipalityProfileSumAggregateInputType
+    _min?: MunicipalityProfileMinAggregateInputType
+    _max?: MunicipalityProfileMaxAggregateInputType
+  }
+
+  export type MunicipalityProfileGroupByOutputType = {
+    id: number
+    name: string
+    canton: string
+    userId: number
+    _count: MunicipalityProfileCountAggregateOutputType | null
+    _avg: MunicipalityProfileAvgAggregateOutputType | null
+    _sum: MunicipalityProfileSumAggregateOutputType | null
+    _min: MunicipalityProfileMinAggregateOutputType | null
+    _max: MunicipalityProfileMaxAggregateOutputType | null
+  }
+
+  type GetMunicipalityProfileGroupByPayload<T extends MunicipalityProfileGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MunicipalityProfileGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MunicipalityProfileGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MunicipalityProfileGroupByOutputType[P]>
+            : GetScalarType<T[P], MunicipalityProfileGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MunicipalityProfileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    canton?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["municipalityProfile"]>
+
+  export type MunicipalityProfileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    canton?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["municipalityProfile"]>
+
+  export type MunicipalityProfileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    canton?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["municipalityProfile"]>
+
+  export type MunicipalityProfileSelectScalar = {
+    id?: boolean
+    name?: boolean
+    canton?: boolean
+    userId?: boolean
+  }
+
+  export type MunicipalityProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "canton" | "userId", ExtArgs["result"]["municipalityProfile"]>
+  export type MunicipalityProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type MunicipalityProfileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type MunicipalityProfileIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $MunicipalityProfilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MunicipalityProfile"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+      canton: string
+      userId: number
+    }, ExtArgs["result"]["municipalityProfile"]>
+    composites: {}
+  }
+
+  type MunicipalityProfileGetPayload<S extends boolean | null | undefined | MunicipalityProfileDefaultArgs> = $Result.GetResult<Prisma.$MunicipalityProfilePayload, S>
+
+  type MunicipalityProfileCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MunicipalityProfileFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MunicipalityProfileCountAggregateInputType | true
+    }
+
+  export interface MunicipalityProfileDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MunicipalityProfile'], meta: { name: 'MunicipalityProfile' } }
+    /**
+     * Find zero or one MunicipalityProfile that matches the filter.
+     * @param {MunicipalityProfileFindUniqueArgs} args - Arguments to find a MunicipalityProfile
+     * @example
+     * // Get one MunicipalityProfile
+     * const municipalityProfile = await prisma.municipalityProfile.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MunicipalityProfileFindUniqueArgs>(args: SelectSubset<T, MunicipalityProfileFindUniqueArgs<ExtArgs>>): Prisma__MunicipalityProfileClient<$Result.GetResult<Prisma.$MunicipalityProfilePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MunicipalityProfile that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MunicipalityProfileFindUniqueOrThrowArgs} args - Arguments to find a MunicipalityProfile
+     * @example
+     * // Get one MunicipalityProfile
+     * const municipalityProfile = await prisma.municipalityProfile.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MunicipalityProfileFindUniqueOrThrowArgs>(args: SelectSubset<T, MunicipalityProfileFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MunicipalityProfileClient<$Result.GetResult<Prisma.$MunicipalityProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MunicipalityProfile that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MunicipalityProfileFindFirstArgs} args - Arguments to find a MunicipalityProfile
+     * @example
+     * // Get one MunicipalityProfile
+     * const municipalityProfile = await prisma.municipalityProfile.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MunicipalityProfileFindFirstArgs>(args?: SelectSubset<T, MunicipalityProfileFindFirstArgs<ExtArgs>>): Prisma__MunicipalityProfileClient<$Result.GetResult<Prisma.$MunicipalityProfilePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MunicipalityProfile that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MunicipalityProfileFindFirstOrThrowArgs} args - Arguments to find a MunicipalityProfile
+     * @example
+     * // Get one MunicipalityProfile
+     * const municipalityProfile = await prisma.municipalityProfile.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MunicipalityProfileFindFirstOrThrowArgs>(args?: SelectSubset<T, MunicipalityProfileFindFirstOrThrowArgs<ExtArgs>>): Prisma__MunicipalityProfileClient<$Result.GetResult<Prisma.$MunicipalityProfilePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MunicipalityProfiles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MunicipalityProfileFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MunicipalityProfiles
+     * const municipalityProfiles = await prisma.municipalityProfile.findMany()
+     * 
+     * // Get first 10 MunicipalityProfiles
+     * const municipalityProfiles = await prisma.municipalityProfile.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const municipalityProfileWithIdOnly = await prisma.municipalityProfile.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MunicipalityProfileFindManyArgs>(args?: SelectSubset<T, MunicipalityProfileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MunicipalityProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MunicipalityProfile.
+     * @param {MunicipalityProfileCreateArgs} args - Arguments to create a MunicipalityProfile.
+     * @example
+     * // Create one MunicipalityProfile
+     * const MunicipalityProfile = await prisma.municipalityProfile.create({
+     *   data: {
+     *     // ... data to create a MunicipalityProfile
+     *   }
+     * })
+     * 
+     */
+    create<T extends MunicipalityProfileCreateArgs>(args: SelectSubset<T, MunicipalityProfileCreateArgs<ExtArgs>>): Prisma__MunicipalityProfileClient<$Result.GetResult<Prisma.$MunicipalityProfilePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MunicipalityProfiles.
+     * @param {MunicipalityProfileCreateManyArgs} args - Arguments to create many MunicipalityProfiles.
+     * @example
+     * // Create many MunicipalityProfiles
+     * const municipalityProfile = await prisma.municipalityProfile.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MunicipalityProfileCreateManyArgs>(args?: SelectSubset<T, MunicipalityProfileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MunicipalityProfiles and returns the data saved in the database.
+     * @param {MunicipalityProfileCreateManyAndReturnArgs} args - Arguments to create many MunicipalityProfiles.
+     * @example
+     * // Create many MunicipalityProfiles
+     * const municipalityProfile = await prisma.municipalityProfile.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MunicipalityProfiles and only return the `id`
+     * const municipalityProfileWithIdOnly = await prisma.municipalityProfile.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MunicipalityProfileCreateManyAndReturnArgs>(args?: SelectSubset<T, MunicipalityProfileCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MunicipalityProfilePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MunicipalityProfile.
+     * @param {MunicipalityProfileDeleteArgs} args - Arguments to delete one MunicipalityProfile.
+     * @example
+     * // Delete one MunicipalityProfile
+     * const MunicipalityProfile = await prisma.municipalityProfile.delete({
+     *   where: {
+     *     // ... filter to delete one MunicipalityProfile
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MunicipalityProfileDeleteArgs>(args: SelectSubset<T, MunicipalityProfileDeleteArgs<ExtArgs>>): Prisma__MunicipalityProfileClient<$Result.GetResult<Prisma.$MunicipalityProfilePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MunicipalityProfile.
+     * @param {MunicipalityProfileUpdateArgs} args - Arguments to update one MunicipalityProfile.
+     * @example
+     * // Update one MunicipalityProfile
+     * const municipalityProfile = await prisma.municipalityProfile.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MunicipalityProfileUpdateArgs>(args: SelectSubset<T, MunicipalityProfileUpdateArgs<ExtArgs>>): Prisma__MunicipalityProfileClient<$Result.GetResult<Prisma.$MunicipalityProfilePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MunicipalityProfiles.
+     * @param {MunicipalityProfileDeleteManyArgs} args - Arguments to filter MunicipalityProfiles to delete.
+     * @example
+     * // Delete a few MunicipalityProfiles
+     * const { count } = await prisma.municipalityProfile.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MunicipalityProfileDeleteManyArgs>(args?: SelectSubset<T, MunicipalityProfileDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MunicipalityProfiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MunicipalityProfileUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MunicipalityProfiles
+     * const municipalityProfile = await prisma.municipalityProfile.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MunicipalityProfileUpdateManyArgs>(args: SelectSubset<T, MunicipalityProfileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MunicipalityProfiles and returns the data updated in the database.
+     * @param {MunicipalityProfileUpdateManyAndReturnArgs} args - Arguments to update many MunicipalityProfiles.
+     * @example
+     * // Update many MunicipalityProfiles
+     * const municipalityProfile = await prisma.municipalityProfile.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MunicipalityProfiles and only return the `id`
+     * const municipalityProfileWithIdOnly = await prisma.municipalityProfile.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MunicipalityProfileUpdateManyAndReturnArgs>(args: SelectSubset<T, MunicipalityProfileUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MunicipalityProfilePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MunicipalityProfile.
+     * @param {MunicipalityProfileUpsertArgs} args - Arguments to update or create a MunicipalityProfile.
+     * @example
+     * // Update or create a MunicipalityProfile
+     * const municipalityProfile = await prisma.municipalityProfile.upsert({
+     *   create: {
+     *     // ... data to create a MunicipalityProfile
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MunicipalityProfile we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MunicipalityProfileUpsertArgs>(args: SelectSubset<T, MunicipalityProfileUpsertArgs<ExtArgs>>): Prisma__MunicipalityProfileClient<$Result.GetResult<Prisma.$MunicipalityProfilePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MunicipalityProfiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MunicipalityProfileCountArgs} args - Arguments to filter MunicipalityProfiles to count.
+     * @example
+     * // Count the number of MunicipalityProfiles
+     * const count = await prisma.municipalityProfile.count({
+     *   where: {
+     *     // ... the filter for the MunicipalityProfiles we want to count
+     *   }
+     * })
+    **/
+    count<T extends MunicipalityProfileCountArgs>(
+      args?: Subset<T, MunicipalityProfileCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MunicipalityProfileCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MunicipalityProfile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MunicipalityProfileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MunicipalityProfileAggregateArgs>(args: Subset<T, MunicipalityProfileAggregateArgs>): Prisma.PrismaPromise<GetMunicipalityProfileAggregateType<T>>
+
+    /**
+     * Group by MunicipalityProfile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MunicipalityProfileGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MunicipalityProfileGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MunicipalityProfileGroupByArgs['orderBy'] }
+        : { orderBy?: MunicipalityProfileGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MunicipalityProfileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMunicipalityProfileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MunicipalityProfile model
+   */
+  readonly fields: MunicipalityProfileFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MunicipalityProfile.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MunicipalityProfileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MunicipalityProfile model
+   */
+  interface MunicipalityProfileFieldRefs {
+    readonly id: FieldRef<"MunicipalityProfile", 'Int'>
+    readonly name: FieldRef<"MunicipalityProfile", 'String'>
+    readonly canton: FieldRef<"MunicipalityProfile", 'String'>
+    readonly userId: FieldRef<"MunicipalityProfile", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MunicipalityProfile findUnique
+   */
+  export type MunicipalityProfileFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MunicipalityProfile
+     */
+    select?: MunicipalityProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MunicipalityProfile
+     */
+    omit?: MunicipalityProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MunicipalityProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which MunicipalityProfile to fetch.
+     */
+    where: MunicipalityProfileWhereUniqueInput
+  }
+
+  /**
+   * MunicipalityProfile findUniqueOrThrow
+   */
+  export type MunicipalityProfileFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MunicipalityProfile
+     */
+    select?: MunicipalityProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MunicipalityProfile
+     */
+    omit?: MunicipalityProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MunicipalityProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which MunicipalityProfile to fetch.
+     */
+    where: MunicipalityProfileWhereUniqueInput
+  }
+
+  /**
+   * MunicipalityProfile findFirst
+   */
+  export type MunicipalityProfileFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MunicipalityProfile
+     */
+    select?: MunicipalityProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MunicipalityProfile
+     */
+    omit?: MunicipalityProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MunicipalityProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which MunicipalityProfile to fetch.
+     */
+    where?: MunicipalityProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MunicipalityProfiles to fetch.
+     */
+    orderBy?: MunicipalityProfileOrderByWithRelationInput | MunicipalityProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MunicipalityProfiles.
+     */
+    cursor?: MunicipalityProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MunicipalityProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MunicipalityProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MunicipalityProfiles.
+     */
+    distinct?: MunicipalityProfileScalarFieldEnum | MunicipalityProfileScalarFieldEnum[]
+  }
+
+  /**
+   * MunicipalityProfile findFirstOrThrow
+   */
+  export type MunicipalityProfileFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MunicipalityProfile
+     */
+    select?: MunicipalityProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MunicipalityProfile
+     */
+    omit?: MunicipalityProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MunicipalityProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which MunicipalityProfile to fetch.
+     */
+    where?: MunicipalityProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MunicipalityProfiles to fetch.
+     */
+    orderBy?: MunicipalityProfileOrderByWithRelationInput | MunicipalityProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MunicipalityProfiles.
+     */
+    cursor?: MunicipalityProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MunicipalityProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MunicipalityProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MunicipalityProfiles.
+     */
+    distinct?: MunicipalityProfileScalarFieldEnum | MunicipalityProfileScalarFieldEnum[]
+  }
+
+  /**
+   * MunicipalityProfile findMany
+   */
+  export type MunicipalityProfileFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MunicipalityProfile
+     */
+    select?: MunicipalityProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MunicipalityProfile
+     */
+    omit?: MunicipalityProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MunicipalityProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which MunicipalityProfiles to fetch.
+     */
+    where?: MunicipalityProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MunicipalityProfiles to fetch.
+     */
+    orderBy?: MunicipalityProfileOrderByWithRelationInput | MunicipalityProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MunicipalityProfiles.
+     */
+    cursor?: MunicipalityProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MunicipalityProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MunicipalityProfiles.
+     */
+    skip?: number
+    distinct?: MunicipalityProfileScalarFieldEnum | MunicipalityProfileScalarFieldEnum[]
+  }
+
+  /**
+   * MunicipalityProfile create
+   */
+  export type MunicipalityProfileCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MunicipalityProfile
+     */
+    select?: MunicipalityProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MunicipalityProfile
+     */
+    omit?: MunicipalityProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MunicipalityProfileInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MunicipalityProfile.
+     */
+    data: XOR<MunicipalityProfileCreateInput, MunicipalityProfileUncheckedCreateInput>
+  }
+
+  /**
+   * MunicipalityProfile createMany
+   */
+  export type MunicipalityProfileCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MunicipalityProfiles.
+     */
+    data: MunicipalityProfileCreateManyInput | MunicipalityProfileCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MunicipalityProfile createManyAndReturn
+   */
+  export type MunicipalityProfileCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MunicipalityProfile
+     */
+    select?: MunicipalityProfileSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MunicipalityProfile
+     */
+    omit?: MunicipalityProfileOmit<ExtArgs> | null
+    /**
+     * The data used to create many MunicipalityProfiles.
+     */
+    data: MunicipalityProfileCreateManyInput | MunicipalityProfileCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MunicipalityProfileIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MunicipalityProfile update
+   */
+  export type MunicipalityProfileUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MunicipalityProfile
+     */
+    select?: MunicipalityProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MunicipalityProfile
+     */
+    omit?: MunicipalityProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MunicipalityProfileInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MunicipalityProfile.
+     */
+    data: XOR<MunicipalityProfileUpdateInput, MunicipalityProfileUncheckedUpdateInput>
+    /**
+     * Choose, which MunicipalityProfile to update.
+     */
+    where: MunicipalityProfileWhereUniqueInput
+  }
+
+  /**
+   * MunicipalityProfile updateMany
+   */
+  export type MunicipalityProfileUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MunicipalityProfiles.
+     */
+    data: XOR<MunicipalityProfileUpdateManyMutationInput, MunicipalityProfileUncheckedUpdateManyInput>
+    /**
+     * Filter which MunicipalityProfiles to update
+     */
+    where?: MunicipalityProfileWhereInput
+    /**
+     * Limit how many MunicipalityProfiles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MunicipalityProfile updateManyAndReturn
+   */
+  export type MunicipalityProfileUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MunicipalityProfile
+     */
+    select?: MunicipalityProfileSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MunicipalityProfile
+     */
+    omit?: MunicipalityProfileOmit<ExtArgs> | null
+    /**
+     * The data used to update MunicipalityProfiles.
+     */
+    data: XOR<MunicipalityProfileUpdateManyMutationInput, MunicipalityProfileUncheckedUpdateManyInput>
+    /**
+     * Filter which MunicipalityProfiles to update
+     */
+    where?: MunicipalityProfileWhereInput
+    /**
+     * Limit how many MunicipalityProfiles to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MunicipalityProfileIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MunicipalityProfile upsert
+   */
+  export type MunicipalityProfileUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MunicipalityProfile
+     */
+    select?: MunicipalityProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MunicipalityProfile
+     */
+    omit?: MunicipalityProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MunicipalityProfileInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MunicipalityProfile to update in case it exists.
+     */
+    where: MunicipalityProfileWhereUniqueInput
+    /**
+     * In case the MunicipalityProfile found by the `where` argument doesn't exist, create a new MunicipalityProfile with this data.
+     */
+    create: XOR<MunicipalityProfileCreateInput, MunicipalityProfileUncheckedCreateInput>
+    /**
+     * In case the MunicipalityProfile was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MunicipalityProfileUpdateInput, MunicipalityProfileUncheckedUpdateInput>
+  }
+
+  /**
+   * MunicipalityProfile delete
+   */
+  export type MunicipalityProfileDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MunicipalityProfile
+     */
+    select?: MunicipalityProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MunicipalityProfile
+     */
+    omit?: MunicipalityProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MunicipalityProfileInclude<ExtArgs> | null
+    /**
+     * Filter which MunicipalityProfile to delete.
+     */
+    where: MunicipalityProfileWhereUniqueInput
+  }
+
+  /**
+   * MunicipalityProfile deleteMany
+   */
+  export type MunicipalityProfileDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MunicipalityProfiles to delete
+     */
+    where?: MunicipalityProfileWhereInput
+    /**
+     * Limit how many MunicipalityProfiles to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MunicipalityProfile without action
+   */
+  export type MunicipalityProfileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MunicipalityProfile
+     */
+    select?: MunicipalityProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MunicipalityProfile
+     */
+    omit?: MunicipalityProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MunicipalityProfileInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Alert
+   */
+
+  export type AggregateAlert = {
+    _count: AlertCountAggregateOutputType | null
+    _avg: AlertAvgAggregateOutputType | null
+    _sum: AlertSumAggregateOutputType | null
+    _min: AlertMinAggregateOutputType | null
+    _max: AlertMaxAggregateOutputType | null
+  }
+
+  export type AlertAvgAggregateOutputType = {
+    id: number | null
+    authorId: number | null
+  }
+
+  export type AlertSumAggregateOutputType = {
+    id: number | null
+    authorId: number | null
+  }
+
+  export type AlertMinAggregateOutputType = {
+    id: number | null
+    title: string | null
+    content: string | null
+    created_at: Date | null
+    updated_at: Date | null
+    authorId: number | null
+  }
+
+  export type AlertMaxAggregateOutputType = {
+    id: number | null
+    title: string | null
+    content: string | null
+    created_at: Date | null
+    updated_at: Date | null
+    authorId: number | null
+  }
+
+  export type AlertCountAggregateOutputType = {
+    id: number
+    title: number
+    content: number
+    created_at: number
+    updated_at: number
+    authorId: number
+    _all: number
+  }
+
+
+  export type AlertAvgAggregateInputType = {
+    id?: true
+    authorId?: true
+  }
+
+  export type AlertSumAggregateInputType = {
+    id?: true
+    authorId?: true
+  }
+
+  export type AlertMinAggregateInputType = {
+    id?: true
+    title?: true
+    content?: true
+    created_at?: true
+    updated_at?: true
+    authorId?: true
+  }
+
+  export type AlertMaxAggregateInputType = {
+    id?: true
+    title?: true
+    content?: true
+    created_at?: true
+    updated_at?: true
+    authorId?: true
+  }
+
+  export type AlertCountAggregateInputType = {
+    id?: true
+    title?: true
+    content?: true
+    created_at?: true
+    updated_at?: true
+    authorId?: true
+    _all?: true
+  }
+
+  export type AlertAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Alert to aggregate.
+     */
+    where?: AlertWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Alerts to fetch.
+     */
+    orderBy?: AlertOrderByWithRelationInput | AlertOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AlertWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Alerts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Alerts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Alerts
+    **/
+    _count?: true | AlertCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AlertAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AlertSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AlertMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AlertMaxAggregateInputType
+  }
+
+  export type GetAlertAggregateType<T extends AlertAggregateArgs> = {
+        [P in keyof T & keyof AggregateAlert]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAlert[P]>
+      : GetScalarType<T[P], AggregateAlert[P]>
+  }
+
+
+
+
+  export type AlertGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AlertWhereInput
+    orderBy?: AlertOrderByWithAggregationInput | AlertOrderByWithAggregationInput[]
+    by: AlertScalarFieldEnum[] | AlertScalarFieldEnum
+    having?: AlertScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AlertCountAggregateInputType | true
+    _avg?: AlertAvgAggregateInputType
+    _sum?: AlertSumAggregateInputType
+    _min?: AlertMinAggregateInputType
+    _max?: AlertMaxAggregateInputType
+  }
+
+  export type AlertGroupByOutputType = {
+    id: number
+    title: string
+    content: string
+    created_at: Date
+    updated_at: Date
+    authorId: number
+    _count: AlertCountAggregateOutputType | null
+    _avg: AlertAvgAggregateOutputType | null
+    _sum: AlertSumAggregateOutputType | null
+    _min: AlertMinAggregateOutputType | null
+    _max: AlertMaxAggregateOutputType | null
+  }
+
+  type GetAlertGroupByPayload<T extends AlertGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AlertGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AlertGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AlertGroupByOutputType[P]>
+            : GetScalarType<T[P], AlertGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AlertSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    content?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    authorId?: boolean
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["alert"]>
+
+  export type AlertSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    content?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    authorId?: boolean
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["alert"]>
+
+  export type AlertSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    content?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    authorId?: boolean
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["alert"]>
+
+  export type AlertSelectScalar = {
+    id?: boolean
+    title?: boolean
+    content?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    authorId?: boolean
+  }
+
+  export type AlertOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "created_at" | "updated_at" | "authorId", ExtArgs["result"]["alert"]>
+  export type AlertInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type AlertIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type AlertIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $AlertPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Alert"
+    objects: {
+      author: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      title: string
+      content: string
+      created_at: Date
+      updated_at: Date
+      authorId: number
+    }, ExtArgs["result"]["alert"]>
+    composites: {}
+  }
+
+  type AlertGetPayload<S extends boolean | null | undefined | AlertDefaultArgs> = $Result.GetResult<Prisma.$AlertPayload, S>
+
+  type AlertCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AlertFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AlertCountAggregateInputType | true
+    }
+
+  export interface AlertDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Alert'], meta: { name: 'Alert' } }
+    /**
+     * Find zero or one Alert that matches the filter.
+     * @param {AlertFindUniqueArgs} args - Arguments to find a Alert
+     * @example
+     * // Get one Alert
+     * const alert = await prisma.alert.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AlertFindUniqueArgs>(args: SelectSubset<T, AlertFindUniqueArgs<ExtArgs>>): Prisma__AlertClient<$Result.GetResult<Prisma.$AlertPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Alert that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AlertFindUniqueOrThrowArgs} args - Arguments to find a Alert
+     * @example
+     * // Get one Alert
+     * const alert = await prisma.alert.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AlertFindUniqueOrThrowArgs>(args: SelectSubset<T, AlertFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AlertClient<$Result.GetResult<Prisma.$AlertPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Alert that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AlertFindFirstArgs} args - Arguments to find a Alert
+     * @example
+     * // Get one Alert
+     * const alert = await prisma.alert.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AlertFindFirstArgs>(args?: SelectSubset<T, AlertFindFirstArgs<ExtArgs>>): Prisma__AlertClient<$Result.GetResult<Prisma.$AlertPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Alert that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AlertFindFirstOrThrowArgs} args - Arguments to find a Alert
+     * @example
+     * // Get one Alert
+     * const alert = await prisma.alert.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AlertFindFirstOrThrowArgs>(args?: SelectSubset<T, AlertFindFirstOrThrowArgs<ExtArgs>>): Prisma__AlertClient<$Result.GetResult<Prisma.$AlertPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Alerts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AlertFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Alerts
+     * const alerts = await prisma.alert.findMany()
+     * 
+     * // Get first 10 Alerts
+     * const alerts = await prisma.alert.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const alertWithIdOnly = await prisma.alert.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AlertFindManyArgs>(args?: SelectSubset<T, AlertFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Alert.
+     * @param {AlertCreateArgs} args - Arguments to create a Alert.
+     * @example
+     * // Create one Alert
+     * const Alert = await prisma.alert.create({
+     *   data: {
+     *     // ... data to create a Alert
+     *   }
+     * })
+     * 
+     */
+    create<T extends AlertCreateArgs>(args: SelectSubset<T, AlertCreateArgs<ExtArgs>>): Prisma__AlertClient<$Result.GetResult<Prisma.$AlertPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Alerts.
+     * @param {AlertCreateManyArgs} args - Arguments to create many Alerts.
+     * @example
+     * // Create many Alerts
+     * const alert = await prisma.alert.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AlertCreateManyArgs>(args?: SelectSubset<T, AlertCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Alerts and returns the data saved in the database.
+     * @param {AlertCreateManyAndReturnArgs} args - Arguments to create many Alerts.
+     * @example
+     * // Create many Alerts
+     * const alert = await prisma.alert.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Alerts and only return the `id`
+     * const alertWithIdOnly = await prisma.alert.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AlertCreateManyAndReturnArgs>(args?: SelectSubset<T, AlertCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AlertPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Alert.
+     * @param {AlertDeleteArgs} args - Arguments to delete one Alert.
+     * @example
+     * // Delete one Alert
+     * const Alert = await prisma.alert.delete({
+     *   where: {
+     *     // ... filter to delete one Alert
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AlertDeleteArgs>(args: SelectSubset<T, AlertDeleteArgs<ExtArgs>>): Prisma__AlertClient<$Result.GetResult<Prisma.$AlertPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Alert.
+     * @param {AlertUpdateArgs} args - Arguments to update one Alert.
+     * @example
+     * // Update one Alert
+     * const alert = await prisma.alert.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AlertUpdateArgs>(args: SelectSubset<T, AlertUpdateArgs<ExtArgs>>): Prisma__AlertClient<$Result.GetResult<Prisma.$AlertPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Alerts.
+     * @param {AlertDeleteManyArgs} args - Arguments to filter Alerts to delete.
+     * @example
+     * // Delete a few Alerts
+     * const { count } = await prisma.alert.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AlertDeleteManyArgs>(args?: SelectSubset<T, AlertDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Alerts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AlertUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Alerts
+     * const alert = await prisma.alert.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AlertUpdateManyArgs>(args: SelectSubset<T, AlertUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Alerts and returns the data updated in the database.
+     * @param {AlertUpdateManyAndReturnArgs} args - Arguments to update many Alerts.
+     * @example
+     * // Update many Alerts
+     * const alert = await prisma.alert.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Alerts and only return the `id`
+     * const alertWithIdOnly = await prisma.alert.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AlertUpdateManyAndReturnArgs>(args: SelectSubset<T, AlertUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AlertPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Alert.
+     * @param {AlertUpsertArgs} args - Arguments to update or create a Alert.
+     * @example
+     * // Update or create a Alert
+     * const alert = await prisma.alert.upsert({
+     *   create: {
+     *     // ... data to create a Alert
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Alert we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AlertUpsertArgs>(args: SelectSubset<T, AlertUpsertArgs<ExtArgs>>): Prisma__AlertClient<$Result.GetResult<Prisma.$AlertPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Alerts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AlertCountArgs} args - Arguments to filter Alerts to count.
+     * @example
+     * // Count the number of Alerts
+     * const count = await prisma.alert.count({
+     *   where: {
+     *     // ... the filter for the Alerts we want to count
+     *   }
+     * })
+    **/
+    count<T extends AlertCountArgs>(
+      args?: Subset<T, AlertCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AlertCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Alert.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AlertAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AlertAggregateArgs>(args: Subset<T, AlertAggregateArgs>): Prisma.PrismaPromise<GetAlertAggregateType<T>>
+
+    /**
+     * Group by Alert.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AlertGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AlertGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AlertGroupByArgs['orderBy'] }
+        : { orderBy?: AlertGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AlertGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAlertGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Alert model
+   */
+  readonly fields: AlertFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Alert.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AlertClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Alert model
+   */
+  interface AlertFieldRefs {
+    readonly id: FieldRef<"Alert", 'Int'>
+    readonly title: FieldRef<"Alert", 'String'>
+    readonly content: FieldRef<"Alert", 'String'>
+    readonly created_at: FieldRef<"Alert", 'DateTime'>
+    readonly updated_at: FieldRef<"Alert", 'DateTime'>
+    readonly authorId: FieldRef<"Alert", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Alert findUnique
+   */
+  export type AlertFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Alert
+     */
+    select?: AlertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Alert
+     */
+    omit?: AlertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AlertInclude<ExtArgs> | null
+    /**
+     * Filter, which Alert to fetch.
+     */
+    where: AlertWhereUniqueInput
+  }
+
+  /**
+   * Alert findUniqueOrThrow
+   */
+  export type AlertFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Alert
+     */
+    select?: AlertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Alert
+     */
+    omit?: AlertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AlertInclude<ExtArgs> | null
+    /**
+     * Filter, which Alert to fetch.
+     */
+    where: AlertWhereUniqueInput
+  }
+
+  /**
+   * Alert findFirst
+   */
+  export type AlertFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Alert
+     */
+    select?: AlertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Alert
+     */
+    omit?: AlertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AlertInclude<ExtArgs> | null
+    /**
+     * Filter, which Alert to fetch.
+     */
+    where?: AlertWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Alerts to fetch.
+     */
+    orderBy?: AlertOrderByWithRelationInput | AlertOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Alerts.
+     */
+    cursor?: AlertWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Alerts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Alerts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Alerts.
+     */
+    distinct?: AlertScalarFieldEnum | AlertScalarFieldEnum[]
+  }
+
+  /**
+   * Alert findFirstOrThrow
+   */
+  export type AlertFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Alert
+     */
+    select?: AlertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Alert
+     */
+    omit?: AlertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AlertInclude<ExtArgs> | null
+    /**
+     * Filter, which Alert to fetch.
+     */
+    where?: AlertWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Alerts to fetch.
+     */
+    orderBy?: AlertOrderByWithRelationInput | AlertOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Alerts.
+     */
+    cursor?: AlertWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Alerts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Alerts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Alerts.
+     */
+    distinct?: AlertScalarFieldEnum | AlertScalarFieldEnum[]
+  }
+
+  /**
+   * Alert findMany
+   */
+  export type AlertFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Alert
+     */
+    select?: AlertSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Alert
+     */
+    omit?: AlertOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AlertInclude<ExtArgs> | null
+    /**
+     * Filter, which Alerts to fetch.
+     */
+    where?: AlertWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Alerts to fetch.
+     */
+    orderBy?: AlertOrderByWithRelationInput | AlertOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Alerts.
+     */
+    cursor?: AlertWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Alerts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Alerts.
      */
     skip?: number
     distinct?: AlertScalarFieldEnum | AlertScalarFieldEnum[]
   }
 
   /**
-   * alert create
+   * Alert create
    */
-  export type alertCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AlertCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the alert
+     * Select specific fields to fetch from the Alert
      */
-    select?: alertSelect<ExtArgs> | null
+    select?: AlertSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the alert
+     * Omit specific fields from the Alert
      */
-    omit?: alertOmit<ExtArgs> | null
+    omit?: AlertOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: alertInclude<ExtArgs> | null
+    include?: AlertInclude<ExtArgs> | null
     /**
-     * The data needed to create a alert.
+     * The data needed to create a Alert.
      */
-    data?: XOR<alertCreateInput, alertUncheckedCreateInput>
+    data: XOR<AlertCreateInput, AlertUncheckedCreateInput>
   }
 
   /**
-   * alert createMany
+   * Alert createMany
    */
-  export type alertCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AlertCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many alerts.
+     * The data used to create many Alerts.
      */
-    data: alertCreateManyInput | alertCreateManyInput[]
+    data: AlertCreateManyInput | AlertCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * alert createManyAndReturn
+   * Alert createManyAndReturn
    */
-  export type alertCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AlertCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the alert
+     * Select specific fields to fetch from the Alert
      */
-    select?: alertSelectCreateManyAndReturn<ExtArgs> | null
+    select?: AlertSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the alert
+     * Omit specific fields from the Alert
      */
-    omit?: alertOmit<ExtArgs> | null
+    omit?: AlertOmit<ExtArgs> | null
     /**
-     * The data used to create many alerts.
+     * The data used to create many Alerts.
      */
-    data: alertCreateManyInput | alertCreateManyInput[]
+    data: AlertCreateManyInput | AlertCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: alertIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: AlertIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * alert update
+   * Alert update
    */
-  export type alertUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AlertUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the alert
+     * Select specific fields to fetch from the Alert
      */
-    select?: alertSelect<ExtArgs> | null
+    select?: AlertSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the alert
+     * Omit specific fields from the Alert
      */
-    omit?: alertOmit<ExtArgs> | null
+    omit?: AlertOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: alertInclude<ExtArgs> | null
+    include?: AlertInclude<ExtArgs> | null
     /**
-     * The data needed to update a alert.
+     * The data needed to update a Alert.
      */
-    data: XOR<alertUpdateInput, alertUncheckedUpdateInput>
+    data: XOR<AlertUpdateInput, AlertUncheckedUpdateInput>
     /**
-     * Choose, which alert to update.
+     * Choose, which Alert to update.
      */
-    where: alertWhereUniqueInput
+    where: AlertWhereUniqueInput
   }
 
   /**
-   * alert updateMany
+   * Alert updateMany
    */
-  export type alertUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AlertUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update alerts.
+     * The data used to update Alerts.
      */
-    data: XOR<alertUpdateManyMutationInput, alertUncheckedUpdateManyInput>
+    data: XOR<AlertUpdateManyMutationInput, AlertUncheckedUpdateManyInput>
     /**
-     * Filter which alerts to update
+     * Filter which Alerts to update
      */
-    where?: alertWhereInput
+    where?: AlertWhereInput
     /**
-     * Limit how many alerts to update.
+     * Limit how many Alerts to update.
      */
     limit?: number
   }
 
   /**
-   * alert updateManyAndReturn
+   * Alert updateManyAndReturn
    */
-  export type alertUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AlertUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the alert
+     * Select specific fields to fetch from the Alert
      */
-    select?: alertSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: AlertSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the alert
+     * Omit specific fields from the Alert
      */
-    omit?: alertOmit<ExtArgs> | null
+    omit?: AlertOmit<ExtArgs> | null
     /**
-     * The data used to update alerts.
+     * The data used to update Alerts.
      */
-    data: XOR<alertUpdateManyMutationInput, alertUncheckedUpdateManyInput>
+    data: XOR<AlertUpdateManyMutationInput, AlertUncheckedUpdateManyInput>
     /**
-     * Filter which alerts to update
+     * Filter which Alerts to update
      */
-    where?: alertWhereInput
+    where?: AlertWhereInput
     /**
-     * Limit how many alerts to update.
+     * Limit how many Alerts to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: alertIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: AlertIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * alert upsert
+   * Alert upsert
    */
-  export type alertUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AlertUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the alert
+     * Select specific fields to fetch from the Alert
      */
-    select?: alertSelect<ExtArgs> | null
+    select?: AlertSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the alert
+     * Omit specific fields from the Alert
      */
-    omit?: alertOmit<ExtArgs> | null
+    omit?: AlertOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: alertInclude<ExtArgs> | null
+    include?: AlertInclude<ExtArgs> | null
     /**
-     * The filter to search for the alert to update in case it exists.
+     * The filter to search for the Alert to update in case it exists.
      */
-    where: alertWhereUniqueInput
+    where: AlertWhereUniqueInput
     /**
-     * In case the alert found by the `where` argument doesn't exist, create a new alert with this data.
+     * In case the Alert found by the `where` argument doesn't exist, create a new Alert with this data.
      */
-    create: XOR<alertCreateInput, alertUncheckedCreateInput>
+    create: XOR<AlertCreateInput, AlertUncheckedCreateInput>
     /**
-     * In case the alert was found with the provided `where` argument, update it with this data.
+     * In case the Alert was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<alertUpdateInput, alertUncheckedUpdateInput>
+    update: XOR<AlertUpdateInput, AlertUncheckedUpdateInput>
   }
 
   /**
-   * alert delete
+   * Alert delete
    */
-  export type alertDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AlertDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the alert
+     * Select specific fields to fetch from the Alert
      */
-    select?: alertSelect<ExtArgs> | null
+    select?: AlertSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the alert
+     * Omit specific fields from the Alert
      */
-    omit?: alertOmit<ExtArgs> | null
+    omit?: AlertOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: alertInclude<ExtArgs> | null
+    include?: AlertInclude<ExtArgs> | null
     /**
-     * Filter which alert to delete.
+     * Filter which Alert to delete.
      */
-    where: alertWhereUniqueInput
+    where: AlertWhereUniqueInput
   }
 
   /**
-   * alert deleteMany
+   * Alert deleteMany
    */
-  export type alertDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AlertDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which alerts to delete
+     * Filter which Alerts to delete
      */
-    where?: alertWhereInput
+    where?: AlertWhereInput
     /**
-     * Limit how many alerts to delete.
+     * Limit how many Alerts to delete.
      */
     limit?: number
   }
 
   /**
-   * alert.municipality
+   * Alert without action
    */
-  export type alert$municipalityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AlertDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the municipality
+     * Select specific fields to fetch from the Alert
      */
-    select?: municipalitySelect<ExtArgs> | null
+    select?: AlertSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the municipality
+     * Omit specific fields from the Alert
      */
-    omit?: municipalityOmit<ExtArgs> | null
+    omit?: AlertOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: municipalityInclude<ExtArgs> | null
-    where?: municipalityWhereInput
-  }
-
-  /**
-   * alert without action
-   */
-  export type alertDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the alert
-     */
-    select?: alertSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the alert
-     */
-    omit?: alertOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: alertInclude<ExtArgs> | null
+    include?: AlertInclude<ExtArgs> | null
   }
 
 
@@ -5041,2218 +8499,6 @@ export namespace Prisma {
 
 
   /**
-   * Model municipality
-   */
-
-  export type AggregateMunicipality = {
-    _count: MunicipalityCountAggregateOutputType | null
-    _avg: MunicipalityAvgAggregateOutputType | null
-    _sum: MunicipalitySumAggregateOutputType | null
-    _min: MunicipalityMinAggregateOutputType | null
-    _max: MunicipalityMaxAggregateOutputType | null
-  }
-
-  export type MunicipalityAvgAggregateOutputType = {
-    muni_id: number | null
-  }
-
-  export type MunicipalitySumAggregateOutputType = {
-    muni_id: number | null
-  }
-
-  export type MunicipalityMinAggregateOutputType = {
-    muni_id: number | null
-    email: string | null
-    password: string | null
-  }
-
-  export type MunicipalityMaxAggregateOutputType = {
-    muni_id: number | null
-    email: string | null
-    password: string | null
-  }
-
-  export type MunicipalityCountAggregateOutputType = {
-    muni_id: number
-    email: number
-    password: number
-    _all: number
-  }
-
-
-  export type MunicipalityAvgAggregateInputType = {
-    muni_id?: true
-  }
-
-  export type MunicipalitySumAggregateInputType = {
-    muni_id?: true
-  }
-
-  export type MunicipalityMinAggregateInputType = {
-    muni_id?: true
-    email?: true
-    password?: true
-  }
-
-  export type MunicipalityMaxAggregateInputType = {
-    muni_id?: true
-    email?: true
-    password?: true
-  }
-
-  export type MunicipalityCountAggregateInputType = {
-    muni_id?: true
-    email?: true
-    password?: true
-    _all?: true
-  }
-
-  export type MunicipalityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which municipality to aggregate.
-     */
-    where?: municipalityWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of municipalities to fetch.
-     */
-    orderBy?: municipalityOrderByWithRelationInput | municipalityOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: municipalityWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` municipalities from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` municipalities.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned municipalities
-    **/
-    _count?: true | MunicipalityCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: MunicipalityAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: MunicipalitySumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: MunicipalityMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: MunicipalityMaxAggregateInputType
-  }
-
-  export type GetMunicipalityAggregateType<T extends MunicipalityAggregateArgs> = {
-        [P in keyof T & keyof AggregateMunicipality]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateMunicipality[P]>
-      : GetScalarType<T[P], AggregateMunicipality[P]>
-  }
-
-
-
-
-  export type municipalityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: municipalityWhereInput
-    orderBy?: municipalityOrderByWithAggregationInput | municipalityOrderByWithAggregationInput[]
-    by: MunicipalityScalarFieldEnum[] | MunicipalityScalarFieldEnum
-    having?: municipalityScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: MunicipalityCountAggregateInputType | true
-    _avg?: MunicipalityAvgAggregateInputType
-    _sum?: MunicipalitySumAggregateInputType
-    _min?: MunicipalityMinAggregateInputType
-    _max?: MunicipalityMaxAggregateInputType
-  }
-
-  export type MunicipalityGroupByOutputType = {
-    muni_id: number
-    email: string | null
-    password: string | null
-    _count: MunicipalityCountAggregateOutputType | null
-    _avg: MunicipalityAvgAggregateOutputType | null
-    _sum: MunicipalitySumAggregateOutputType | null
-    _min: MunicipalityMinAggregateOutputType | null
-    _max: MunicipalityMaxAggregateOutputType | null
-  }
-
-  type GetMunicipalityGroupByPayload<T extends municipalityGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<MunicipalityGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof MunicipalityGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], MunicipalityGroupByOutputType[P]>
-            : GetScalarType<T[P], MunicipalityGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type municipalitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    muni_id?: boolean
-    email?: boolean
-    password?: boolean
-    alert?: boolean | municipality$alertArgs<ExtArgs>
-    _count?: boolean | MunicipalityCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["municipality"]>
-
-  export type municipalitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    muni_id?: boolean
-    email?: boolean
-    password?: boolean
-  }, ExtArgs["result"]["municipality"]>
-
-  export type municipalitySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    muni_id?: boolean
-    email?: boolean
-    password?: boolean
-  }, ExtArgs["result"]["municipality"]>
-
-  export type municipalitySelectScalar = {
-    muni_id?: boolean
-    email?: boolean
-    password?: boolean
-  }
-
-  export type municipalityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"muni_id" | "email" | "password", ExtArgs["result"]["municipality"]>
-  export type municipalityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    alert?: boolean | municipality$alertArgs<ExtArgs>
-    _count?: boolean | MunicipalityCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type municipalityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type municipalityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $municipalityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "municipality"
-    objects: {
-      alert: Prisma.$alertPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      muni_id: number
-      email: string | null
-      password: string | null
-    }, ExtArgs["result"]["municipality"]>
-    composites: {}
-  }
-
-  type municipalityGetPayload<S extends boolean | null | undefined | municipalityDefaultArgs> = $Result.GetResult<Prisma.$municipalityPayload, S>
-
-  type municipalityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<municipalityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: MunicipalityCountAggregateInputType | true
-    }
-
-  export interface municipalityDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['municipality'], meta: { name: 'municipality' } }
-    /**
-     * Find zero or one Municipality that matches the filter.
-     * @param {municipalityFindUniqueArgs} args - Arguments to find a Municipality
-     * @example
-     * // Get one Municipality
-     * const municipality = await prisma.municipality.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends municipalityFindUniqueArgs>(args: SelectSubset<T, municipalityFindUniqueArgs<ExtArgs>>): Prisma__municipalityClient<$Result.GetResult<Prisma.$municipalityPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Municipality that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {municipalityFindUniqueOrThrowArgs} args - Arguments to find a Municipality
-     * @example
-     * // Get one Municipality
-     * const municipality = await prisma.municipality.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends municipalityFindUniqueOrThrowArgs>(args: SelectSubset<T, municipalityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__municipalityClient<$Result.GetResult<Prisma.$municipalityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Municipality that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {municipalityFindFirstArgs} args - Arguments to find a Municipality
-     * @example
-     * // Get one Municipality
-     * const municipality = await prisma.municipality.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends municipalityFindFirstArgs>(args?: SelectSubset<T, municipalityFindFirstArgs<ExtArgs>>): Prisma__municipalityClient<$Result.GetResult<Prisma.$municipalityPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Municipality that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {municipalityFindFirstOrThrowArgs} args - Arguments to find a Municipality
-     * @example
-     * // Get one Municipality
-     * const municipality = await prisma.municipality.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends municipalityFindFirstOrThrowArgs>(args?: SelectSubset<T, municipalityFindFirstOrThrowArgs<ExtArgs>>): Prisma__municipalityClient<$Result.GetResult<Prisma.$municipalityPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Municipalities that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {municipalityFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Municipalities
-     * const municipalities = await prisma.municipality.findMany()
-     * 
-     * // Get first 10 Municipalities
-     * const municipalities = await prisma.municipality.findMany({ take: 10 })
-     * 
-     * // Only select the `muni_id`
-     * const municipalityWithMuni_idOnly = await prisma.municipality.findMany({ select: { muni_id: true } })
-     * 
-     */
-    findMany<T extends municipalityFindManyArgs>(args?: SelectSubset<T, municipalityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$municipalityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Municipality.
-     * @param {municipalityCreateArgs} args - Arguments to create a Municipality.
-     * @example
-     * // Create one Municipality
-     * const Municipality = await prisma.municipality.create({
-     *   data: {
-     *     // ... data to create a Municipality
-     *   }
-     * })
-     * 
-     */
-    create<T extends municipalityCreateArgs>(args: SelectSubset<T, municipalityCreateArgs<ExtArgs>>): Prisma__municipalityClient<$Result.GetResult<Prisma.$municipalityPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Municipalities.
-     * @param {municipalityCreateManyArgs} args - Arguments to create many Municipalities.
-     * @example
-     * // Create many Municipalities
-     * const municipality = await prisma.municipality.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends municipalityCreateManyArgs>(args?: SelectSubset<T, municipalityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Municipalities and returns the data saved in the database.
-     * @param {municipalityCreateManyAndReturnArgs} args - Arguments to create many Municipalities.
-     * @example
-     * // Create many Municipalities
-     * const municipality = await prisma.municipality.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Municipalities and only return the `muni_id`
-     * const municipalityWithMuni_idOnly = await prisma.municipality.createManyAndReturn({
-     *   select: { muni_id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends municipalityCreateManyAndReturnArgs>(args?: SelectSubset<T, municipalityCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$municipalityPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Municipality.
-     * @param {municipalityDeleteArgs} args - Arguments to delete one Municipality.
-     * @example
-     * // Delete one Municipality
-     * const Municipality = await prisma.municipality.delete({
-     *   where: {
-     *     // ... filter to delete one Municipality
-     *   }
-     * })
-     * 
-     */
-    delete<T extends municipalityDeleteArgs>(args: SelectSubset<T, municipalityDeleteArgs<ExtArgs>>): Prisma__municipalityClient<$Result.GetResult<Prisma.$municipalityPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Municipality.
-     * @param {municipalityUpdateArgs} args - Arguments to update one Municipality.
-     * @example
-     * // Update one Municipality
-     * const municipality = await prisma.municipality.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends municipalityUpdateArgs>(args: SelectSubset<T, municipalityUpdateArgs<ExtArgs>>): Prisma__municipalityClient<$Result.GetResult<Prisma.$municipalityPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Municipalities.
-     * @param {municipalityDeleteManyArgs} args - Arguments to filter Municipalities to delete.
-     * @example
-     * // Delete a few Municipalities
-     * const { count } = await prisma.municipality.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends municipalityDeleteManyArgs>(args?: SelectSubset<T, municipalityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Municipalities.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {municipalityUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Municipalities
-     * const municipality = await prisma.municipality.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends municipalityUpdateManyArgs>(args: SelectSubset<T, municipalityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Municipalities and returns the data updated in the database.
-     * @param {municipalityUpdateManyAndReturnArgs} args - Arguments to update many Municipalities.
-     * @example
-     * // Update many Municipalities
-     * const municipality = await prisma.municipality.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Municipalities and only return the `muni_id`
-     * const municipalityWithMuni_idOnly = await prisma.municipality.updateManyAndReturn({
-     *   select: { muni_id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends municipalityUpdateManyAndReturnArgs>(args: SelectSubset<T, municipalityUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$municipalityPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Municipality.
-     * @param {municipalityUpsertArgs} args - Arguments to update or create a Municipality.
-     * @example
-     * // Update or create a Municipality
-     * const municipality = await prisma.municipality.upsert({
-     *   create: {
-     *     // ... data to create a Municipality
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Municipality we want to update
-     *   }
-     * })
-     */
-    upsert<T extends municipalityUpsertArgs>(args: SelectSubset<T, municipalityUpsertArgs<ExtArgs>>): Prisma__municipalityClient<$Result.GetResult<Prisma.$municipalityPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Municipalities.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {municipalityCountArgs} args - Arguments to filter Municipalities to count.
-     * @example
-     * // Count the number of Municipalities
-     * const count = await prisma.municipality.count({
-     *   where: {
-     *     // ... the filter for the Municipalities we want to count
-     *   }
-     * })
-    **/
-    count<T extends municipalityCountArgs>(
-      args?: Subset<T, municipalityCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], MunicipalityCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Municipality.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MunicipalityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends MunicipalityAggregateArgs>(args: Subset<T, MunicipalityAggregateArgs>): Prisma.PrismaPromise<GetMunicipalityAggregateType<T>>
-
-    /**
-     * Group by Municipality.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {municipalityGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends municipalityGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: municipalityGroupByArgs['orderBy'] }
-        : { orderBy?: municipalityGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, municipalityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMunicipalityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the municipality model
-   */
-  readonly fields: municipalityFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for municipality.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__municipalityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    alert<T extends municipality$alertArgs<ExtArgs> = {}>(args?: Subset<T, municipality$alertArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$alertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the municipality model
-   */
-  interface municipalityFieldRefs {
-    readonly muni_id: FieldRef<"municipality", 'Int'>
-    readonly email: FieldRef<"municipality", 'String'>
-    readonly password: FieldRef<"municipality", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * municipality findUnique
-   */
-  export type municipalityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the municipality
-     */
-    select?: municipalitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the municipality
-     */
-    omit?: municipalityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: municipalityInclude<ExtArgs> | null
-    /**
-     * Filter, which municipality to fetch.
-     */
-    where: municipalityWhereUniqueInput
-  }
-
-  /**
-   * municipality findUniqueOrThrow
-   */
-  export type municipalityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the municipality
-     */
-    select?: municipalitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the municipality
-     */
-    omit?: municipalityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: municipalityInclude<ExtArgs> | null
-    /**
-     * Filter, which municipality to fetch.
-     */
-    where: municipalityWhereUniqueInput
-  }
-
-  /**
-   * municipality findFirst
-   */
-  export type municipalityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the municipality
-     */
-    select?: municipalitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the municipality
-     */
-    omit?: municipalityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: municipalityInclude<ExtArgs> | null
-    /**
-     * Filter, which municipality to fetch.
-     */
-    where?: municipalityWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of municipalities to fetch.
-     */
-    orderBy?: municipalityOrderByWithRelationInput | municipalityOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for municipalities.
-     */
-    cursor?: municipalityWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` municipalities from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` municipalities.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of municipalities.
-     */
-    distinct?: MunicipalityScalarFieldEnum | MunicipalityScalarFieldEnum[]
-  }
-
-  /**
-   * municipality findFirstOrThrow
-   */
-  export type municipalityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the municipality
-     */
-    select?: municipalitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the municipality
-     */
-    omit?: municipalityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: municipalityInclude<ExtArgs> | null
-    /**
-     * Filter, which municipality to fetch.
-     */
-    where?: municipalityWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of municipalities to fetch.
-     */
-    orderBy?: municipalityOrderByWithRelationInput | municipalityOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for municipalities.
-     */
-    cursor?: municipalityWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` municipalities from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` municipalities.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of municipalities.
-     */
-    distinct?: MunicipalityScalarFieldEnum | MunicipalityScalarFieldEnum[]
-  }
-
-  /**
-   * municipality findMany
-   */
-  export type municipalityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the municipality
-     */
-    select?: municipalitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the municipality
-     */
-    omit?: municipalityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: municipalityInclude<ExtArgs> | null
-    /**
-     * Filter, which municipalities to fetch.
-     */
-    where?: municipalityWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of municipalities to fetch.
-     */
-    orderBy?: municipalityOrderByWithRelationInput | municipalityOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing municipalities.
-     */
-    cursor?: municipalityWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` municipalities from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` municipalities.
-     */
-    skip?: number
-    distinct?: MunicipalityScalarFieldEnum | MunicipalityScalarFieldEnum[]
-  }
-
-  /**
-   * municipality create
-   */
-  export type municipalityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the municipality
-     */
-    select?: municipalitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the municipality
-     */
-    omit?: municipalityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: municipalityInclude<ExtArgs> | null
-    /**
-     * The data needed to create a municipality.
-     */
-    data?: XOR<municipalityCreateInput, municipalityUncheckedCreateInput>
-  }
-
-  /**
-   * municipality createMany
-   */
-  export type municipalityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many municipalities.
-     */
-    data: municipalityCreateManyInput | municipalityCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * municipality createManyAndReturn
-   */
-  export type municipalityCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the municipality
-     */
-    select?: municipalitySelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the municipality
-     */
-    omit?: municipalityOmit<ExtArgs> | null
-    /**
-     * The data used to create many municipalities.
-     */
-    data: municipalityCreateManyInput | municipalityCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * municipality update
-   */
-  export type municipalityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the municipality
-     */
-    select?: municipalitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the municipality
-     */
-    omit?: municipalityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: municipalityInclude<ExtArgs> | null
-    /**
-     * The data needed to update a municipality.
-     */
-    data: XOR<municipalityUpdateInput, municipalityUncheckedUpdateInput>
-    /**
-     * Choose, which municipality to update.
-     */
-    where: municipalityWhereUniqueInput
-  }
-
-  /**
-   * municipality updateMany
-   */
-  export type municipalityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update municipalities.
-     */
-    data: XOR<municipalityUpdateManyMutationInput, municipalityUncheckedUpdateManyInput>
-    /**
-     * Filter which municipalities to update
-     */
-    where?: municipalityWhereInput
-    /**
-     * Limit how many municipalities to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * municipality updateManyAndReturn
-   */
-  export type municipalityUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the municipality
-     */
-    select?: municipalitySelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the municipality
-     */
-    omit?: municipalityOmit<ExtArgs> | null
-    /**
-     * The data used to update municipalities.
-     */
-    data: XOR<municipalityUpdateManyMutationInput, municipalityUncheckedUpdateManyInput>
-    /**
-     * Filter which municipalities to update
-     */
-    where?: municipalityWhereInput
-    /**
-     * Limit how many municipalities to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * municipality upsert
-   */
-  export type municipalityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the municipality
-     */
-    select?: municipalitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the municipality
-     */
-    omit?: municipalityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: municipalityInclude<ExtArgs> | null
-    /**
-     * The filter to search for the municipality to update in case it exists.
-     */
-    where: municipalityWhereUniqueInput
-    /**
-     * In case the municipality found by the `where` argument doesn't exist, create a new municipality with this data.
-     */
-    create: XOR<municipalityCreateInput, municipalityUncheckedCreateInput>
-    /**
-     * In case the municipality was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<municipalityUpdateInput, municipalityUncheckedUpdateInput>
-  }
-
-  /**
-   * municipality delete
-   */
-  export type municipalityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the municipality
-     */
-    select?: municipalitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the municipality
-     */
-    omit?: municipalityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: municipalityInclude<ExtArgs> | null
-    /**
-     * Filter which municipality to delete.
-     */
-    where: municipalityWhereUniqueInput
-  }
-
-  /**
-   * municipality deleteMany
-   */
-  export type municipalityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which municipalities to delete
-     */
-    where?: municipalityWhereInput
-    /**
-     * Limit how many municipalities to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * municipality.alert
-   */
-  export type municipality$alertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the alert
-     */
-    select?: alertSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the alert
-     */
-    omit?: alertOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: alertInclude<ExtArgs> | null
-    where?: alertWhereInput
-    orderBy?: alertOrderByWithRelationInput | alertOrderByWithRelationInput[]
-    cursor?: alertWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AlertScalarFieldEnum | AlertScalarFieldEnum[]
-  }
-
-  /**
-   * municipality without action
-   */
-  export type municipalityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the municipality
-     */
-    select?: municipalitySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the municipality
-     */
-    omit?: municipalityOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: municipalityInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model neighbor
-   */
-
-  export type AggregateNeighbor = {
-    _count: NeighborCountAggregateOutputType | null
-    _avg: NeighborAvgAggregateOutputType | null
-    _sum: NeighborSumAggregateOutputType | null
-    _min: NeighborMinAggregateOutputType | null
-    _max: NeighborMaxAggregateOutputType | null
-  }
-
-  export type NeighborAvgAggregateOutputType = {
-    identification: number | null
-    phone_number: number | null
-  }
-
-  export type NeighborSumAggregateOutputType = {
-    identification: number | null
-    phone_number: number | null
-  }
-
-  export type NeighborMinAggregateOutputType = {
-    identification: number | null
-    first_name: string | null
-    last_name: string | null
-    second_last_name: string | null
-    email: string | null
-    password: string | null
-    phone_number: number | null
-  }
-
-  export type NeighborMaxAggregateOutputType = {
-    identification: number | null
-    first_name: string | null
-    last_name: string | null
-    second_last_name: string | null
-    email: string | null
-    password: string | null
-    phone_number: number | null
-  }
-
-  export type NeighborCountAggregateOutputType = {
-    identification: number
-    first_name: number
-    last_name: number
-    second_last_name: number
-    email: number
-    password: number
-    phone_number: number
-    _all: number
-  }
-
-
-  export type NeighborAvgAggregateInputType = {
-    identification?: true
-    phone_number?: true
-  }
-
-  export type NeighborSumAggregateInputType = {
-    identification?: true
-    phone_number?: true
-  }
-
-  export type NeighborMinAggregateInputType = {
-    identification?: true
-    first_name?: true
-    last_name?: true
-    second_last_name?: true
-    email?: true
-    password?: true
-    phone_number?: true
-  }
-
-  export type NeighborMaxAggregateInputType = {
-    identification?: true
-    first_name?: true
-    last_name?: true
-    second_last_name?: true
-    email?: true
-    password?: true
-    phone_number?: true
-  }
-
-  export type NeighborCountAggregateInputType = {
-    identification?: true
-    first_name?: true
-    last_name?: true
-    second_last_name?: true
-    email?: true
-    password?: true
-    phone_number?: true
-    _all?: true
-  }
-
-  export type NeighborAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which neighbor to aggregate.
-     */
-    where?: neighborWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of neighbors to fetch.
-     */
-    orderBy?: neighborOrderByWithRelationInput | neighborOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: neighborWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` neighbors from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` neighbors.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned neighbors
-    **/
-    _count?: true | NeighborCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: NeighborAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: NeighborSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: NeighborMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: NeighborMaxAggregateInputType
-  }
-
-  export type GetNeighborAggregateType<T extends NeighborAggregateArgs> = {
-        [P in keyof T & keyof AggregateNeighbor]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateNeighbor[P]>
-      : GetScalarType<T[P], AggregateNeighbor[P]>
-  }
-
-
-
-
-  export type neighborGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: neighborWhereInput
-    orderBy?: neighborOrderByWithAggregationInput | neighborOrderByWithAggregationInput[]
-    by: NeighborScalarFieldEnum[] | NeighborScalarFieldEnum
-    having?: neighborScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: NeighborCountAggregateInputType | true
-    _avg?: NeighborAvgAggregateInputType
-    _sum?: NeighborSumAggregateInputType
-    _min?: NeighborMinAggregateInputType
-    _max?: NeighborMaxAggregateInputType
-  }
-
-  export type NeighborGroupByOutputType = {
-    identification: number
-    first_name: string
-    last_name: string
-    second_last_name: string | null
-    email: string
-    password: string
-    phone_number: number | null
-    _count: NeighborCountAggregateOutputType | null
-    _avg: NeighborAvgAggregateOutputType | null
-    _sum: NeighborSumAggregateOutputType | null
-    _min: NeighborMinAggregateOutputType | null
-    _max: NeighborMaxAggregateOutputType | null
-  }
-
-  type GetNeighborGroupByPayload<T extends neighborGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<NeighborGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof NeighborGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], NeighborGroupByOutputType[P]>
-            : GetScalarType<T[P], NeighborGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type neighborSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    identification?: boolean
-    first_name?: boolean
-    last_name?: boolean
-    second_last_name?: boolean
-    email?: boolean
-    password?: boolean
-    phone_number?: boolean
-    report?: boolean | neighbor$reportArgs<ExtArgs>
-    _count?: boolean | NeighborCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["neighbor"]>
-
-  export type neighborSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    identification?: boolean
-    first_name?: boolean
-    last_name?: boolean
-    second_last_name?: boolean
-    email?: boolean
-    password?: boolean
-    phone_number?: boolean
-  }, ExtArgs["result"]["neighbor"]>
-
-  export type neighborSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    identification?: boolean
-    first_name?: boolean
-    last_name?: boolean
-    second_last_name?: boolean
-    email?: boolean
-    password?: boolean
-    phone_number?: boolean
-  }, ExtArgs["result"]["neighbor"]>
-
-  export type neighborSelectScalar = {
-    identification?: boolean
-    first_name?: boolean
-    last_name?: boolean
-    second_last_name?: boolean
-    email?: boolean
-    password?: boolean
-    phone_number?: boolean
-  }
-
-  export type neighborOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"identification" | "first_name" | "last_name" | "second_last_name" | "email" | "password" | "phone_number", ExtArgs["result"]["neighbor"]>
-  export type neighborInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    report?: boolean | neighbor$reportArgs<ExtArgs>
-    _count?: boolean | NeighborCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type neighborIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type neighborIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $neighborPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "neighbor"
-    objects: {
-      report: Prisma.$reportPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      identification: number
-      first_name: string
-      last_name: string
-      second_last_name: string | null
-      email: string
-      password: string
-      phone_number: number | null
-    }, ExtArgs["result"]["neighbor"]>
-    composites: {}
-  }
-
-  type neighborGetPayload<S extends boolean | null | undefined | neighborDefaultArgs> = $Result.GetResult<Prisma.$neighborPayload, S>
-
-  type neighborCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<neighborFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: NeighborCountAggregateInputType | true
-    }
-
-  export interface neighborDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['neighbor'], meta: { name: 'neighbor' } }
-    /**
-     * Find zero or one Neighbor that matches the filter.
-     * @param {neighborFindUniqueArgs} args - Arguments to find a Neighbor
-     * @example
-     * // Get one Neighbor
-     * const neighbor = await prisma.neighbor.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends neighborFindUniqueArgs>(args: SelectSubset<T, neighborFindUniqueArgs<ExtArgs>>): Prisma__neighborClient<$Result.GetResult<Prisma.$neighborPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Neighbor that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {neighborFindUniqueOrThrowArgs} args - Arguments to find a Neighbor
-     * @example
-     * // Get one Neighbor
-     * const neighbor = await prisma.neighbor.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends neighborFindUniqueOrThrowArgs>(args: SelectSubset<T, neighborFindUniqueOrThrowArgs<ExtArgs>>): Prisma__neighborClient<$Result.GetResult<Prisma.$neighborPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Neighbor that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {neighborFindFirstArgs} args - Arguments to find a Neighbor
-     * @example
-     * // Get one Neighbor
-     * const neighbor = await prisma.neighbor.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends neighborFindFirstArgs>(args?: SelectSubset<T, neighborFindFirstArgs<ExtArgs>>): Prisma__neighborClient<$Result.GetResult<Prisma.$neighborPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Neighbor that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {neighborFindFirstOrThrowArgs} args - Arguments to find a Neighbor
-     * @example
-     * // Get one Neighbor
-     * const neighbor = await prisma.neighbor.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends neighborFindFirstOrThrowArgs>(args?: SelectSubset<T, neighborFindFirstOrThrowArgs<ExtArgs>>): Prisma__neighborClient<$Result.GetResult<Prisma.$neighborPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Neighbors that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {neighborFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Neighbors
-     * const neighbors = await prisma.neighbor.findMany()
-     * 
-     * // Get first 10 Neighbors
-     * const neighbors = await prisma.neighbor.findMany({ take: 10 })
-     * 
-     * // Only select the `identification`
-     * const neighborWithIdentificationOnly = await prisma.neighbor.findMany({ select: { identification: true } })
-     * 
-     */
-    findMany<T extends neighborFindManyArgs>(args?: SelectSubset<T, neighborFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$neighborPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Neighbor.
-     * @param {neighborCreateArgs} args - Arguments to create a Neighbor.
-     * @example
-     * // Create one Neighbor
-     * const Neighbor = await prisma.neighbor.create({
-     *   data: {
-     *     // ... data to create a Neighbor
-     *   }
-     * })
-     * 
-     */
-    create<T extends neighborCreateArgs>(args: SelectSubset<T, neighborCreateArgs<ExtArgs>>): Prisma__neighborClient<$Result.GetResult<Prisma.$neighborPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Neighbors.
-     * @param {neighborCreateManyArgs} args - Arguments to create many Neighbors.
-     * @example
-     * // Create many Neighbors
-     * const neighbor = await prisma.neighbor.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends neighborCreateManyArgs>(args?: SelectSubset<T, neighborCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Neighbors and returns the data saved in the database.
-     * @param {neighborCreateManyAndReturnArgs} args - Arguments to create many Neighbors.
-     * @example
-     * // Create many Neighbors
-     * const neighbor = await prisma.neighbor.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Neighbors and only return the `identification`
-     * const neighborWithIdentificationOnly = await prisma.neighbor.createManyAndReturn({
-     *   select: { identification: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends neighborCreateManyAndReturnArgs>(args?: SelectSubset<T, neighborCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$neighborPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Neighbor.
-     * @param {neighborDeleteArgs} args - Arguments to delete one Neighbor.
-     * @example
-     * // Delete one Neighbor
-     * const Neighbor = await prisma.neighbor.delete({
-     *   where: {
-     *     // ... filter to delete one Neighbor
-     *   }
-     * })
-     * 
-     */
-    delete<T extends neighborDeleteArgs>(args: SelectSubset<T, neighborDeleteArgs<ExtArgs>>): Prisma__neighborClient<$Result.GetResult<Prisma.$neighborPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Neighbor.
-     * @param {neighborUpdateArgs} args - Arguments to update one Neighbor.
-     * @example
-     * // Update one Neighbor
-     * const neighbor = await prisma.neighbor.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends neighborUpdateArgs>(args: SelectSubset<T, neighborUpdateArgs<ExtArgs>>): Prisma__neighborClient<$Result.GetResult<Prisma.$neighborPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Neighbors.
-     * @param {neighborDeleteManyArgs} args - Arguments to filter Neighbors to delete.
-     * @example
-     * // Delete a few Neighbors
-     * const { count } = await prisma.neighbor.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends neighborDeleteManyArgs>(args?: SelectSubset<T, neighborDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Neighbors.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {neighborUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Neighbors
-     * const neighbor = await prisma.neighbor.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends neighborUpdateManyArgs>(args: SelectSubset<T, neighborUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Neighbors and returns the data updated in the database.
-     * @param {neighborUpdateManyAndReturnArgs} args - Arguments to update many Neighbors.
-     * @example
-     * // Update many Neighbors
-     * const neighbor = await prisma.neighbor.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Neighbors and only return the `identification`
-     * const neighborWithIdentificationOnly = await prisma.neighbor.updateManyAndReturn({
-     *   select: { identification: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends neighborUpdateManyAndReturnArgs>(args: SelectSubset<T, neighborUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$neighborPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Neighbor.
-     * @param {neighborUpsertArgs} args - Arguments to update or create a Neighbor.
-     * @example
-     * // Update or create a Neighbor
-     * const neighbor = await prisma.neighbor.upsert({
-     *   create: {
-     *     // ... data to create a Neighbor
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Neighbor we want to update
-     *   }
-     * })
-     */
-    upsert<T extends neighborUpsertArgs>(args: SelectSubset<T, neighborUpsertArgs<ExtArgs>>): Prisma__neighborClient<$Result.GetResult<Prisma.$neighborPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Neighbors.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {neighborCountArgs} args - Arguments to filter Neighbors to count.
-     * @example
-     * // Count the number of Neighbors
-     * const count = await prisma.neighbor.count({
-     *   where: {
-     *     // ... the filter for the Neighbors we want to count
-     *   }
-     * })
-    **/
-    count<T extends neighborCountArgs>(
-      args?: Subset<T, neighborCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], NeighborCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Neighbor.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {NeighborAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends NeighborAggregateArgs>(args: Subset<T, NeighborAggregateArgs>): Prisma.PrismaPromise<GetNeighborAggregateType<T>>
-
-    /**
-     * Group by Neighbor.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {neighborGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends neighborGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: neighborGroupByArgs['orderBy'] }
-        : { orderBy?: neighborGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, neighborGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetNeighborGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the neighbor model
-   */
-  readonly fields: neighborFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for neighbor.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__neighborClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    report<T extends neighbor$reportArgs<ExtArgs> = {}>(args?: Subset<T, neighbor$reportArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$reportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the neighbor model
-   */
-  interface neighborFieldRefs {
-    readonly identification: FieldRef<"neighbor", 'Int'>
-    readonly first_name: FieldRef<"neighbor", 'String'>
-    readonly last_name: FieldRef<"neighbor", 'String'>
-    readonly second_last_name: FieldRef<"neighbor", 'String'>
-    readonly email: FieldRef<"neighbor", 'String'>
-    readonly password: FieldRef<"neighbor", 'String'>
-    readonly phone_number: FieldRef<"neighbor", 'Int'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * neighbor findUnique
-   */
-  export type neighborFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the neighbor
-     */
-    select?: neighborSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the neighbor
-     */
-    omit?: neighborOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: neighborInclude<ExtArgs> | null
-    /**
-     * Filter, which neighbor to fetch.
-     */
-    where: neighborWhereUniqueInput
-  }
-
-  /**
-   * neighbor findUniqueOrThrow
-   */
-  export type neighborFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the neighbor
-     */
-    select?: neighborSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the neighbor
-     */
-    omit?: neighborOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: neighborInclude<ExtArgs> | null
-    /**
-     * Filter, which neighbor to fetch.
-     */
-    where: neighborWhereUniqueInput
-  }
-
-  /**
-   * neighbor findFirst
-   */
-  export type neighborFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the neighbor
-     */
-    select?: neighborSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the neighbor
-     */
-    omit?: neighborOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: neighborInclude<ExtArgs> | null
-    /**
-     * Filter, which neighbor to fetch.
-     */
-    where?: neighborWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of neighbors to fetch.
-     */
-    orderBy?: neighborOrderByWithRelationInput | neighborOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for neighbors.
-     */
-    cursor?: neighborWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` neighbors from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` neighbors.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of neighbors.
-     */
-    distinct?: NeighborScalarFieldEnum | NeighborScalarFieldEnum[]
-  }
-
-  /**
-   * neighbor findFirstOrThrow
-   */
-  export type neighborFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the neighbor
-     */
-    select?: neighborSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the neighbor
-     */
-    omit?: neighborOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: neighborInclude<ExtArgs> | null
-    /**
-     * Filter, which neighbor to fetch.
-     */
-    where?: neighborWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of neighbors to fetch.
-     */
-    orderBy?: neighborOrderByWithRelationInput | neighborOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for neighbors.
-     */
-    cursor?: neighborWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` neighbors from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` neighbors.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of neighbors.
-     */
-    distinct?: NeighborScalarFieldEnum | NeighborScalarFieldEnum[]
-  }
-
-  /**
-   * neighbor findMany
-   */
-  export type neighborFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the neighbor
-     */
-    select?: neighborSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the neighbor
-     */
-    omit?: neighborOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: neighborInclude<ExtArgs> | null
-    /**
-     * Filter, which neighbors to fetch.
-     */
-    where?: neighborWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of neighbors to fetch.
-     */
-    orderBy?: neighborOrderByWithRelationInput | neighborOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing neighbors.
-     */
-    cursor?: neighborWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` neighbors from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` neighbors.
-     */
-    skip?: number
-    distinct?: NeighborScalarFieldEnum | NeighborScalarFieldEnum[]
-  }
-
-  /**
-   * neighbor create
-   */
-  export type neighborCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the neighbor
-     */
-    select?: neighborSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the neighbor
-     */
-    omit?: neighborOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: neighborInclude<ExtArgs> | null
-    /**
-     * The data needed to create a neighbor.
-     */
-    data: XOR<neighborCreateInput, neighborUncheckedCreateInput>
-  }
-
-  /**
-   * neighbor createMany
-   */
-  export type neighborCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many neighbors.
-     */
-    data: neighborCreateManyInput | neighborCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * neighbor createManyAndReturn
-   */
-  export type neighborCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the neighbor
-     */
-    select?: neighborSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the neighbor
-     */
-    omit?: neighborOmit<ExtArgs> | null
-    /**
-     * The data used to create many neighbors.
-     */
-    data: neighborCreateManyInput | neighborCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * neighbor update
-   */
-  export type neighborUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the neighbor
-     */
-    select?: neighborSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the neighbor
-     */
-    omit?: neighborOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: neighborInclude<ExtArgs> | null
-    /**
-     * The data needed to update a neighbor.
-     */
-    data: XOR<neighborUpdateInput, neighborUncheckedUpdateInput>
-    /**
-     * Choose, which neighbor to update.
-     */
-    where: neighborWhereUniqueInput
-  }
-
-  /**
-   * neighbor updateMany
-   */
-  export type neighborUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update neighbors.
-     */
-    data: XOR<neighborUpdateManyMutationInput, neighborUncheckedUpdateManyInput>
-    /**
-     * Filter which neighbors to update
-     */
-    where?: neighborWhereInput
-    /**
-     * Limit how many neighbors to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * neighbor updateManyAndReturn
-   */
-  export type neighborUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the neighbor
-     */
-    select?: neighborSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the neighbor
-     */
-    omit?: neighborOmit<ExtArgs> | null
-    /**
-     * The data used to update neighbors.
-     */
-    data: XOR<neighborUpdateManyMutationInput, neighborUncheckedUpdateManyInput>
-    /**
-     * Filter which neighbors to update
-     */
-    where?: neighborWhereInput
-    /**
-     * Limit how many neighbors to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * neighbor upsert
-   */
-  export type neighborUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the neighbor
-     */
-    select?: neighborSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the neighbor
-     */
-    omit?: neighborOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: neighborInclude<ExtArgs> | null
-    /**
-     * The filter to search for the neighbor to update in case it exists.
-     */
-    where: neighborWhereUniqueInput
-    /**
-     * In case the neighbor found by the `where` argument doesn't exist, create a new neighbor with this data.
-     */
-    create: XOR<neighborCreateInput, neighborUncheckedCreateInput>
-    /**
-     * In case the neighbor was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<neighborUpdateInput, neighborUncheckedUpdateInput>
-  }
-
-  /**
-   * neighbor delete
-   */
-  export type neighborDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the neighbor
-     */
-    select?: neighborSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the neighbor
-     */
-    omit?: neighborOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: neighborInclude<ExtArgs> | null
-    /**
-     * Filter which neighbor to delete.
-     */
-    where: neighborWhereUniqueInput
-  }
-
-  /**
-   * neighbor deleteMany
-   */
-  export type neighborDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which neighbors to delete
-     */
-    where?: neighborWhereInput
-    /**
-     * Limit how many neighbors to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * neighbor.report
-   */
-  export type neighbor$reportArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the report
-     */
-    select?: reportSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the report
-     */
-    omit?: reportOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: reportInclude<ExtArgs> | null
-    where?: reportWhereInput
-    orderBy?: reportOrderByWithRelationInput | reportOrderByWithRelationInput[]
-    cursor?: reportWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ReportScalarFieldEnum | ReportScalarFieldEnum[]
-  }
-
-  /**
-   * neighbor without action
-   */
-  export type neighborDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the neighbor
-     */
-    select?: neighborSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the neighbor
-     */
-    omit?: neighborOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: neighborInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Model problem
    */
 
@@ -9450,7 +10696,7 @@ export namespace Prisma {
 
   export type ReportAvgAggregateOutputType = {
     report_id: number | null
-    neighbor_id: number | null
+    author_id: number | null
     problem_id: number | null
     canton_id: number | null
     district: number | null
@@ -9458,7 +10704,7 @@ export namespace Prisma {
 
   export type ReportSumAggregateOutputType = {
     report_id: number | null
-    neighbor_id: number | null
+    author_id: number | null
     problem_id: number | null
     canton_id: number | null
     district: number | null
@@ -9466,7 +10712,7 @@ export namespace Prisma {
 
   export type ReportMinAggregateOutputType = {
     report_id: number | null
-    neighbor_id: number | null
+    author_id: number | null
     report_title: string | null
     problem_id: number | null
     canton_id: number | null
@@ -9481,7 +10727,7 @@ export namespace Prisma {
 
   export type ReportMaxAggregateOutputType = {
     report_id: number | null
-    neighbor_id: number | null
+    author_id: number | null
     report_title: string | null
     problem_id: number | null
     canton_id: number | null
@@ -9496,7 +10742,7 @@ export namespace Prisma {
 
   export type ReportCountAggregateOutputType = {
     report_id: number
-    neighbor_id: number
+    author_id: number
     report_title: number
     problem_id: number
     canton_id: number
@@ -9513,7 +10759,7 @@ export namespace Prisma {
 
   export type ReportAvgAggregateInputType = {
     report_id?: true
-    neighbor_id?: true
+    author_id?: true
     problem_id?: true
     canton_id?: true
     district?: true
@@ -9521,7 +10767,7 @@ export namespace Prisma {
 
   export type ReportSumAggregateInputType = {
     report_id?: true
-    neighbor_id?: true
+    author_id?: true
     problem_id?: true
     canton_id?: true
     district?: true
@@ -9529,7 +10775,7 @@ export namespace Prisma {
 
   export type ReportMinAggregateInputType = {
     report_id?: true
-    neighbor_id?: true
+    author_id?: true
     report_title?: true
     problem_id?: true
     canton_id?: true
@@ -9544,7 +10790,7 @@ export namespace Prisma {
 
   export type ReportMaxAggregateInputType = {
     report_id?: true
-    neighbor_id?: true
+    author_id?: true
     report_title?: true
     problem_id?: true
     canton_id?: true
@@ -9559,7 +10805,7 @@ export namespace Prisma {
 
   export type ReportCountAggregateInputType = {
     report_id?: true
-    neighbor_id?: true
+    author_id?: true
     report_title?: true
     problem_id?: true
     canton_id?: true
@@ -9661,7 +10907,7 @@ export namespace Prisma {
 
   export type ReportGroupByOutputType = {
     report_id: number
-    neighbor_id: number | null
+    author_id: number | null
     report_title: string | null
     problem_id: number | null
     canton_id: number | null
@@ -9695,7 +10941,7 @@ export namespace Prisma {
 
   export type reportSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     report_id?: boolean
-    neighbor_id?: boolean
+    author_id?: boolean
     report_title?: boolean
     problem_id?: boolean
     canton_id?: boolean
@@ -9708,13 +10954,13 @@ export namespace Prisma {
     updated_at?: boolean
     canton?: boolean | report$cantonArgs<ExtArgs>
     district_report_districtTodistrict?: boolean | report$district_report_districtTodistrictArgs<ExtArgs>
-    neighbor?: boolean | report$neighborArgs<ExtArgs>
+    author?: boolean | report$authorArgs<ExtArgs>
     problem?: boolean | report$problemArgs<ExtArgs>
   }, ExtArgs["result"]["report"]>
 
   export type reportSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     report_id?: boolean
-    neighbor_id?: boolean
+    author_id?: boolean
     report_title?: boolean
     problem_id?: boolean
     canton_id?: boolean
@@ -9727,13 +10973,13 @@ export namespace Prisma {
     updated_at?: boolean
     canton?: boolean | report$cantonArgs<ExtArgs>
     district_report_districtTodistrict?: boolean | report$district_report_districtTodistrictArgs<ExtArgs>
-    neighbor?: boolean | report$neighborArgs<ExtArgs>
+    author?: boolean | report$authorArgs<ExtArgs>
     problem?: boolean | report$problemArgs<ExtArgs>
   }, ExtArgs["result"]["report"]>
 
   export type reportSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     report_id?: boolean
-    neighbor_id?: boolean
+    author_id?: boolean
     report_title?: boolean
     problem_id?: boolean
     canton_id?: boolean
@@ -9746,13 +10992,13 @@ export namespace Prisma {
     updated_at?: boolean
     canton?: boolean | report$cantonArgs<ExtArgs>
     district_report_districtTodistrict?: boolean | report$district_report_districtTodistrictArgs<ExtArgs>
-    neighbor?: boolean | report$neighborArgs<ExtArgs>
+    author?: boolean | report$authorArgs<ExtArgs>
     problem?: boolean | report$problemArgs<ExtArgs>
   }, ExtArgs["result"]["report"]>
 
   export type reportSelectScalar = {
     report_id?: boolean
-    neighbor_id?: boolean
+    author_id?: boolean
     report_title?: boolean
     problem_id?: boolean
     canton_id?: boolean
@@ -9765,23 +11011,23 @@ export namespace Prisma {
     updated_at?: boolean
   }
 
-  export type reportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"report_id" | "neighbor_id" | "report_title" | "problem_id" | "canton_id" | "district" | "neighborhood" | "street" | "report_date" | "report_time" | "status" | "updated_at", ExtArgs["result"]["report"]>
+  export type reportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"report_id" | "author_id" | "report_title" | "problem_id" | "canton_id" | "district" | "neighborhood" | "street" | "report_date" | "report_time" | "status" | "updated_at", ExtArgs["result"]["report"]>
   export type reportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     canton?: boolean | report$cantonArgs<ExtArgs>
     district_report_districtTodistrict?: boolean | report$district_report_districtTodistrictArgs<ExtArgs>
-    neighbor?: boolean | report$neighborArgs<ExtArgs>
+    author?: boolean | report$authorArgs<ExtArgs>
     problem?: boolean | report$problemArgs<ExtArgs>
   }
   export type reportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     canton?: boolean | report$cantonArgs<ExtArgs>
     district_report_districtTodistrict?: boolean | report$district_report_districtTodistrictArgs<ExtArgs>
-    neighbor?: boolean | report$neighborArgs<ExtArgs>
+    author?: boolean | report$authorArgs<ExtArgs>
     problem?: boolean | report$problemArgs<ExtArgs>
   }
   export type reportIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     canton?: boolean | report$cantonArgs<ExtArgs>
     district_report_districtTodistrict?: boolean | report$district_report_districtTodistrictArgs<ExtArgs>
-    neighbor?: boolean | report$neighborArgs<ExtArgs>
+    author?: boolean | report$authorArgs<ExtArgs>
     problem?: boolean | report$problemArgs<ExtArgs>
   }
 
@@ -9790,12 +11036,12 @@ export namespace Prisma {
     objects: {
       canton: Prisma.$cantonPayload<ExtArgs> | null
       district_report_districtTodistrict: Prisma.$districtPayload<ExtArgs> | null
-      neighbor: Prisma.$neighborPayload<ExtArgs> | null
+      author: Prisma.$UserPayload<ExtArgs> | null
       problem: Prisma.$problemPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       report_id: number
-      neighbor_id: number | null
+      author_id: number | null
       report_title: string | null
       problem_id: number | null
       canton_id: number | null
@@ -10202,7 +11448,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     canton<T extends report$cantonArgs<ExtArgs> = {}>(args?: Subset<T, report$cantonArgs<ExtArgs>>): Prisma__cantonClient<$Result.GetResult<Prisma.$cantonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     district_report_districtTodistrict<T extends report$district_report_districtTodistrictArgs<ExtArgs> = {}>(args?: Subset<T, report$district_report_districtTodistrictArgs<ExtArgs>>): Prisma__districtClient<$Result.GetResult<Prisma.$districtPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    neighbor<T extends report$neighborArgs<ExtArgs> = {}>(args?: Subset<T, report$neighborArgs<ExtArgs>>): Prisma__neighborClient<$Result.GetResult<Prisma.$neighborPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    author<T extends report$authorArgs<ExtArgs> = {}>(args?: Subset<T, report$authorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     problem<T extends report$problemArgs<ExtArgs> = {}>(args?: Subset<T, report$problemArgs<ExtArgs>>): Prisma__problemClient<$Result.GetResult<Prisma.$problemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -10234,7 +11480,7 @@ export namespace Prisma {
    */
   interface reportFieldRefs {
     readonly report_id: FieldRef<"report", 'Int'>
-    readonly neighbor_id: FieldRef<"report", 'Int'>
+    readonly author_id: FieldRef<"report", 'Int'>
     readonly report_title: FieldRef<"report", 'String'>
     readonly problem_id: FieldRef<"report", 'Int'>
     readonly canton_id: FieldRef<"report", 'Int'>
@@ -10679,22 +11925,22 @@ export namespace Prisma {
   }
 
   /**
-   * report.neighbor
+   * report.author
    */
-  export type report$neighborArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type report$authorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the neighbor
+     * Select specific fields to fetch from the User
      */
-    select?: neighborSelect<ExtArgs> | null
+    select?: UserSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the neighbor
+     * Omit specific fields from the User
      */
-    omit?: neighborOmit<ExtArgs> | null
+    omit?: UserOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: neighborInclude<ExtArgs> | null
-    where?: neighborWhereInput
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
   }
 
   /**
@@ -10749,13 +11995,47 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+  export const UserScalarFieldEnum: {
+    id: 'id',
+    email: 'email',
+    password: 'password',
+    role: 'role',
+    created_at: 'created_at'
+  };
+
+  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const NeighborProfileScalarFieldEnum: {
+    id: 'id',
+    first_name: 'first_name',
+    last_name: 'last_name',
+    second_last_name: 'second_last_name',
+    identification: 'identification',
+    phone_number: 'phone_number',
+    userId: 'userId'
+  };
+
+  export type NeighborProfileScalarFieldEnum = (typeof NeighborProfileScalarFieldEnum)[keyof typeof NeighborProfileScalarFieldEnum]
+
+
+  export const MunicipalityProfileScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    canton: 'canton',
+    userId: 'userId'
+  };
+
+  export type MunicipalityProfileScalarFieldEnum = (typeof MunicipalityProfileScalarFieldEnum)[keyof typeof MunicipalityProfileScalarFieldEnum]
+
+
   export const AlertScalarFieldEnum: {
-    alert_id: 'alert_id',
-    muni_id: 'muni_id',
-    alert_title: 'alert_title',
-    alert_date: 'alert_date',
-    alert_time: 'alert_time',
-    description: 'description'
+    id: 'id',
+    title: 'title',
+    content: 'content',
+    created_at: 'created_at',
+    updated_at: 'updated_at',
+    authorId: 'authorId'
   };
 
   export type AlertScalarFieldEnum = (typeof AlertScalarFieldEnum)[keyof typeof AlertScalarFieldEnum]
@@ -10778,28 +12058,6 @@ export namespace Prisma {
   export type DistrictScalarFieldEnum = (typeof DistrictScalarFieldEnum)[keyof typeof DistrictScalarFieldEnum]
 
 
-  export const MunicipalityScalarFieldEnum: {
-    muni_id: 'muni_id',
-    email: 'email',
-    password: 'password'
-  };
-
-  export type MunicipalityScalarFieldEnum = (typeof MunicipalityScalarFieldEnum)[keyof typeof MunicipalityScalarFieldEnum]
-
-
-  export const NeighborScalarFieldEnum: {
-    identification: 'identification',
-    first_name: 'first_name',
-    last_name: 'last_name',
-    second_last_name: 'second_last_name',
-    email: 'email',
-    password: 'password',
-    phone_number: 'phone_number'
-  };
-
-  export type NeighborScalarFieldEnum = (typeof NeighborScalarFieldEnum)[keyof typeof NeighborScalarFieldEnum]
-
-
   export const ProblemScalarFieldEnum: {
     problem_id: 'problem_id',
     problem_type_id: 'problem_type_id',
@@ -10819,7 +12077,7 @@ export namespace Prisma {
 
   export const ReportScalarFieldEnum: {
     report_id: 'report_id',
-    neighbor_id: 'neighbor_id',
+    author_id: 'author_id',
     report_title: 'report_title',
     problem_id: 'problem_id',
     canton_id: 'canton_id',
@@ -10893,6 +12151,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Role'
+   */
+  export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
+    
+
+
+  /**
+   * Reference to a field of type 'Role[]'
+   */
+  export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -10923,66 +12195,251 @@ export namespace Prisma {
    */
 
 
-  export type alertWhereInput = {
-    AND?: alertWhereInput | alertWhereInput[]
-    OR?: alertWhereInput[]
-    NOT?: alertWhereInput | alertWhereInput[]
-    alert_id?: IntFilter<"alert"> | number
-    muni_id?: IntNullableFilter<"alert"> | number | null
-    alert_title?: StringNullableFilter<"alert"> | string | null
-    alert_date?: DateTimeNullableFilter<"alert"> | Date | string | null
-    alert_time?: DateTimeNullableFilter<"alert"> | Date | string | null
-    description?: StringNullableFilter<"alert"> | string | null
-    municipality?: XOR<MunicipalityNullableScalarRelationFilter, municipalityWhereInput> | null
+  export type UserWhereInput = {
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    id?: IntFilter<"User"> | number
+    email?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    role?: EnumRoleFilter<"User"> | $Enums.Role
+    created_at?: DateTimeFilter<"User"> | Date | string
+    neighborProfile?: XOR<NeighborProfileNullableScalarRelationFilter, NeighborProfileWhereInput> | null
+    municipalityProfile?: XOR<MunicipalityProfileNullableScalarRelationFilter, MunicipalityProfileWhereInput> | null
+    alerts?: AlertListRelationFilter
+    reports?: ReportListRelationFilter
   }
 
-  export type alertOrderByWithRelationInput = {
-    alert_id?: SortOrder
-    muni_id?: SortOrderInput | SortOrder
-    alert_title?: SortOrderInput | SortOrder
-    alert_date?: SortOrderInput | SortOrder
-    alert_time?: SortOrderInput | SortOrder
-    description?: SortOrderInput | SortOrder
-    municipality?: municipalityOrderByWithRelationInput
+  export type UserOrderByWithRelationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    role?: SortOrder
+    created_at?: SortOrder
+    neighborProfile?: NeighborProfileOrderByWithRelationInput
+    municipalityProfile?: MunicipalityProfileOrderByWithRelationInput
+    alerts?: AlertOrderByRelationAggregateInput
+    reports?: reportOrderByRelationAggregateInput
   }
 
-  export type alertWhereUniqueInput = Prisma.AtLeast<{
-    alert_id?: number
-    AND?: alertWhereInput | alertWhereInput[]
-    OR?: alertWhereInput[]
-    NOT?: alertWhereInput | alertWhereInput[]
-    muni_id?: IntNullableFilter<"alert"> | number | null
-    alert_title?: StringNullableFilter<"alert"> | string | null
-    alert_date?: DateTimeNullableFilter<"alert"> | Date | string | null
-    alert_time?: DateTimeNullableFilter<"alert"> | Date | string | null
-    description?: StringNullableFilter<"alert"> | string | null
-    municipality?: XOR<MunicipalityNullableScalarRelationFilter, municipalityWhereInput> | null
-  }, "alert_id">
+  export type UserWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    email?: string
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    password?: StringFilter<"User"> | string
+    role?: EnumRoleFilter<"User"> | $Enums.Role
+    created_at?: DateTimeFilter<"User"> | Date | string
+    neighborProfile?: XOR<NeighborProfileNullableScalarRelationFilter, NeighborProfileWhereInput> | null
+    municipalityProfile?: XOR<MunicipalityProfileNullableScalarRelationFilter, MunicipalityProfileWhereInput> | null
+    alerts?: AlertListRelationFilter
+    reports?: ReportListRelationFilter
+  }, "id" | "email">
 
-  export type alertOrderByWithAggregationInput = {
-    alert_id?: SortOrder
-    muni_id?: SortOrderInput | SortOrder
-    alert_title?: SortOrderInput | SortOrder
-    alert_date?: SortOrderInput | SortOrder
-    alert_time?: SortOrderInput | SortOrder
-    description?: SortOrderInput | SortOrder
-    _count?: alertCountOrderByAggregateInput
-    _avg?: alertAvgOrderByAggregateInput
-    _max?: alertMaxOrderByAggregateInput
-    _min?: alertMinOrderByAggregateInput
-    _sum?: alertSumOrderByAggregateInput
+  export type UserOrderByWithAggregationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    role?: SortOrder
+    created_at?: SortOrder
+    _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
+    _max?: UserMaxOrderByAggregateInput
+    _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
   }
 
-  export type alertScalarWhereWithAggregatesInput = {
-    AND?: alertScalarWhereWithAggregatesInput | alertScalarWhereWithAggregatesInput[]
-    OR?: alertScalarWhereWithAggregatesInput[]
-    NOT?: alertScalarWhereWithAggregatesInput | alertScalarWhereWithAggregatesInput[]
-    alert_id?: IntWithAggregatesFilter<"alert"> | number
-    muni_id?: IntNullableWithAggregatesFilter<"alert"> | number | null
-    alert_title?: StringNullableWithAggregatesFilter<"alert"> | string | null
-    alert_date?: DateTimeNullableWithAggregatesFilter<"alert"> | Date | string | null
-    alert_time?: DateTimeNullableWithAggregatesFilter<"alert"> | Date | string | null
-    description?: StringNullableWithAggregatesFilter<"alert"> | string | null
+  export type UserScalarWhereWithAggregatesInput = {
+    AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    OR?: UserScalarWhereWithAggregatesInput[]
+    NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"User"> | number
+    email?: StringWithAggregatesFilter<"User"> | string
+    password?: StringWithAggregatesFilter<"User"> | string
+    role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
+    created_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type NeighborProfileWhereInput = {
+    AND?: NeighborProfileWhereInput | NeighborProfileWhereInput[]
+    OR?: NeighborProfileWhereInput[]
+    NOT?: NeighborProfileWhereInput | NeighborProfileWhereInput[]
+    id?: IntFilter<"NeighborProfile"> | number
+    first_name?: StringFilter<"NeighborProfile"> | string
+    last_name?: StringFilter<"NeighborProfile"> | string
+    second_last_name?: StringNullableFilter<"NeighborProfile"> | string | null
+    identification?: IntFilter<"NeighborProfile"> | number
+    phone_number?: IntNullableFilter<"NeighborProfile"> | number | null
+    userId?: IntFilter<"NeighborProfile"> | number
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type NeighborProfileOrderByWithRelationInput = {
+    id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    second_last_name?: SortOrderInput | SortOrder
+    identification?: SortOrder
+    phone_number?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type NeighborProfileWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    identification?: number
+    userId?: number
+    AND?: NeighborProfileWhereInput | NeighborProfileWhereInput[]
+    OR?: NeighborProfileWhereInput[]
+    NOT?: NeighborProfileWhereInput | NeighborProfileWhereInput[]
+    first_name?: StringFilter<"NeighborProfile"> | string
+    last_name?: StringFilter<"NeighborProfile"> | string
+    second_last_name?: StringNullableFilter<"NeighborProfile"> | string | null
+    phone_number?: IntNullableFilter<"NeighborProfile"> | number | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "identification" | "userId">
+
+  export type NeighborProfileOrderByWithAggregationInput = {
+    id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    second_last_name?: SortOrderInput | SortOrder
+    identification?: SortOrder
+    phone_number?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    _count?: NeighborProfileCountOrderByAggregateInput
+    _avg?: NeighborProfileAvgOrderByAggregateInput
+    _max?: NeighborProfileMaxOrderByAggregateInput
+    _min?: NeighborProfileMinOrderByAggregateInput
+    _sum?: NeighborProfileSumOrderByAggregateInput
+  }
+
+  export type NeighborProfileScalarWhereWithAggregatesInput = {
+    AND?: NeighborProfileScalarWhereWithAggregatesInput | NeighborProfileScalarWhereWithAggregatesInput[]
+    OR?: NeighborProfileScalarWhereWithAggregatesInput[]
+    NOT?: NeighborProfileScalarWhereWithAggregatesInput | NeighborProfileScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"NeighborProfile"> | number
+    first_name?: StringWithAggregatesFilter<"NeighborProfile"> | string
+    last_name?: StringWithAggregatesFilter<"NeighborProfile"> | string
+    second_last_name?: StringNullableWithAggregatesFilter<"NeighborProfile"> | string | null
+    identification?: IntWithAggregatesFilter<"NeighborProfile"> | number
+    phone_number?: IntNullableWithAggregatesFilter<"NeighborProfile"> | number | null
+    userId?: IntWithAggregatesFilter<"NeighborProfile"> | number
+  }
+
+  export type MunicipalityProfileWhereInput = {
+    AND?: MunicipalityProfileWhereInput | MunicipalityProfileWhereInput[]
+    OR?: MunicipalityProfileWhereInput[]
+    NOT?: MunicipalityProfileWhereInput | MunicipalityProfileWhereInput[]
+    id?: IntFilter<"MunicipalityProfile"> | number
+    name?: StringFilter<"MunicipalityProfile"> | string
+    canton?: StringFilter<"MunicipalityProfile"> | string
+    userId?: IntFilter<"MunicipalityProfile"> | number
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type MunicipalityProfileOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    canton?: SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type MunicipalityProfileWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId?: number
+    AND?: MunicipalityProfileWhereInput | MunicipalityProfileWhereInput[]
+    OR?: MunicipalityProfileWhereInput[]
+    NOT?: MunicipalityProfileWhereInput | MunicipalityProfileWhereInput[]
+    name?: StringFilter<"MunicipalityProfile"> | string
+    canton?: StringFilter<"MunicipalityProfile"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId">
+
+  export type MunicipalityProfileOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    canton?: SortOrder
+    userId?: SortOrder
+    _count?: MunicipalityProfileCountOrderByAggregateInput
+    _avg?: MunicipalityProfileAvgOrderByAggregateInput
+    _max?: MunicipalityProfileMaxOrderByAggregateInput
+    _min?: MunicipalityProfileMinOrderByAggregateInput
+    _sum?: MunicipalityProfileSumOrderByAggregateInput
+  }
+
+  export type MunicipalityProfileScalarWhereWithAggregatesInput = {
+    AND?: MunicipalityProfileScalarWhereWithAggregatesInput | MunicipalityProfileScalarWhereWithAggregatesInput[]
+    OR?: MunicipalityProfileScalarWhereWithAggregatesInput[]
+    NOT?: MunicipalityProfileScalarWhereWithAggregatesInput | MunicipalityProfileScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"MunicipalityProfile"> | number
+    name?: StringWithAggregatesFilter<"MunicipalityProfile"> | string
+    canton?: StringWithAggregatesFilter<"MunicipalityProfile"> | string
+    userId?: IntWithAggregatesFilter<"MunicipalityProfile"> | number
+  }
+
+  export type AlertWhereInput = {
+    AND?: AlertWhereInput | AlertWhereInput[]
+    OR?: AlertWhereInput[]
+    NOT?: AlertWhereInput | AlertWhereInput[]
+    id?: IntFilter<"Alert"> | number
+    title?: StringFilter<"Alert"> | string
+    content?: StringFilter<"Alert"> | string
+    created_at?: DateTimeFilter<"Alert"> | Date | string
+    updated_at?: DateTimeFilter<"Alert"> | Date | string
+    authorId?: IntFilter<"Alert"> | number
+    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type AlertOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    authorId?: SortOrder
+    author?: UserOrderByWithRelationInput
+  }
+
+  export type AlertWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: AlertWhereInput | AlertWhereInput[]
+    OR?: AlertWhereInput[]
+    NOT?: AlertWhereInput | AlertWhereInput[]
+    title?: StringFilter<"Alert"> | string
+    content?: StringFilter<"Alert"> | string
+    created_at?: DateTimeFilter<"Alert"> | Date | string
+    updated_at?: DateTimeFilter<"Alert"> | Date | string
+    authorId?: IntFilter<"Alert"> | number
+    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type AlertOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    authorId?: SortOrder
+    _count?: AlertCountOrderByAggregateInput
+    _avg?: AlertAvgOrderByAggregateInput
+    _max?: AlertMaxOrderByAggregateInput
+    _min?: AlertMinOrderByAggregateInput
+    _sum?: AlertSumOrderByAggregateInput
+  }
+
+  export type AlertScalarWhereWithAggregatesInput = {
+    AND?: AlertScalarWhereWithAggregatesInput | AlertScalarWhereWithAggregatesInput[]
+    OR?: AlertScalarWhereWithAggregatesInput[]
+    NOT?: AlertScalarWhereWithAggregatesInput | AlertScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Alert"> | number
+    title?: StringWithAggregatesFilter<"Alert"> | string
+    content?: StringWithAggregatesFilter<"Alert"> | string
+    created_at?: DateTimeWithAggregatesFilter<"Alert"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"Alert"> | Date | string
+    authorId?: IntWithAggregatesFilter<"Alert"> | number
   }
 
   export type cantonWhereInput = {
@@ -11078,120 +12535,6 @@ export namespace Prisma {
     district_id?: IntWithAggregatesFilter<"district"> | number
     district_name?: StringNullableWithAggregatesFilter<"district"> | string | null
     canton_id?: IntNullableWithAggregatesFilter<"district"> | number | null
-  }
-
-  export type municipalityWhereInput = {
-    AND?: municipalityWhereInput | municipalityWhereInput[]
-    OR?: municipalityWhereInput[]
-    NOT?: municipalityWhereInput | municipalityWhereInput[]
-    muni_id?: IntFilter<"municipality"> | number
-    email?: StringNullableFilter<"municipality"> | string | null
-    password?: StringNullableFilter<"municipality"> | string | null
-    alert?: AlertListRelationFilter
-  }
-
-  export type municipalityOrderByWithRelationInput = {
-    muni_id?: SortOrder
-    email?: SortOrderInput | SortOrder
-    password?: SortOrderInput | SortOrder
-    alert?: alertOrderByRelationAggregateInput
-  }
-
-  export type municipalityWhereUniqueInput = Prisma.AtLeast<{
-    muni_id?: number
-    AND?: municipalityWhereInput | municipalityWhereInput[]
-    OR?: municipalityWhereInput[]
-    NOT?: municipalityWhereInput | municipalityWhereInput[]
-    email?: StringNullableFilter<"municipality"> | string | null
-    password?: StringNullableFilter<"municipality"> | string | null
-    alert?: AlertListRelationFilter
-  }, "muni_id">
-
-  export type municipalityOrderByWithAggregationInput = {
-    muni_id?: SortOrder
-    email?: SortOrderInput | SortOrder
-    password?: SortOrderInput | SortOrder
-    _count?: municipalityCountOrderByAggregateInput
-    _avg?: municipalityAvgOrderByAggregateInput
-    _max?: municipalityMaxOrderByAggregateInput
-    _min?: municipalityMinOrderByAggregateInput
-    _sum?: municipalitySumOrderByAggregateInput
-  }
-
-  export type municipalityScalarWhereWithAggregatesInput = {
-    AND?: municipalityScalarWhereWithAggregatesInput | municipalityScalarWhereWithAggregatesInput[]
-    OR?: municipalityScalarWhereWithAggregatesInput[]
-    NOT?: municipalityScalarWhereWithAggregatesInput | municipalityScalarWhereWithAggregatesInput[]
-    muni_id?: IntWithAggregatesFilter<"municipality"> | number
-    email?: StringNullableWithAggregatesFilter<"municipality"> | string | null
-    password?: StringNullableWithAggregatesFilter<"municipality"> | string | null
-  }
-
-  export type neighborWhereInput = {
-    AND?: neighborWhereInput | neighborWhereInput[]
-    OR?: neighborWhereInput[]
-    NOT?: neighborWhereInput | neighborWhereInput[]
-    identification?: IntFilter<"neighbor"> | number
-    first_name?: StringFilter<"neighbor"> | string
-    last_name?: StringFilter<"neighbor"> | string
-    second_last_name?: StringNullableFilter<"neighbor"> | string | null
-    email?: StringFilter<"neighbor"> | string
-    password?: StringFilter<"neighbor"> | string
-    phone_number?: IntNullableFilter<"neighbor"> | number | null
-    report?: ReportListRelationFilter
-  }
-
-  export type neighborOrderByWithRelationInput = {
-    identification?: SortOrder
-    first_name?: SortOrder
-    last_name?: SortOrder
-    second_last_name?: SortOrderInput | SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    phone_number?: SortOrderInput | SortOrder
-    report?: reportOrderByRelationAggregateInput
-  }
-
-  export type neighborWhereUniqueInput = Prisma.AtLeast<{
-    identification?: number
-    email?: string
-    AND?: neighborWhereInput | neighborWhereInput[]
-    OR?: neighborWhereInput[]
-    NOT?: neighborWhereInput | neighborWhereInput[]
-    first_name?: StringFilter<"neighbor"> | string
-    last_name?: StringFilter<"neighbor"> | string
-    second_last_name?: StringNullableFilter<"neighbor"> | string | null
-    password?: StringFilter<"neighbor"> | string
-    phone_number?: IntNullableFilter<"neighbor"> | number | null
-    report?: ReportListRelationFilter
-  }, "identification" | "email">
-
-  export type neighborOrderByWithAggregationInput = {
-    identification?: SortOrder
-    first_name?: SortOrder
-    last_name?: SortOrder
-    second_last_name?: SortOrderInput | SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    phone_number?: SortOrderInput | SortOrder
-    _count?: neighborCountOrderByAggregateInput
-    _avg?: neighborAvgOrderByAggregateInput
-    _max?: neighborMaxOrderByAggregateInput
-    _min?: neighborMinOrderByAggregateInput
-    _sum?: neighborSumOrderByAggregateInput
-  }
-
-  export type neighborScalarWhereWithAggregatesInput = {
-    AND?: neighborScalarWhereWithAggregatesInput | neighborScalarWhereWithAggregatesInput[]
-    OR?: neighborScalarWhereWithAggregatesInput[]
-    NOT?: neighborScalarWhereWithAggregatesInput | neighborScalarWhereWithAggregatesInput[]
-    identification?: IntWithAggregatesFilter<"neighbor"> | number
-    first_name?: StringWithAggregatesFilter<"neighbor"> | string
-    last_name?: StringWithAggregatesFilter<"neighbor"> | string
-    second_last_name?: StringNullableWithAggregatesFilter<"neighbor"> | string | null
-    email?: StringWithAggregatesFilter<"neighbor"> | string
-    password?: StringWithAggregatesFilter<"neighbor"> | string
-    phone_number?: IntNullableWithAggregatesFilter<"neighbor"> | number | null
   }
 
   export type problemWhereInput = {
@@ -11291,7 +12634,7 @@ export namespace Prisma {
     OR?: reportWhereInput[]
     NOT?: reportWhereInput | reportWhereInput[]
     report_id?: IntFilter<"report"> | number
-    neighbor_id?: IntNullableFilter<"report"> | number | null
+    author_id?: IntNullableFilter<"report"> | number | null
     report_title?: StringNullableFilter<"report"> | string | null
     problem_id?: IntNullableFilter<"report"> | number | null
     canton_id?: IntNullableFilter<"report"> | number | null
@@ -11304,13 +12647,13 @@ export namespace Prisma {
     updated_at?: DateTimeNullableFilter<"report"> | Date | string | null
     canton?: XOR<CantonNullableScalarRelationFilter, cantonWhereInput> | null
     district_report_districtTodistrict?: XOR<DistrictNullableScalarRelationFilter, districtWhereInput> | null
-    neighbor?: XOR<NeighborNullableScalarRelationFilter, neighborWhereInput> | null
+    author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     problem?: XOR<ProblemNullableScalarRelationFilter, problemWhereInput> | null
   }
 
   export type reportOrderByWithRelationInput = {
     report_id?: SortOrder
-    neighbor_id?: SortOrderInput | SortOrder
+    author_id?: SortOrderInput | SortOrder
     report_title?: SortOrderInput | SortOrder
     problem_id?: SortOrderInput | SortOrder
     canton_id?: SortOrderInput | SortOrder
@@ -11323,7 +12666,7 @@ export namespace Prisma {
     updated_at?: SortOrderInput | SortOrder
     canton?: cantonOrderByWithRelationInput
     district_report_districtTodistrict?: districtOrderByWithRelationInput
-    neighbor?: neighborOrderByWithRelationInput
+    author?: UserOrderByWithRelationInput
     problem?: problemOrderByWithRelationInput
   }
 
@@ -11332,7 +12675,7 @@ export namespace Prisma {
     AND?: reportWhereInput | reportWhereInput[]
     OR?: reportWhereInput[]
     NOT?: reportWhereInput | reportWhereInput[]
-    neighbor_id?: IntNullableFilter<"report"> | number | null
+    author_id?: IntNullableFilter<"report"> | number | null
     report_title?: StringNullableFilter<"report"> | string | null
     problem_id?: IntNullableFilter<"report"> | number | null
     canton_id?: IntNullableFilter<"report"> | number | null
@@ -11345,13 +12688,13 @@ export namespace Prisma {
     updated_at?: DateTimeNullableFilter<"report"> | Date | string | null
     canton?: XOR<CantonNullableScalarRelationFilter, cantonWhereInput> | null
     district_report_districtTodistrict?: XOR<DistrictNullableScalarRelationFilter, districtWhereInput> | null
-    neighbor?: XOR<NeighborNullableScalarRelationFilter, neighborWhereInput> | null
+    author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     problem?: XOR<ProblemNullableScalarRelationFilter, problemWhereInput> | null
   }, "report_id">
 
   export type reportOrderByWithAggregationInput = {
     report_id?: SortOrder
-    neighbor_id?: SortOrderInput | SortOrder
+    author_id?: SortOrderInput | SortOrder
     report_title?: SortOrderInput | SortOrder
     problem_id?: SortOrderInput | SortOrder
     canton_id?: SortOrderInput | SortOrder
@@ -11374,7 +12717,7 @@ export namespace Prisma {
     OR?: reportScalarWhereWithAggregatesInput[]
     NOT?: reportScalarWhereWithAggregatesInput | reportScalarWhereWithAggregatesInput[]
     report_id?: IntWithAggregatesFilter<"report"> | number
-    neighbor_id?: IntNullableWithAggregatesFilter<"report"> | number | null
+    author_id?: IntNullableWithAggregatesFilter<"report"> | number | null
     report_title?: StringNullableWithAggregatesFilter<"report"> | string | null
     problem_id?: IntNullableWithAggregatesFilter<"report"> | number | null
     canton_id?: IntNullableWithAggregatesFilter<"report"> | number | null
@@ -11387,63 +12730,243 @@ export namespace Prisma {
     updated_at?: DateTimeNullableWithAggregatesFilter<"report"> | Date | string | null
   }
 
-  export type alertCreateInput = {
-    alert_title?: string | null
-    alert_date?: Date | string | null
-    alert_time?: Date | string | null
-    description?: string | null
-    municipality?: municipalityCreateNestedOneWithoutAlertInput
+  export type UserCreateInput = {
+    email: string
+    password: string
+    role?: $Enums.Role
+    created_at?: Date | string
+    neighborProfile?: NeighborProfileCreateNestedOneWithoutUserInput
+    municipalityProfile?: MunicipalityProfileCreateNestedOneWithoutUserInput
+    alerts?: AlertCreateNestedManyWithoutAuthorInput
+    reports?: reportCreateNestedManyWithoutAuthorInput
   }
 
-  export type alertUncheckedCreateInput = {
-    alert_id?: number
-    muni_id?: number | null
-    alert_title?: string | null
-    alert_date?: Date | string | null
-    alert_time?: Date | string | null
-    description?: string | null
+  export type UserUncheckedCreateInput = {
+    id?: number
+    email: string
+    password: string
+    role?: $Enums.Role
+    created_at?: Date | string
+    neighborProfile?: NeighborProfileUncheckedCreateNestedOneWithoutUserInput
+    municipalityProfile?: MunicipalityProfileUncheckedCreateNestedOneWithoutUserInput
+    alerts?: AlertUncheckedCreateNestedManyWithoutAuthorInput
+    reports?: reportUncheckedCreateNestedManyWithoutAuthorInput
   }
 
-  export type alertUpdateInput = {
-    alert_title?: NullableStringFieldUpdateOperationsInput | string | null
-    alert_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    alert_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    municipality?: municipalityUpdateOneWithoutAlertNestedInput
+  export type UserUpdateInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    neighborProfile?: NeighborProfileUpdateOneWithoutUserNestedInput
+    municipalityProfile?: MunicipalityProfileUpdateOneWithoutUserNestedInput
+    alerts?: AlertUpdateManyWithoutAuthorNestedInput
+    reports?: reportUpdateManyWithoutAuthorNestedInput
   }
 
-  export type alertUncheckedUpdateInput = {
-    alert_id?: IntFieldUpdateOperationsInput | number
-    muni_id?: NullableIntFieldUpdateOperationsInput | number | null
-    alert_title?: NullableStringFieldUpdateOperationsInput | string | null
-    alert_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    alert_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+  export type UserUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    neighborProfile?: NeighborProfileUncheckedUpdateOneWithoutUserNestedInput
+    municipalityProfile?: MunicipalityProfileUncheckedUpdateOneWithoutUserNestedInput
+    alerts?: AlertUncheckedUpdateManyWithoutAuthorNestedInput
+    reports?: reportUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
-  export type alertCreateManyInput = {
-    alert_id?: number
-    muni_id?: number | null
-    alert_title?: string | null
-    alert_date?: Date | string | null
-    alert_time?: Date | string | null
-    description?: string | null
+  export type UserCreateManyInput = {
+    id?: number
+    email: string
+    password: string
+    role?: $Enums.Role
+    created_at?: Date | string
   }
 
-  export type alertUpdateManyMutationInput = {
-    alert_title?: NullableStringFieldUpdateOperationsInput | string | null
-    alert_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    alert_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+  export type UserUpdateManyMutationInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type alertUncheckedUpdateManyInput = {
-    alert_id?: IntFieldUpdateOperationsInput | number
-    muni_id?: NullableIntFieldUpdateOperationsInput | number | null
-    alert_title?: NullableStringFieldUpdateOperationsInput | string | null
-    alert_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    alert_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+  export type UserUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NeighborProfileCreateInput = {
+    first_name: string
+    last_name: string
+    second_last_name?: string | null
+    identification: number
+    phone_number?: number | null
+    user: UserCreateNestedOneWithoutNeighborProfileInput
+  }
+
+  export type NeighborProfileUncheckedCreateInput = {
+    id?: number
+    first_name: string
+    last_name: string
+    second_last_name?: string | null
+    identification: number
+    phone_number?: number | null
+    userId: number
+  }
+
+  export type NeighborProfileUpdateInput = {
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    second_last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    identification?: IntFieldUpdateOperationsInput | number
+    phone_number?: NullableIntFieldUpdateOperationsInput | number | null
+    user?: UserUpdateOneRequiredWithoutNeighborProfileNestedInput
+  }
+
+  export type NeighborProfileUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    second_last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    identification?: IntFieldUpdateOperationsInput | number
+    phone_number?: NullableIntFieldUpdateOperationsInput | number | null
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type NeighborProfileCreateManyInput = {
+    id?: number
+    first_name: string
+    last_name: string
+    second_last_name?: string | null
+    identification: number
+    phone_number?: number | null
+    userId: number
+  }
+
+  export type NeighborProfileUpdateManyMutationInput = {
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    second_last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    identification?: IntFieldUpdateOperationsInput | number
+    phone_number?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type NeighborProfileUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    second_last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    identification?: IntFieldUpdateOperationsInput | number
+    phone_number?: NullableIntFieldUpdateOperationsInput | number | null
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type MunicipalityProfileCreateInput = {
+    name: string
+    canton: string
+    user: UserCreateNestedOneWithoutMunicipalityProfileInput
+  }
+
+  export type MunicipalityProfileUncheckedCreateInput = {
+    id?: number
+    name: string
+    canton: string
+    userId: number
+  }
+
+  export type MunicipalityProfileUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    canton?: StringFieldUpdateOperationsInput | string
+    user?: UserUpdateOneRequiredWithoutMunicipalityProfileNestedInput
+  }
+
+  export type MunicipalityProfileUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    canton?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type MunicipalityProfileCreateManyInput = {
+    id?: number
+    name: string
+    canton: string
+    userId: number
+  }
+
+  export type MunicipalityProfileUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    canton?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MunicipalityProfileUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    canton?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type AlertCreateInput = {
+    title: string
+    content: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    author: UserCreateNestedOneWithoutAlertsInput
+  }
+
+  export type AlertUncheckedCreateInput = {
+    id?: number
+    title: string
+    content: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    authorId: number
+  }
+
+  export type AlertUpdateInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: UserUpdateOneRequiredWithoutAlertsNestedInput
+  }
+
+  export type AlertUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    authorId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type AlertCreateManyInput = {
+    id?: number
+    title: string
+    content: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    authorId: number
+  }
+
+  export type AlertUpdateManyMutationInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AlertUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    authorId?: IntFieldUpdateOperationsInput | number
   }
 
   export type cantonCreateInput = {
@@ -11526,123 +13049,6 @@ export namespace Prisma {
     district_id?: IntFieldUpdateOperationsInput | number
     district_name?: NullableStringFieldUpdateOperationsInput | string | null
     canton_id?: NullableIntFieldUpdateOperationsInput | number | null
-  }
-
-  export type municipalityCreateInput = {
-    email?: string | null
-    password?: string | null
-    alert?: alertCreateNestedManyWithoutMunicipalityInput
-  }
-
-  export type municipalityUncheckedCreateInput = {
-    muni_id?: number
-    email?: string | null
-    password?: string | null
-    alert?: alertUncheckedCreateNestedManyWithoutMunicipalityInput
-  }
-
-  export type municipalityUpdateInput = {
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
-    alert?: alertUpdateManyWithoutMunicipalityNestedInput
-  }
-
-  export type municipalityUncheckedUpdateInput = {
-    muni_id?: IntFieldUpdateOperationsInput | number
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
-    alert?: alertUncheckedUpdateManyWithoutMunicipalityNestedInput
-  }
-
-  export type municipalityCreateManyInput = {
-    muni_id?: number
-    email?: string | null
-    password?: string | null
-  }
-
-  export type municipalityUpdateManyMutationInput = {
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type municipalityUncheckedUpdateManyInput = {
-    muni_id?: IntFieldUpdateOperationsInput | number
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type neighborCreateInput = {
-    identification: number
-    first_name: string
-    last_name: string
-    second_last_name?: string | null
-    email: string
-    password: string
-    phone_number?: number | null
-    report?: reportCreateNestedManyWithoutNeighborInput
-  }
-
-  export type neighborUncheckedCreateInput = {
-    identification: number
-    first_name: string
-    last_name: string
-    second_last_name?: string | null
-    email: string
-    password: string
-    phone_number?: number | null
-    report?: reportUncheckedCreateNestedManyWithoutNeighborInput
-  }
-
-  export type neighborUpdateInput = {
-    identification?: IntFieldUpdateOperationsInput | number
-    first_name?: StringFieldUpdateOperationsInput | string
-    last_name?: StringFieldUpdateOperationsInput | string
-    second_last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phone_number?: NullableIntFieldUpdateOperationsInput | number | null
-    report?: reportUpdateManyWithoutNeighborNestedInput
-  }
-
-  export type neighborUncheckedUpdateInput = {
-    identification?: IntFieldUpdateOperationsInput | number
-    first_name?: StringFieldUpdateOperationsInput | string
-    last_name?: StringFieldUpdateOperationsInput | string
-    second_last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phone_number?: NullableIntFieldUpdateOperationsInput | number | null
-    report?: reportUncheckedUpdateManyWithoutNeighborNestedInput
-  }
-
-  export type neighborCreateManyInput = {
-    identification: number
-    first_name: string
-    last_name: string
-    second_last_name?: string | null
-    email: string
-    password: string
-    phone_number?: number | null
-  }
-
-  export type neighborUpdateManyMutationInput = {
-    identification?: IntFieldUpdateOperationsInput | number
-    first_name?: StringFieldUpdateOperationsInput | string
-    last_name?: StringFieldUpdateOperationsInput | string
-    second_last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phone_number?: NullableIntFieldUpdateOperationsInput | number | null
-  }
-
-  export type neighborUncheckedUpdateManyInput = {
-    identification?: IntFieldUpdateOperationsInput | number
-    first_name?: StringFieldUpdateOperationsInput | string
-    last_name?: StringFieldUpdateOperationsInput | string
-    second_last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phone_number?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type problemCreateInput = {
@@ -11733,13 +13139,13 @@ export namespace Prisma {
     updated_at?: Date | string | null
     canton?: cantonCreateNestedOneWithoutReportInput
     district_report_districtTodistrict?: districtCreateNestedOneWithoutReport_report_districtTodistrictInput
-    neighbor?: neighborCreateNestedOneWithoutReportInput
+    author?: UserCreateNestedOneWithoutReportsInput
     problem?: problemCreateNestedOneWithoutReportInput
   }
 
   export type reportUncheckedCreateInput = {
     report_id?: number
-    neighbor_id?: number | null
+    author_id?: number | null
     report_title?: string | null
     problem_id?: number | null
     canton_id?: number | null
@@ -11762,13 +13168,13 @@ export namespace Prisma {
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canton?: cantonUpdateOneWithoutReportNestedInput
     district_report_districtTodistrict?: districtUpdateOneWithoutReport_report_districtTodistrictNestedInput
-    neighbor?: neighborUpdateOneWithoutReportNestedInput
+    author?: UserUpdateOneWithoutReportsNestedInput
     problem?: problemUpdateOneWithoutReportNestedInput
   }
 
   export type reportUncheckedUpdateInput = {
     report_id?: IntFieldUpdateOperationsInput | number
-    neighbor_id?: NullableIntFieldUpdateOperationsInput | number | null
+    author_id?: NullableIntFieldUpdateOperationsInput | number | null
     report_title?: NullableStringFieldUpdateOperationsInput | string | null
     problem_id?: NullableIntFieldUpdateOperationsInput | number | null
     canton_id?: NullableIntFieldUpdateOperationsInput | number | null
@@ -11783,7 +13189,7 @@ export namespace Prisma {
 
   export type reportCreateManyInput = {
     report_id?: number
-    neighbor_id?: number | null
+    author_id?: number | null
     report_title?: string | null
     problem_id?: number | null
     canton_id?: number | null
@@ -11808,7 +13214,7 @@ export namespace Prisma {
 
   export type reportUncheckedUpdateManyInput = {
     report_id?: IntFieldUpdateOperationsInput | number
-    neighbor_id?: NullableIntFieldUpdateOperationsInput | number | null
+    author_id?: NullableIntFieldUpdateOperationsInput | number | null
     report_title?: NullableStringFieldUpdateOperationsInput | string | null
     problem_id?: NullableIntFieldUpdateOperationsInput | number | null
     canton_id?: NullableIntFieldUpdateOperationsInput | number | null
@@ -11832,21 +13238,10 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+  export type StringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -11855,65 +13250,87 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+    not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+  export type EnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type MunicipalityNullableScalarRelationFilter = {
-    is?: municipalityWhereInput | null
-    isNot?: municipalityWhereInput | null
+  export type NeighborProfileNullableScalarRelationFilter = {
+    is?: NeighborProfileWhereInput | null
+    isNot?: NeighborProfileWhereInput | null
   }
 
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
+  export type MunicipalityProfileNullableScalarRelationFilter = {
+    is?: MunicipalityProfileWhereInput | null
+    isNot?: MunicipalityProfileWhereInput | null
   }
 
-  export type alertCountOrderByAggregateInput = {
-    alert_id?: SortOrder
-    muni_id?: SortOrder
-    alert_title?: SortOrder
-    alert_date?: SortOrder
-    alert_time?: SortOrder
-    description?: SortOrder
+  export type AlertListRelationFilter = {
+    every?: AlertWhereInput
+    some?: AlertWhereInput
+    none?: AlertWhereInput
   }
 
-  export type alertAvgOrderByAggregateInput = {
-    alert_id?: SortOrder
-    muni_id?: SortOrder
+  export type ReportListRelationFilter = {
+    every?: reportWhereInput
+    some?: reportWhereInput
+    none?: reportWhereInput
   }
 
-  export type alertMaxOrderByAggregateInput = {
-    alert_id?: SortOrder
-    muni_id?: SortOrder
-    alert_title?: SortOrder
-    alert_date?: SortOrder
-    alert_time?: SortOrder
-    description?: SortOrder
+  export type AlertOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
-  export type alertMinOrderByAggregateInput = {
-    alert_id?: SortOrder
-    muni_id?: SortOrder
-    alert_title?: SortOrder
-    alert_date?: SortOrder
-    alert_time?: SortOrder
-    description?: SortOrder
+  export type reportOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
-  export type alertSumOrderByAggregateInput = {
-    alert_id?: SortOrder
-    muni_id?: SortOrder
+  export type UserCountOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    role?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type UserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    role?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type UserMinOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    role?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -11932,7 +13349,64 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
     notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -11940,12 +13414,61 @@ export namespace Prisma {
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type NeighborProfileCountOrderByAggregateInput = {
+    id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    second_last_name?: SortOrder
+    identification?: SortOrder
+    phone_number?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type NeighborProfileAvgOrderByAggregateInput = {
+    id?: SortOrder
+    identification?: SortOrder
+    phone_number?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type NeighborProfileMaxOrderByAggregateInput = {
+    id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    second_last_name?: SortOrder
+    identification?: SortOrder
+    phone_number?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type NeighborProfileMinOrderByAggregateInput = {
+    id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    second_last_name?: SortOrder
+    identification?: SortOrder
+    phone_number?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type NeighborProfileSumOrderByAggregateInput = {
+    id?: SortOrder
+    identification?: SortOrder
+    phone_number?: SortOrder
+    userId?: SortOrder
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -11966,18 +13489,88 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
     _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type MunicipalityProfileCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    canton?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type MunicipalityProfileAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type MunicipalityProfileMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    canton?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type MunicipalityProfileMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    canton?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type MunicipalityProfileSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type AlertCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    authorId?: SortOrder
+  }
+
+  export type AlertAvgOrderByAggregateInput = {
+    id?: SortOrder
+    authorId?: SortOrder
+  }
+
+  export type AlertMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    authorId?: SortOrder
+  }
+
+  export type AlertMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    authorId?: SortOrder
+  }
+
+  export type AlertSumOrderByAggregateInput = {
+    id?: SortOrder
+    authorId?: SortOrder
   }
 
   export type DistrictListRelationFilter = {
@@ -11986,17 +13579,7 @@ export namespace Prisma {
     none?: districtWhereInput
   }
 
-  export type ReportListRelationFilter = {
-    every?: reportWhereInput
-    some?: reportWhereInput
-    none?: reportWhereInput
-  }
-
   export type districtOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type reportOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -12054,115 +13637,6 @@ export namespace Prisma {
   export type districtSumOrderByAggregateInput = {
     district_id?: SortOrder
     canton_id?: SortOrder
-  }
-
-  export type AlertListRelationFilter = {
-    every?: alertWhereInput
-    some?: alertWhereInput
-    none?: alertWhereInput
-  }
-
-  export type alertOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type municipalityCountOrderByAggregateInput = {
-    muni_id?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-  }
-
-  export type municipalityAvgOrderByAggregateInput = {
-    muni_id?: SortOrder
-  }
-
-  export type municipalityMaxOrderByAggregateInput = {
-    muni_id?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-  }
-
-  export type municipalityMinOrderByAggregateInput = {
-    muni_id?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-  }
-
-  export type municipalitySumOrderByAggregateInput = {
-    muni_id?: SortOrder
-  }
-
-  export type StringFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringFilter<$PrismaModel> | string
-  }
-
-  export type neighborCountOrderByAggregateInput = {
-    identification?: SortOrder
-    first_name?: SortOrder
-    last_name?: SortOrder
-    second_last_name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    phone_number?: SortOrder
-  }
-
-  export type neighborAvgOrderByAggregateInput = {
-    identification?: SortOrder
-    phone_number?: SortOrder
-  }
-
-  export type neighborMaxOrderByAggregateInput = {
-    identification?: SortOrder
-    first_name?: SortOrder
-    last_name?: SortOrder
-    second_last_name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    phone_number?: SortOrder
-  }
-
-  export type neighborMinOrderByAggregateInput = {
-    identification?: SortOrder
-    first_name?: SortOrder
-    last_name?: SortOrder
-    second_last_name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    phone_number?: SortOrder
-  }
-
-  export type neighborSumOrderByAggregateInput = {
-    identification?: SortOrder
-    phone_number?: SortOrder
-  }
-
-  export type StringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type Problem_typeNullableScalarRelationFilter = {
@@ -12231,14 +13705,25 @@ export namespace Prisma {
     problem_type_id?: SortOrder
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type DistrictNullableScalarRelationFilter = {
     is?: districtWhereInput | null
     isNot?: districtWhereInput | null
   }
 
-  export type NeighborNullableScalarRelationFilter = {
-    is?: neighborWhereInput | null
-    isNot?: neighborWhereInput | null
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
   }
 
   export type ProblemNullableScalarRelationFilter = {
@@ -12248,7 +13733,7 @@ export namespace Prisma {
 
   export type reportCountOrderByAggregateInput = {
     report_id?: SortOrder
-    neighbor_id?: SortOrder
+    author_id?: SortOrder
     report_title?: SortOrder
     problem_id?: SortOrder
     canton_id?: SortOrder
@@ -12263,7 +13748,7 @@ export namespace Prisma {
 
   export type reportAvgOrderByAggregateInput = {
     report_id?: SortOrder
-    neighbor_id?: SortOrder
+    author_id?: SortOrder
     problem_id?: SortOrder
     canton_id?: SortOrder
     district?: SortOrder
@@ -12271,7 +13756,7 @@ export namespace Prisma {
 
   export type reportMaxOrderByAggregateInput = {
     report_id?: SortOrder
-    neighbor_id?: SortOrder
+    author_id?: SortOrder
     report_title?: SortOrder
     problem_id?: SortOrder
     canton_id?: SortOrder
@@ -12286,7 +13771,7 @@ export namespace Prisma {
 
   export type reportMinOrderByAggregateInput = {
     report_id?: SortOrder
-    neighbor_id?: SortOrder
+    author_id?: SortOrder
     report_title?: SortOrder
     problem_id?: SortOrder
     canton_id?: SortOrder
@@ -12301,34 +13786,136 @@ export namespace Prisma {
 
   export type reportSumOrderByAggregateInput = {
     report_id?: SortOrder
-    neighbor_id?: SortOrder
+    author_id?: SortOrder
     problem_id?: SortOrder
     canton_id?: SortOrder
     district?: SortOrder
   }
 
-  export type municipalityCreateNestedOneWithoutAlertInput = {
-    create?: XOR<municipalityCreateWithoutAlertInput, municipalityUncheckedCreateWithoutAlertInput>
-    connectOrCreate?: municipalityCreateOrConnectWithoutAlertInput
-    connect?: municipalityWhereUniqueInput
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
+  export type NeighborProfileCreateNestedOneWithoutUserInput = {
+    create?: XOR<NeighborProfileCreateWithoutUserInput, NeighborProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: NeighborProfileCreateOrConnectWithoutUserInput
+    connect?: NeighborProfileWhereUniqueInput
   }
 
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
+  export type MunicipalityProfileCreateNestedOneWithoutUserInput = {
+    create?: XOR<MunicipalityProfileCreateWithoutUserInput, MunicipalityProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: MunicipalityProfileCreateOrConnectWithoutUserInput
+    connect?: MunicipalityProfileWhereUniqueInput
   }
 
-  export type municipalityUpdateOneWithoutAlertNestedInput = {
-    create?: XOR<municipalityCreateWithoutAlertInput, municipalityUncheckedCreateWithoutAlertInput>
-    connectOrCreate?: municipalityCreateOrConnectWithoutAlertInput
-    upsert?: municipalityUpsertWithoutAlertInput
-    disconnect?: municipalityWhereInput | boolean
-    delete?: municipalityWhereInput | boolean
-    connect?: municipalityWhereUniqueInput
-    update?: XOR<XOR<municipalityUpdateToOneWithWhereWithoutAlertInput, municipalityUpdateWithoutAlertInput>, municipalityUncheckedUpdateWithoutAlertInput>
+  export type AlertCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<AlertCreateWithoutAuthorInput, AlertUncheckedCreateWithoutAuthorInput> | AlertCreateWithoutAuthorInput[] | AlertUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: AlertCreateOrConnectWithoutAuthorInput | AlertCreateOrConnectWithoutAuthorInput[]
+    createMany?: AlertCreateManyAuthorInputEnvelope
+    connect?: AlertWhereUniqueInput | AlertWhereUniqueInput[]
+  }
+
+  export type reportCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<reportCreateWithoutAuthorInput, reportUncheckedCreateWithoutAuthorInput> | reportCreateWithoutAuthorInput[] | reportUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: reportCreateOrConnectWithoutAuthorInput | reportCreateOrConnectWithoutAuthorInput[]
+    createMany?: reportCreateManyAuthorInputEnvelope
+    connect?: reportWhereUniqueInput | reportWhereUniqueInput[]
+  }
+
+  export type NeighborProfileUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<NeighborProfileCreateWithoutUserInput, NeighborProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: NeighborProfileCreateOrConnectWithoutUserInput
+    connect?: NeighborProfileWhereUniqueInput
+  }
+
+  export type MunicipalityProfileUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<MunicipalityProfileCreateWithoutUserInput, MunicipalityProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: MunicipalityProfileCreateOrConnectWithoutUserInput
+    connect?: MunicipalityProfileWhereUniqueInput
+  }
+
+  export type AlertUncheckedCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<AlertCreateWithoutAuthorInput, AlertUncheckedCreateWithoutAuthorInput> | AlertCreateWithoutAuthorInput[] | AlertUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: AlertCreateOrConnectWithoutAuthorInput | AlertCreateOrConnectWithoutAuthorInput[]
+    createMany?: AlertCreateManyAuthorInputEnvelope
+    connect?: AlertWhereUniqueInput | AlertWhereUniqueInput[]
+  }
+
+  export type reportUncheckedCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<reportCreateWithoutAuthorInput, reportUncheckedCreateWithoutAuthorInput> | reportCreateWithoutAuthorInput[] | reportUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: reportCreateOrConnectWithoutAuthorInput | reportCreateOrConnectWithoutAuthorInput[]
+    createMany?: reportCreateManyAuthorInputEnvelope
+    connect?: reportWhereUniqueInput | reportWhereUniqueInput[]
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
+  }
+
+  export type EnumRoleFieldUpdateOperationsInput = {
+    set?: $Enums.Role
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type NeighborProfileUpdateOneWithoutUserNestedInput = {
+    create?: XOR<NeighborProfileCreateWithoutUserInput, NeighborProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: NeighborProfileCreateOrConnectWithoutUserInput
+    upsert?: NeighborProfileUpsertWithoutUserInput
+    disconnect?: NeighborProfileWhereInput | boolean
+    delete?: NeighborProfileWhereInput | boolean
+    connect?: NeighborProfileWhereUniqueInput
+    update?: XOR<XOR<NeighborProfileUpdateToOneWithWhereWithoutUserInput, NeighborProfileUpdateWithoutUserInput>, NeighborProfileUncheckedUpdateWithoutUserInput>
+  }
+
+  export type MunicipalityProfileUpdateOneWithoutUserNestedInput = {
+    create?: XOR<MunicipalityProfileCreateWithoutUserInput, MunicipalityProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: MunicipalityProfileCreateOrConnectWithoutUserInput
+    upsert?: MunicipalityProfileUpsertWithoutUserInput
+    disconnect?: MunicipalityProfileWhereInput | boolean
+    delete?: MunicipalityProfileWhereInput | boolean
+    connect?: MunicipalityProfileWhereUniqueInput
+    update?: XOR<XOR<MunicipalityProfileUpdateToOneWithWhereWithoutUserInput, MunicipalityProfileUpdateWithoutUserInput>, MunicipalityProfileUncheckedUpdateWithoutUserInput>
+  }
+
+  export type AlertUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<AlertCreateWithoutAuthorInput, AlertUncheckedCreateWithoutAuthorInput> | AlertCreateWithoutAuthorInput[] | AlertUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: AlertCreateOrConnectWithoutAuthorInput | AlertCreateOrConnectWithoutAuthorInput[]
+    upsert?: AlertUpsertWithWhereUniqueWithoutAuthorInput | AlertUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: AlertCreateManyAuthorInputEnvelope
+    set?: AlertWhereUniqueInput | AlertWhereUniqueInput[]
+    disconnect?: AlertWhereUniqueInput | AlertWhereUniqueInput[]
+    delete?: AlertWhereUniqueInput | AlertWhereUniqueInput[]
+    connect?: AlertWhereUniqueInput | AlertWhereUniqueInput[]
+    update?: AlertUpdateWithWhereUniqueWithoutAuthorInput | AlertUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: AlertUpdateManyWithWhereWithoutAuthorInput | AlertUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: AlertScalarWhereInput | AlertScalarWhereInput[]
+  }
+
+  export type reportUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<reportCreateWithoutAuthorInput, reportUncheckedCreateWithoutAuthorInput> | reportCreateWithoutAuthorInput[] | reportUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: reportCreateOrConnectWithoutAuthorInput | reportCreateOrConnectWithoutAuthorInput[]
+    upsert?: reportUpsertWithWhereUniqueWithoutAuthorInput | reportUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: reportCreateManyAuthorInputEnvelope
+    set?: reportWhereUniqueInput | reportWhereUniqueInput[]
+    disconnect?: reportWhereUniqueInput | reportWhereUniqueInput[]
+    delete?: reportWhereUniqueInput | reportWhereUniqueInput[]
+    connect?: reportWhereUniqueInput | reportWhereUniqueInput[]
+    update?: reportUpdateWithWhereUniqueWithoutAuthorInput | reportUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: reportUpdateManyWithWhereWithoutAuthorInput | reportUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: reportScalarWhereInput | reportScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -12339,12 +13926,106 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type NeighborProfileUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<NeighborProfileCreateWithoutUserInput, NeighborProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: NeighborProfileCreateOrConnectWithoutUserInput
+    upsert?: NeighborProfileUpsertWithoutUserInput
+    disconnect?: NeighborProfileWhereInput | boolean
+    delete?: NeighborProfileWhereInput | boolean
+    connect?: NeighborProfileWhereUniqueInput
+    update?: XOR<XOR<NeighborProfileUpdateToOneWithWhereWithoutUserInput, NeighborProfileUpdateWithoutUserInput>, NeighborProfileUncheckedUpdateWithoutUserInput>
+  }
+
+  export type MunicipalityProfileUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<MunicipalityProfileCreateWithoutUserInput, MunicipalityProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: MunicipalityProfileCreateOrConnectWithoutUserInput
+    upsert?: MunicipalityProfileUpsertWithoutUserInput
+    disconnect?: MunicipalityProfileWhereInput | boolean
+    delete?: MunicipalityProfileWhereInput | boolean
+    connect?: MunicipalityProfileWhereUniqueInput
+    update?: XOR<XOR<MunicipalityProfileUpdateToOneWithWhereWithoutUserInput, MunicipalityProfileUpdateWithoutUserInput>, MunicipalityProfileUncheckedUpdateWithoutUserInput>
+  }
+
+  export type AlertUncheckedUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<AlertCreateWithoutAuthorInput, AlertUncheckedCreateWithoutAuthorInput> | AlertCreateWithoutAuthorInput[] | AlertUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: AlertCreateOrConnectWithoutAuthorInput | AlertCreateOrConnectWithoutAuthorInput[]
+    upsert?: AlertUpsertWithWhereUniqueWithoutAuthorInput | AlertUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: AlertCreateManyAuthorInputEnvelope
+    set?: AlertWhereUniqueInput | AlertWhereUniqueInput[]
+    disconnect?: AlertWhereUniqueInput | AlertWhereUniqueInput[]
+    delete?: AlertWhereUniqueInput | AlertWhereUniqueInput[]
+    connect?: AlertWhereUniqueInput | AlertWhereUniqueInput[]
+    update?: AlertUpdateWithWhereUniqueWithoutAuthorInput | AlertUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: AlertUpdateManyWithWhereWithoutAuthorInput | AlertUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: AlertScalarWhereInput | AlertScalarWhereInput[]
+  }
+
+  export type reportUncheckedUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<reportCreateWithoutAuthorInput, reportUncheckedCreateWithoutAuthorInput> | reportCreateWithoutAuthorInput[] | reportUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: reportCreateOrConnectWithoutAuthorInput | reportCreateOrConnectWithoutAuthorInput[]
+    upsert?: reportUpsertWithWhereUniqueWithoutAuthorInput | reportUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: reportCreateManyAuthorInputEnvelope
+    set?: reportWhereUniqueInput | reportWhereUniqueInput[]
+    disconnect?: reportWhereUniqueInput | reportWhereUniqueInput[]
+    delete?: reportWhereUniqueInput | reportWhereUniqueInput[]
+    connect?: reportWhereUniqueInput | reportWhereUniqueInput[]
+    update?: reportUpdateWithWhereUniqueWithoutAuthorInput | reportUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: reportUpdateManyWithWhereWithoutAuthorInput | reportUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: reportScalarWhereInput | reportScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutNeighborProfileInput = {
+    create?: XOR<UserCreateWithoutNeighborProfileInput, UserUncheckedCreateWithoutNeighborProfileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutNeighborProfileInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type UserUpdateOneRequiredWithoutNeighborProfileNestedInput = {
+    create?: XOR<UserCreateWithoutNeighborProfileInput, UserUncheckedCreateWithoutNeighborProfileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutNeighborProfileInput
+    upsert?: UserUpsertWithoutNeighborProfileInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutNeighborProfileInput, UserUpdateWithoutNeighborProfileInput>, UserUncheckedUpdateWithoutNeighborProfileInput>
+  }
+
+  export type UserCreateNestedOneWithoutMunicipalityProfileInput = {
+    create?: XOR<UserCreateWithoutMunicipalityProfileInput, UserUncheckedCreateWithoutMunicipalityProfileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMunicipalityProfileInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutMunicipalityProfileNestedInput = {
+    create?: XOR<UserCreateWithoutMunicipalityProfileInput, UserUncheckedCreateWithoutMunicipalityProfileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMunicipalityProfileInput
+    upsert?: UserUpsertWithoutMunicipalityProfileInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMunicipalityProfileInput, UserUpdateWithoutMunicipalityProfileInput>, UserUncheckedUpdateWithoutMunicipalityProfileInput>
+  }
+
+  export type UserCreateNestedOneWithoutAlertsInput = {
+    create?: XOR<UserCreateWithoutAlertsInput, UserUncheckedCreateWithoutAlertsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAlertsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutAlertsNestedInput = {
+    create?: XOR<UserCreateWithoutAlertsInput, UserUncheckedCreateWithoutAlertsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAlertsInput
+    upsert?: UserUpsertWithoutAlertsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAlertsInput, UserUpdateWithoutAlertsInput>, UserUncheckedUpdateWithoutAlertsInput>
   }
 
   export type districtCreateNestedManyWithoutCantonInput = {
@@ -12489,94 +14170,6 @@ export namespace Prisma {
     deleteMany?: reportScalarWhereInput | reportScalarWhereInput[]
   }
 
-  export type alertCreateNestedManyWithoutMunicipalityInput = {
-    create?: XOR<alertCreateWithoutMunicipalityInput, alertUncheckedCreateWithoutMunicipalityInput> | alertCreateWithoutMunicipalityInput[] | alertUncheckedCreateWithoutMunicipalityInput[]
-    connectOrCreate?: alertCreateOrConnectWithoutMunicipalityInput | alertCreateOrConnectWithoutMunicipalityInput[]
-    createMany?: alertCreateManyMunicipalityInputEnvelope
-    connect?: alertWhereUniqueInput | alertWhereUniqueInput[]
-  }
-
-  export type alertUncheckedCreateNestedManyWithoutMunicipalityInput = {
-    create?: XOR<alertCreateWithoutMunicipalityInput, alertUncheckedCreateWithoutMunicipalityInput> | alertCreateWithoutMunicipalityInput[] | alertUncheckedCreateWithoutMunicipalityInput[]
-    connectOrCreate?: alertCreateOrConnectWithoutMunicipalityInput | alertCreateOrConnectWithoutMunicipalityInput[]
-    createMany?: alertCreateManyMunicipalityInputEnvelope
-    connect?: alertWhereUniqueInput | alertWhereUniqueInput[]
-  }
-
-  export type alertUpdateManyWithoutMunicipalityNestedInput = {
-    create?: XOR<alertCreateWithoutMunicipalityInput, alertUncheckedCreateWithoutMunicipalityInput> | alertCreateWithoutMunicipalityInput[] | alertUncheckedCreateWithoutMunicipalityInput[]
-    connectOrCreate?: alertCreateOrConnectWithoutMunicipalityInput | alertCreateOrConnectWithoutMunicipalityInput[]
-    upsert?: alertUpsertWithWhereUniqueWithoutMunicipalityInput | alertUpsertWithWhereUniqueWithoutMunicipalityInput[]
-    createMany?: alertCreateManyMunicipalityInputEnvelope
-    set?: alertWhereUniqueInput | alertWhereUniqueInput[]
-    disconnect?: alertWhereUniqueInput | alertWhereUniqueInput[]
-    delete?: alertWhereUniqueInput | alertWhereUniqueInput[]
-    connect?: alertWhereUniqueInput | alertWhereUniqueInput[]
-    update?: alertUpdateWithWhereUniqueWithoutMunicipalityInput | alertUpdateWithWhereUniqueWithoutMunicipalityInput[]
-    updateMany?: alertUpdateManyWithWhereWithoutMunicipalityInput | alertUpdateManyWithWhereWithoutMunicipalityInput[]
-    deleteMany?: alertScalarWhereInput | alertScalarWhereInput[]
-  }
-
-  export type alertUncheckedUpdateManyWithoutMunicipalityNestedInput = {
-    create?: XOR<alertCreateWithoutMunicipalityInput, alertUncheckedCreateWithoutMunicipalityInput> | alertCreateWithoutMunicipalityInput[] | alertUncheckedCreateWithoutMunicipalityInput[]
-    connectOrCreate?: alertCreateOrConnectWithoutMunicipalityInput | alertCreateOrConnectWithoutMunicipalityInput[]
-    upsert?: alertUpsertWithWhereUniqueWithoutMunicipalityInput | alertUpsertWithWhereUniqueWithoutMunicipalityInput[]
-    createMany?: alertCreateManyMunicipalityInputEnvelope
-    set?: alertWhereUniqueInput | alertWhereUniqueInput[]
-    disconnect?: alertWhereUniqueInput | alertWhereUniqueInput[]
-    delete?: alertWhereUniqueInput | alertWhereUniqueInput[]
-    connect?: alertWhereUniqueInput | alertWhereUniqueInput[]
-    update?: alertUpdateWithWhereUniqueWithoutMunicipalityInput | alertUpdateWithWhereUniqueWithoutMunicipalityInput[]
-    updateMany?: alertUpdateManyWithWhereWithoutMunicipalityInput | alertUpdateManyWithWhereWithoutMunicipalityInput[]
-    deleteMany?: alertScalarWhereInput | alertScalarWhereInput[]
-  }
-
-  export type reportCreateNestedManyWithoutNeighborInput = {
-    create?: XOR<reportCreateWithoutNeighborInput, reportUncheckedCreateWithoutNeighborInput> | reportCreateWithoutNeighborInput[] | reportUncheckedCreateWithoutNeighborInput[]
-    connectOrCreate?: reportCreateOrConnectWithoutNeighborInput | reportCreateOrConnectWithoutNeighborInput[]
-    createMany?: reportCreateManyNeighborInputEnvelope
-    connect?: reportWhereUniqueInput | reportWhereUniqueInput[]
-  }
-
-  export type reportUncheckedCreateNestedManyWithoutNeighborInput = {
-    create?: XOR<reportCreateWithoutNeighborInput, reportUncheckedCreateWithoutNeighborInput> | reportCreateWithoutNeighborInput[] | reportUncheckedCreateWithoutNeighborInput[]
-    connectOrCreate?: reportCreateOrConnectWithoutNeighborInput | reportCreateOrConnectWithoutNeighborInput[]
-    createMany?: reportCreateManyNeighborInputEnvelope
-    connect?: reportWhereUniqueInput | reportWhereUniqueInput[]
-  }
-
-  export type StringFieldUpdateOperationsInput = {
-    set?: string
-  }
-
-  export type reportUpdateManyWithoutNeighborNestedInput = {
-    create?: XOR<reportCreateWithoutNeighborInput, reportUncheckedCreateWithoutNeighborInput> | reportCreateWithoutNeighborInput[] | reportUncheckedCreateWithoutNeighborInput[]
-    connectOrCreate?: reportCreateOrConnectWithoutNeighborInput | reportCreateOrConnectWithoutNeighborInput[]
-    upsert?: reportUpsertWithWhereUniqueWithoutNeighborInput | reportUpsertWithWhereUniqueWithoutNeighborInput[]
-    createMany?: reportCreateManyNeighborInputEnvelope
-    set?: reportWhereUniqueInput | reportWhereUniqueInput[]
-    disconnect?: reportWhereUniqueInput | reportWhereUniqueInput[]
-    delete?: reportWhereUniqueInput | reportWhereUniqueInput[]
-    connect?: reportWhereUniqueInput | reportWhereUniqueInput[]
-    update?: reportUpdateWithWhereUniqueWithoutNeighborInput | reportUpdateWithWhereUniqueWithoutNeighborInput[]
-    updateMany?: reportUpdateManyWithWhereWithoutNeighborInput | reportUpdateManyWithWhereWithoutNeighborInput[]
-    deleteMany?: reportScalarWhereInput | reportScalarWhereInput[]
-  }
-
-  export type reportUncheckedUpdateManyWithoutNeighborNestedInput = {
-    create?: XOR<reportCreateWithoutNeighborInput, reportUncheckedCreateWithoutNeighborInput> | reportCreateWithoutNeighborInput[] | reportUncheckedCreateWithoutNeighborInput[]
-    connectOrCreate?: reportCreateOrConnectWithoutNeighborInput | reportCreateOrConnectWithoutNeighborInput[]
-    upsert?: reportUpsertWithWhereUniqueWithoutNeighborInput | reportUpsertWithWhereUniqueWithoutNeighborInput[]
-    createMany?: reportCreateManyNeighborInputEnvelope
-    set?: reportWhereUniqueInput | reportWhereUniqueInput[]
-    disconnect?: reportWhereUniqueInput | reportWhereUniqueInput[]
-    delete?: reportWhereUniqueInput | reportWhereUniqueInput[]
-    connect?: reportWhereUniqueInput | reportWhereUniqueInput[]
-    update?: reportUpdateWithWhereUniqueWithoutNeighborInput | reportUpdateWithWhereUniqueWithoutNeighborInput[]
-    updateMany?: reportUpdateManyWithWhereWithoutNeighborInput | reportUpdateManyWithWhereWithoutNeighborInput[]
-    deleteMany?: reportScalarWhereInput | reportScalarWhereInput[]
-  }
-
   export type problem_typeCreateNestedOneWithoutProblemInput = {
     create?: XOR<problem_typeCreateWithoutProblemInput, problem_typeUncheckedCreateWithoutProblemInput>
     connectOrCreate?: problem_typeCreateOrConnectWithoutProblemInput
@@ -12689,16 +14282,20 @@ export namespace Prisma {
     connect?: districtWhereUniqueInput
   }
 
-  export type neighborCreateNestedOneWithoutReportInput = {
-    create?: XOR<neighborCreateWithoutReportInput, neighborUncheckedCreateWithoutReportInput>
-    connectOrCreate?: neighborCreateOrConnectWithoutReportInput
-    connect?: neighborWhereUniqueInput
+  export type UserCreateNestedOneWithoutReportsInput = {
+    create?: XOR<UserCreateWithoutReportsInput, UserUncheckedCreateWithoutReportsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReportsInput
+    connect?: UserWhereUniqueInput
   }
 
   export type problemCreateNestedOneWithoutReportInput = {
     create?: XOR<problemCreateWithoutReportInput, problemUncheckedCreateWithoutReportInput>
     connectOrCreate?: problemCreateOrConnectWithoutReportInput
     connect?: problemWhereUniqueInput
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type cantonUpdateOneWithoutReportNestedInput = {
@@ -12721,14 +14318,14 @@ export namespace Prisma {
     update?: XOR<XOR<districtUpdateToOneWithWhereWithoutReport_report_districtTodistrictInput, districtUpdateWithoutReport_report_districtTodistrictInput>, districtUncheckedUpdateWithoutReport_report_districtTodistrictInput>
   }
 
-  export type neighborUpdateOneWithoutReportNestedInput = {
-    create?: XOR<neighborCreateWithoutReportInput, neighborUncheckedCreateWithoutReportInput>
-    connectOrCreate?: neighborCreateOrConnectWithoutReportInput
-    upsert?: neighborUpsertWithoutReportInput
-    disconnect?: neighborWhereInput | boolean
-    delete?: neighborWhereInput | boolean
-    connect?: neighborWhereUniqueInput
-    update?: XOR<XOR<neighborUpdateToOneWithWhereWithoutReportInput, neighborUpdateWithoutReportInput>, neighborUncheckedUpdateWithoutReportInput>
+  export type UserUpdateOneWithoutReportsNestedInput = {
+    create?: XOR<UserCreateWithoutReportsInput, UserUncheckedCreateWithoutReportsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReportsInput
+    upsert?: UserUpsertWithoutReportsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReportsInput, UserUpdateWithoutReportsInput>, UserUncheckedUpdateWithoutReportsInput>
   }
 
   export type problemUpdateOneWithoutReportNestedInput = {
@@ -12752,21 +14349,10 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+  export type NestedStringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -12774,18 +14360,25 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+    not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+  export type NestedEnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -12815,6 +14408,89 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -12842,21 +14518,15 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -12873,73 +14543,390 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type NestedStringFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringFilter<$PrismaModel> | string
+  export type NeighborProfileCreateWithoutUserInput = {
+    first_name: string
+    last_name: string
+    second_last_name?: string | null
+    identification: number
+    phone_number?: number | null
   }
 
-  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
+  export type NeighborProfileUncheckedCreateWithoutUserInput = {
+    id?: number
+    first_name: string
+    last_name: string
+    second_last_name?: string | null
+    identification: number
+    phone_number?: number | null
   }
 
-  export type municipalityCreateWithoutAlertInput = {
-    email?: string | null
-    password?: string | null
+  export type NeighborProfileCreateOrConnectWithoutUserInput = {
+    where: NeighborProfileWhereUniqueInput
+    create: XOR<NeighborProfileCreateWithoutUserInput, NeighborProfileUncheckedCreateWithoutUserInput>
   }
 
-  export type municipalityUncheckedCreateWithoutAlertInput = {
-    muni_id?: number
-    email?: string | null
-    password?: string | null
+  export type MunicipalityProfileCreateWithoutUserInput = {
+    name: string
+    canton: string
   }
 
-  export type municipalityCreateOrConnectWithoutAlertInput = {
-    where: municipalityWhereUniqueInput
-    create: XOR<municipalityCreateWithoutAlertInput, municipalityUncheckedCreateWithoutAlertInput>
+  export type MunicipalityProfileUncheckedCreateWithoutUserInput = {
+    id?: number
+    name: string
+    canton: string
   }
 
-  export type municipalityUpsertWithoutAlertInput = {
-    update: XOR<municipalityUpdateWithoutAlertInput, municipalityUncheckedUpdateWithoutAlertInput>
-    create: XOR<municipalityCreateWithoutAlertInput, municipalityUncheckedCreateWithoutAlertInput>
-    where?: municipalityWhereInput
+  export type MunicipalityProfileCreateOrConnectWithoutUserInput = {
+    where: MunicipalityProfileWhereUniqueInput
+    create: XOR<MunicipalityProfileCreateWithoutUserInput, MunicipalityProfileUncheckedCreateWithoutUserInput>
   }
 
-  export type municipalityUpdateToOneWithWhereWithoutAlertInput = {
-    where?: municipalityWhereInput
-    data: XOR<municipalityUpdateWithoutAlertInput, municipalityUncheckedUpdateWithoutAlertInput>
+  export type AlertCreateWithoutAuthorInput = {
+    title: string
+    content: string
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
-  export type municipalityUpdateWithoutAlertInput = {
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
+  export type AlertUncheckedCreateWithoutAuthorInput = {
+    id?: number
+    title: string
+    content: string
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
-  export type municipalityUncheckedUpdateWithoutAlertInput = {
-    muni_id?: IntFieldUpdateOperationsInput | number
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
+  export type AlertCreateOrConnectWithoutAuthorInput = {
+    where: AlertWhereUniqueInput
+    create: XOR<AlertCreateWithoutAuthorInput, AlertUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type AlertCreateManyAuthorInputEnvelope = {
+    data: AlertCreateManyAuthorInput | AlertCreateManyAuthorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type reportCreateWithoutAuthorInput = {
+    report_title?: string | null
+    neighborhood?: string | null
+    street?: string | null
+    report_date?: Date | string | null
+    report_time?: Date | string | null
+    status?: string | null
+    updated_at?: Date | string | null
+    canton?: cantonCreateNestedOneWithoutReportInput
+    district_report_districtTodistrict?: districtCreateNestedOneWithoutReport_report_districtTodistrictInput
+    problem?: problemCreateNestedOneWithoutReportInput
+  }
+
+  export type reportUncheckedCreateWithoutAuthorInput = {
+    report_id?: number
+    report_title?: string | null
+    problem_id?: number | null
+    canton_id?: number | null
+    district?: number | null
+    neighborhood?: string | null
+    street?: string | null
+    report_date?: Date | string | null
+    report_time?: Date | string | null
+    status?: string | null
+    updated_at?: Date | string | null
+  }
+
+  export type reportCreateOrConnectWithoutAuthorInput = {
+    where: reportWhereUniqueInput
+    create: XOR<reportCreateWithoutAuthorInput, reportUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type reportCreateManyAuthorInputEnvelope = {
+    data: reportCreateManyAuthorInput | reportCreateManyAuthorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type NeighborProfileUpsertWithoutUserInput = {
+    update: XOR<NeighborProfileUpdateWithoutUserInput, NeighborProfileUncheckedUpdateWithoutUserInput>
+    create: XOR<NeighborProfileCreateWithoutUserInput, NeighborProfileUncheckedCreateWithoutUserInput>
+    where?: NeighborProfileWhereInput
+  }
+
+  export type NeighborProfileUpdateToOneWithWhereWithoutUserInput = {
+    where?: NeighborProfileWhereInput
+    data: XOR<NeighborProfileUpdateWithoutUserInput, NeighborProfileUncheckedUpdateWithoutUserInput>
+  }
+
+  export type NeighborProfileUpdateWithoutUserInput = {
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    second_last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    identification?: IntFieldUpdateOperationsInput | number
+    phone_number?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type NeighborProfileUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    second_last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    identification?: IntFieldUpdateOperationsInput | number
+    phone_number?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type MunicipalityProfileUpsertWithoutUserInput = {
+    update: XOR<MunicipalityProfileUpdateWithoutUserInput, MunicipalityProfileUncheckedUpdateWithoutUserInput>
+    create: XOR<MunicipalityProfileCreateWithoutUserInput, MunicipalityProfileUncheckedCreateWithoutUserInput>
+    where?: MunicipalityProfileWhereInput
+  }
+
+  export type MunicipalityProfileUpdateToOneWithWhereWithoutUserInput = {
+    where?: MunicipalityProfileWhereInput
+    data: XOR<MunicipalityProfileUpdateWithoutUserInput, MunicipalityProfileUncheckedUpdateWithoutUserInput>
+  }
+
+  export type MunicipalityProfileUpdateWithoutUserInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    canton?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MunicipalityProfileUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    canton?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AlertUpsertWithWhereUniqueWithoutAuthorInput = {
+    where: AlertWhereUniqueInput
+    update: XOR<AlertUpdateWithoutAuthorInput, AlertUncheckedUpdateWithoutAuthorInput>
+    create: XOR<AlertCreateWithoutAuthorInput, AlertUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type AlertUpdateWithWhereUniqueWithoutAuthorInput = {
+    where: AlertWhereUniqueInput
+    data: XOR<AlertUpdateWithoutAuthorInput, AlertUncheckedUpdateWithoutAuthorInput>
+  }
+
+  export type AlertUpdateManyWithWhereWithoutAuthorInput = {
+    where: AlertScalarWhereInput
+    data: XOR<AlertUpdateManyMutationInput, AlertUncheckedUpdateManyWithoutAuthorInput>
+  }
+
+  export type AlertScalarWhereInput = {
+    AND?: AlertScalarWhereInput | AlertScalarWhereInput[]
+    OR?: AlertScalarWhereInput[]
+    NOT?: AlertScalarWhereInput | AlertScalarWhereInput[]
+    id?: IntFilter<"Alert"> | number
+    title?: StringFilter<"Alert"> | string
+    content?: StringFilter<"Alert"> | string
+    created_at?: DateTimeFilter<"Alert"> | Date | string
+    updated_at?: DateTimeFilter<"Alert"> | Date | string
+    authorId?: IntFilter<"Alert"> | number
+  }
+
+  export type reportUpsertWithWhereUniqueWithoutAuthorInput = {
+    where: reportWhereUniqueInput
+    update: XOR<reportUpdateWithoutAuthorInput, reportUncheckedUpdateWithoutAuthorInput>
+    create: XOR<reportCreateWithoutAuthorInput, reportUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type reportUpdateWithWhereUniqueWithoutAuthorInput = {
+    where: reportWhereUniqueInput
+    data: XOR<reportUpdateWithoutAuthorInput, reportUncheckedUpdateWithoutAuthorInput>
+  }
+
+  export type reportUpdateManyWithWhereWithoutAuthorInput = {
+    where: reportScalarWhereInput
+    data: XOR<reportUpdateManyMutationInput, reportUncheckedUpdateManyWithoutAuthorInput>
+  }
+
+  export type reportScalarWhereInput = {
+    AND?: reportScalarWhereInput | reportScalarWhereInput[]
+    OR?: reportScalarWhereInput[]
+    NOT?: reportScalarWhereInput | reportScalarWhereInput[]
+    report_id?: IntFilter<"report"> | number
+    author_id?: IntNullableFilter<"report"> | number | null
+    report_title?: StringNullableFilter<"report"> | string | null
+    problem_id?: IntNullableFilter<"report"> | number | null
+    canton_id?: IntNullableFilter<"report"> | number | null
+    district?: IntNullableFilter<"report"> | number | null
+    neighborhood?: StringNullableFilter<"report"> | string | null
+    street?: StringNullableFilter<"report"> | string | null
+    report_date?: DateTimeNullableFilter<"report"> | Date | string | null
+    report_time?: DateTimeNullableFilter<"report"> | Date | string | null
+    status?: StringNullableFilter<"report"> | string | null
+    updated_at?: DateTimeNullableFilter<"report"> | Date | string | null
+  }
+
+  export type UserCreateWithoutNeighborProfileInput = {
+    email: string
+    password: string
+    role?: $Enums.Role
+    created_at?: Date | string
+    municipalityProfile?: MunicipalityProfileCreateNestedOneWithoutUserInput
+    alerts?: AlertCreateNestedManyWithoutAuthorInput
+    reports?: reportCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserUncheckedCreateWithoutNeighborProfileInput = {
+    id?: number
+    email: string
+    password: string
+    role?: $Enums.Role
+    created_at?: Date | string
+    municipalityProfile?: MunicipalityProfileUncheckedCreateNestedOneWithoutUserInput
+    alerts?: AlertUncheckedCreateNestedManyWithoutAuthorInput
+    reports?: reportUncheckedCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserCreateOrConnectWithoutNeighborProfileInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutNeighborProfileInput, UserUncheckedCreateWithoutNeighborProfileInput>
+  }
+
+  export type UserUpsertWithoutNeighborProfileInput = {
+    update: XOR<UserUpdateWithoutNeighborProfileInput, UserUncheckedUpdateWithoutNeighborProfileInput>
+    create: XOR<UserCreateWithoutNeighborProfileInput, UserUncheckedCreateWithoutNeighborProfileInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutNeighborProfileInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutNeighborProfileInput, UserUncheckedUpdateWithoutNeighborProfileInput>
+  }
+
+  export type UserUpdateWithoutNeighborProfileInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    municipalityProfile?: MunicipalityProfileUpdateOneWithoutUserNestedInput
+    alerts?: AlertUpdateManyWithoutAuthorNestedInput
+    reports?: reportUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutNeighborProfileInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    municipalityProfile?: MunicipalityProfileUncheckedUpdateOneWithoutUserNestedInput
+    alerts?: AlertUncheckedUpdateManyWithoutAuthorNestedInput
+    reports?: reportUncheckedUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type UserCreateWithoutMunicipalityProfileInput = {
+    email: string
+    password: string
+    role?: $Enums.Role
+    created_at?: Date | string
+    neighborProfile?: NeighborProfileCreateNestedOneWithoutUserInput
+    alerts?: AlertCreateNestedManyWithoutAuthorInput
+    reports?: reportCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserUncheckedCreateWithoutMunicipalityProfileInput = {
+    id?: number
+    email: string
+    password: string
+    role?: $Enums.Role
+    created_at?: Date | string
+    neighborProfile?: NeighborProfileUncheckedCreateNestedOneWithoutUserInput
+    alerts?: AlertUncheckedCreateNestedManyWithoutAuthorInput
+    reports?: reportUncheckedCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserCreateOrConnectWithoutMunicipalityProfileInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutMunicipalityProfileInput, UserUncheckedCreateWithoutMunicipalityProfileInput>
+  }
+
+  export type UserUpsertWithoutMunicipalityProfileInput = {
+    update: XOR<UserUpdateWithoutMunicipalityProfileInput, UserUncheckedUpdateWithoutMunicipalityProfileInput>
+    create: XOR<UserCreateWithoutMunicipalityProfileInput, UserUncheckedCreateWithoutMunicipalityProfileInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutMunicipalityProfileInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutMunicipalityProfileInput, UserUncheckedUpdateWithoutMunicipalityProfileInput>
+  }
+
+  export type UserUpdateWithoutMunicipalityProfileInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    neighborProfile?: NeighborProfileUpdateOneWithoutUserNestedInput
+    alerts?: AlertUpdateManyWithoutAuthorNestedInput
+    reports?: reportUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutMunicipalityProfileInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    neighborProfile?: NeighborProfileUncheckedUpdateOneWithoutUserNestedInput
+    alerts?: AlertUncheckedUpdateManyWithoutAuthorNestedInput
+    reports?: reportUncheckedUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type UserCreateWithoutAlertsInput = {
+    email: string
+    password: string
+    role?: $Enums.Role
+    created_at?: Date | string
+    neighborProfile?: NeighborProfileCreateNestedOneWithoutUserInput
+    municipalityProfile?: MunicipalityProfileCreateNestedOneWithoutUserInput
+    reports?: reportCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserUncheckedCreateWithoutAlertsInput = {
+    id?: number
+    email: string
+    password: string
+    role?: $Enums.Role
+    created_at?: Date | string
+    neighborProfile?: NeighborProfileUncheckedCreateNestedOneWithoutUserInput
+    municipalityProfile?: MunicipalityProfileUncheckedCreateNestedOneWithoutUserInput
+    reports?: reportUncheckedCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserCreateOrConnectWithoutAlertsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAlertsInput, UserUncheckedCreateWithoutAlertsInput>
+  }
+
+  export type UserUpsertWithoutAlertsInput = {
+    update: XOR<UserUpdateWithoutAlertsInput, UserUncheckedUpdateWithoutAlertsInput>
+    create: XOR<UserCreateWithoutAlertsInput, UserUncheckedCreateWithoutAlertsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAlertsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAlertsInput, UserUncheckedUpdateWithoutAlertsInput>
+  }
+
+  export type UserUpdateWithoutAlertsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    neighborProfile?: NeighborProfileUpdateOneWithoutUserNestedInput
+    municipalityProfile?: MunicipalityProfileUpdateOneWithoutUserNestedInput
+    reports?: reportUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAlertsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    neighborProfile?: NeighborProfileUncheckedUpdateOneWithoutUserNestedInput
+    municipalityProfile?: MunicipalityProfileUncheckedUpdateOneWithoutUserNestedInput
+    reports?: reportUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type districtCreateWithoutCantonInput = {
@@ -12972,13 +14959,13 @@ export namespace Prisma {
     status?: string | null
     updated_at?: Date | string | null
     district_report_districtTodistrict?: districtCreateNestedOneWithoutReport_report_districtTodistrictInput
-    neighbor?: neighborCreateNestedOneWithoutReportInput
+    author?: UserCreateNestedOneWithoutReportsInput
     problem?: problemCreateNestedOneWithoutReportInput
   }
 
   export type reportUncheckedCreateWithoutCantonInput = {
     report_id?: number
-    neighbor_id?: number | null
+    author_id?: number | null
     report_title?: string | null
     problem_id?: number | null
     district?: number | null
@@ -13041,24 +15028,6 @@ export namespace Prisma {
     data: XOR<reportUpdateManyMutationInput, reportUncheckedUpdateManyWithoutCantonInput>
   }
 
-  export type reportScalarWhereInput = {
-    AND?: reportScalarWhereInput | reportScalarWhereInput[]
-    OR?: reportScalarWhereInput[]
-    NOT?: reportScalarWhereInput | reportScalarWhereInput[]
-    report_id?: IntFilter<"report"> | number
-    neighbor_id?: IntNullableFilter<"report"> | number | null
-    report_title?: StringNullableFilter<"report"> | string | null
-    problem_id?: IntNullableFilter<"report"> | number | null
-    canton_id?: IntNullableFilter<"report"> | number | null
-    district?: IntNullableFilter<"report"> | number | null
-    neighborhood?: StringNullableFilter<"report"> | string | null
-    street?: StringNullableFilter<"report"> | string | null
-    report_date?: DateTimeNullableFilter<"report"> | Date | string | null
-    report_time?: DateTimeNullableFilter<"report"> | Date | string | null
-    status?: StringNullableFilter<"report"> | string | null
-    updated_at?: DateTimeNullableFilter<"report"> | Date | string | null
-  }
-
   export type cantonCreateWithoutDistrictInput = {
     canton_name?: string | null
     report?: reportCreateNestedManyWithoutCantonInput
@@ -13084,13 +15053,13 @@ export namespace Prisma {
     status?: string | null
     updated_at?: Date | string | null
     canton?: cantonCreateNestedOneWithoutReportInput
-    neighbor?: neighborCreateNestedOneWithoutReportInput
+    author?: UserCreateNestedOneWithoutReportsInput
     problem?: problemCreateNestedOneWithoutReportInput
   }
 
   export type reportUncheckedCreateWithoutDistrict_report_districtTodistrictInput = {
     report_id?: number
-    neighbor_id?: number | null
+    author_id?: number | null
     report_title?: string | null
     problem_id?: number | null
     canton_id?: number | null
@@ -13150,112 +15119,6 @@ export namespace Prisma {
     data: XOR<reportUpdateManyMutationInput, reportUncheckedUpdateManyWithoutDistrict_report_districtTodistrictInput>
   }
 
-  export type alertCreateWithoutMunicipalityInput = {
-    alert_title?: string | null
-    alert_date?: Date | string | null
-    alert_time?: Date | string | null
-    description?: string | null
-  }
-
-  export type alertUncheckedCreateWithoutMunicipalityInput = {
-    alert_id?: number
-    alert_title?: string | null
-    alert_date?: Date | string | null
-    alert_time?: Date | string | null
-    description?: string | null
-  }
-
-  export type alertCreateOrConnectWithoutMunicipalityInput = {
-    where: alertWhereUniqueInput
-    create: XOR<alertCreateWithoutMunicipalityInput, alertUncheckedCreateWithoutMunicipalityInput>
-  }
-
-  export type alertCreateManyMunicipalityInputEnvelope = {
-    data: alertCreateManyMunicipalityInput | alertCreateManyMunicipalityInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type alertUpsertWithWhereUniqueWithoutMunicipalityInput = {
-    where: alertWhereUniqueInput
-    update: XOR<alertUpdateWithoutMunicipalityInput, alertUncheckedUpdateWithoutMunicipalityInput>
-    create: XOR<alertCreateWithoutMunicipalityInput, alertUncheckedCreateWithoutMunicipalityInput>
-  }
-
-  export type alertUpdateWithWhereUniqueWithoutMunicipalityInput = {
-    where: alertWhereUniqueInput
-    data: XOR<alertUpdateWithoutMunicipalityInput, alertUncheckedUpdateWithoutMunicipalityInput>
-  }
-
-  export type alertUpdateManyWithWhereWithoutMunicipalityInput = {
-    where: alertScalarWhereInput
-    data: XOR<alertUpdateManyMutationInput, alertUncheckedUpdateManyWithoutMunicipalityInput>
-  }
-
-  export type alertScalarWhereInput = {
-    AND?: alertScalarWhereInput | alertScalarWhereInput[]
-    OR?: alertScalarWhereInput[]
-    NOT?: alertScalarWhereInput | alertScalarWhereInput[]
-    alert_id?: IntFilter<"alert"> | number
-    muni_id?: IntNullableFilter<"alert"> | number | null
-    alert_title?: StringNullableFilter<"alert"> | string | null
-    alert_date?: DateTimeNullableFilter<"alert"> | Date | string | null
-    alert_time?: DateTimeNullableFilter<"alert"> | Date | string | null
-    description?: StringNullableFilter<"alert"> | string | null
-  }
-
-  export type reportCreateWithoutNeighborInput = {
-    report_title?: string | null
-    neighborhood?: string | null
-    street?: string | null
-    report_date?: Date | string | null
-    report_time?: Date | string | null
-    status?: string | null
-    updated_at?: Date | string | null
-    canton?: cantonCreateNestedOneWithoutReportInput
-    district_report_districtTodistrict?: districtCreateNestedOneWithoutReport_report_districtTodistrictInput
-    problem?: problemCreateNestedOneWithoutReportInput
-  }
-
-  export type reportUncheckedCreateWithoutNeighborInput = {
-    report_id?: number
-    report_title?: string | null
-    problem_id?: number | null
-    canton_id?: number | null
-    district?: number | null
-    neighborhood?: string | null
-    street?: string | null
-    report_date?: Date | string | null
-    report_time?: Date | string | null
-    status?: string | null
-    updated_at?: Date | string | null
-  }
-
-  export type reportCreateOrConnectWithoutNeighborInput = {
-    where: reportWhereUniqueInput
-    create: XOR<reportCreateWithoutNeighborInput, reportUncheckedCreateWithoutNeighborInput>
-  }
-
-  export type reportCreateManyNeighborInputEnvelope = {
-    data: reportCreateManyNeighborInput | reportCreateManyNeighborInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type reportUpsertWithWhereUniqueWithoutNeighborInput = {
-    where: reportWhereUniqueInput
-    update: XOR<reportUpdateWithoutNeighborInput, reportUncheckedUpdateWithoutNeighborInput>
-    create: XOR<reportCreateWithoutNeighborInput, reportUncheckedCreateWithoutNeighborInput>
-  }
-
-  export type reportUpdateWithWhereUniqueWithoutNeighborInput = {
-    where: reportWhereUniqueInput
-    data: XOR<reportUpdateWithoutNeighborInput, reportUncheckedUpdateWithoutNeighborInput>
-  }
-
-  export type reportUpdateManyWithWhereWithoutNeighborInput = {
-    where: reportScalarWhereInput
-    data: XOR<reportUpdateManyMutationInput, reportUncheckedUpdateManyWithoutNeighborInput>
-  }
-
   export type problem_typeCreateWithoutProblemInput = {
     type_name?: string | null
   }
@@ -13280,12 +15143,12 @@ export namespace Prisma {
     updated_at?: Date | string | null
     canton?: cantonCreateNestedOneWithoutReportInput
     district_report_districtTodistrict?: districtCreateNestedOneWithoutReport_report_districtTodistrictInput
-    neighbor?: neighborCreateNestedOneWithoutReportInput
+    author?: UserCreateNestedOneWithoutReportsInput
   }
 
   export type reportUncheckedCreateWithoutProblemInput = {
     report_id?: number
-    neighbor_id?: number | null
+    author_id?: number | null
     report_title?: string | null
     canton_id?: number | null
     district?: number | null
@@ -13421,29 +15284,30 @@ export namespace Prisma {
     create: XOR<districtCreateWithoutReport_report_districtTodistrictInput, districtUncheckedCreateWithoutReport_report_districtTodistrictInput>
   }
 
-  export type neighborCreateWithoutReportInput = {
-    identification: number
-    first_name: string
-    last_name: string
-    second_last_name?: string | null
+  export type UserCreateWithoutReportsInput = {
     email: string
     password: string
-    phone_number?: number | null
+    role?: $Enums.Role
+    created_at?: Date | string
+    neighborProfile?: NeighborProfileCreateNestedOneWithoutUserInput
+    municipalityProfile?: MunicipalityProfileCreateNestedOneWithoutUserInput
+    alerts?: AlertCreateNestedManyWithoutAuthorInput
   }
 
-  export type neighborUncheckedCreateWithoutReportInput = {
-    identification: number
-    first_name: string
-    last_name: string
-    second_last_name?: string | null
+  export type UserUncheckedCreateWithoutReportsInput = {
+    id?: number
     email: string
     password: string
-    phone_number?: number | null
+    role?: $Enums.Role
+    created_at?: Date | string
+    neighborProfile?: NeighborProfileUncheckedCreateNestedOneWithoutUserInput
+    municipalityProfile?: MunicipalityProfileUncheckedCreateNestedOneWithoutUserInput
+    alerts?: AlertUncheckedCreateNestedManyWithoutAuthorInput
   }
 
-  export type neighborCreateOrConnectWithoutReportInput = {
-    where: neighborWhereUniqueInput
-    create: XOR<neighborCreateWithoutReportInput, neighborUncheckedCreateWithoutReportInput>
+  export type UserCreateOrConnectWithoutReportsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutReportsInput, UserUncheckedCreateWithoutReportsInput>
   }
 
   export type problemCreateWithoutReportInput = {
@@ -13506,35 +15370,36 @@ export namespace Prisma {
     canton_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type neighborUpsertWithoutReportInput = {
-    update: XOR<neighborUpdateWithoutReportInput, neighborUncheckedUpdateWithoutReportInput>
-    create: XOR<neighborCreateWithoutReportInput, neighborUncheckedCreateWithoutReportInput>
-    where?: neighborWhereInput
+  export type UserUpsertWithoutReportsInput = {
+    update: XOR<UserUpdateWithoutReportsInput, UserUncheckedUpdateWithoutReportsInput>
+    create: XOR<UserCreateWithoutReportsInput, UserUncheckedCreateWithoutReportsInput>
+    where?: UserWhereInput
   }
 
-  export type neighborUpdateToOneWithWhereWithoutReportInput = {
-    where?: neighborWhereInput
-    data: XOR<neighborUpdateWithoutReportInput, neighborUncheckedUpdateWithoutReportInput>
+  export type UserUpdateToOneWithWhereWithoutReportsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutReportsInput, UserUncheckedUpdateWithoutReportsInput>
   }
 
-  export type neighborUpdateWithoutReportInput = {
-    identification?: IntFieldUpdateOperationsInput | number
-    first_name?: StringFieldUpdateOperationsInput | string
-    last_name?: StringFieldUpdateOperationsInput | string
-    second_last_name?: NullableStringFieldUpdateOperationsInput | string | null
+  export type UserUpdateWithoutReportsInput = {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    phone_number?: NullableIntFieldUpdateOperationsInput | number | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    neighborProfile?: NeighborProfileUpdateOneWithoutUserNestedInput
+    municipalityProfile?: MunicipalityProfileUpdateOneWithoutUserNestedInput
+    alerts?: AlertUpdateManyWithoutAuthorNestedInput
   }
 
-  export type neighborUncheckedUpdateWithoutReportInput = {
-    identification?: IntFieldUpdateOperationsInput | number
-    first_name?: StringFieldUpdateOperationsInput | string
-    last_name?: StringFieldUpdateOperationsInput | string
-    second_last_name?: NullableStringFieldUpdateOperationsInput | string | null
+  export type UserUncheckedUpdateWithoutReportsInput = {
+    id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    phone_number?: NullableIntFieldUpdateOperationsInput | number | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    neighborProfile?: NeighborProfileUncheckedUpdateOneWithoutUserNestedInput
+    municipalityProfile?: MunicipalityProfileUncheckedUpdateOneWithoutUserNestedInput
+    alerts?: AlertUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type problemUpsertWithoutReportInput = {
@@ -13559,6 +15424,92 @@ export namespace Prisma {
     problem_name?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type AlertCreateManyAuthorInput = {
+    id?: number
+    title: string
+    content: string
+    created_at?: Date | string
+    updated_at?: Date | string
+  }
+
+  export type reportCreateManyAuthorInput = {
+    report_id?: number
+    report_title?: string | null
+    problem_id?: number | null
+    canton_id?: number | null
+    district?: number | null
+    neighborhood?: string | null
+    street?: string | null
+    report_date?: Date | string | null
+    report_time?: Date | string | null
+    status?: string | null
+    updated_at?: Date | string | null
+  }
+
+  export type AlertUpdateWithoutAuthorInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AlertUncheckedUpdateWithoutAuthorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AlertUncheckedUpdateManyWithoutAuthorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type reportUpdateWithoutAuthorInput = {
+    report_title?: NullableStringFieldUpdateOperationsInput | string | null
+    neighborhood?: NullableStringFieldUpdateOperationsInput | string | null
+    street?: NullableStringFieldUpdateOperationsInput | string | null
+    report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    canton?: cantonUpdateOneWithoutReportNestedInput
+    district_report_districtTodistrict?: districtUpdateOneWithoutReport_report_districtTodistrictNestedInput
+    problem?: problemUpdateOneWithoutReportNestedInput
+  }
+
+  export type reportUncheckedUpdateWithoutAuthorInput = {
+    report_id?: IntFieldUpdateOperationsInput | number
+    report_title?: NullableStringFieldUpdateOperationsInput | string | null
+    problem_id?: NullableIntFieldUpdateOperationsInput | number | null
+    canton_id?: NullableIntFieldUpdateOperationsInput | number | null
+    district?: NullableIntFieldUpdateOperationsInput | number | null
+    neighborhood?: NullableStringFieldUpdateOperationsInput | string | null
+    street?: NullableStringFieldUpdateOperationsInput | string | null
+    report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type reportUncheckedUpdateManyWithoutAuthorInput = {
+    report_id?: IntFieldUpdateOperationsInput | number
+    report_title?: NullableStringFieldUpdateOperationsInput | string | null
+    problem_id?: NullableIntFieldUpdateOperationsInput | number | null
+    canton_id?: NullableIntFieldUpdateOperationsInput | number | null
+    district?: NullableIntFieldUpdateOperationsInput | number | null
+    neighborhood?: NullableStringFieldUpdateOperationsInput | string | null
+    street?: NullableStringFieldUpdateOperationsInput | string | null
+    report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type districtCreateManyCantonInput = {
     district_id?: number
     district_name?: string | null
@@ -13566,7 +15517,7 @@ export namespace Prisma {
 
   export type reportCreateManyCantonInput = {
     report_id?: number
-    neighbor_id?: number | null
+    author_id?: number | null
     report_title?: string | null
     problem_id?: number | null
     district?: number | null
@@ -13603,13 +15554,13 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     district_report_districtTodistrict?: districtUpdateOneWithoutReport_report_districtTodistrictNestedInput
-    neighbor?: neighborUpdateOneWithoutReportNestedInput
+    author?: UserUpdateOneWithoutReportsNestedInput
     problem?: problemUpdateOneWithoutReportNestedInput
   }
 
   export type reportUncheckedUpdateWithoutCantonInput = {
     report_id?: IntFieldUpdateOperationsInput | number
-    neighbor_id?: NullableIntFieldUpdateOperationsInput | number | null
+    author_id?: NullableIntFieldUpdateOperationsInput | number | null
     report_title?: NullableStringFieldUpdateOperationsInput | string | null
     problem_id?: NullableIntFieldUpdateOperationsInput | number | null
     district?: NullableIntFieldUpdateOperationsInput | number | null
@@ -13623,7 +15574,7 @@ export namespace Prisma {
 
   export type reportUncheckedUpdateManyWithoutCantonInput = {
     report_id?: IntFieldUpdateOperationsInput | number
-    neighbor_id?: NullableIntFieldUpdateOperationsInput | number | null
+    author_id?: NullableIntFieldUpdateOperationsInput | number | null
     report_title?: NullableStringFieldUpdateOperationsInput | string | null
     problem_id?: NullableIntFieldUpdateOperationsInput | number | null
     district?: NullableIntFieldUpdateOperationsInput | number | null
@@ -13637,7 +15588,7 @@ export namespace Prisma {
 
   export type reportCreateManyDistrict_report_districtTodistrictInput = {
     report_id?: number
-    neighbor_id?: number | null
+    author_id?: number | null
     report_title?: string | null
     problem_id?: number | null
     canton_id?: number | null
@@ -13658,13 +15609,13 @@ export namespace Prisma {
     status?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canton?: cantonUpdateOneWithoutReportNestedInput
-    neighbor?: neighborUpdateOneWithoutReportNestedInput
+    author?: UserUpdateOneWithoutReportsNestedInput
     problem?: problemUpdateOneWithoutReportNestedInput
   }
 
   export type reportUncheckedUpdateWithoutDistrict_report_districtTodistrictInput = {
     report_id?: IntFieldUpdateOperationsInput | number
-    neighbor_id?: NullableIntFieldUpdateOperationsInput | number | null
+    author_id?: NullableIntFieldUpdateOperationsInput | number | null
     report_title?: NullableStringFieldUpdateOperationsInput | string | null
     problem_id?: NullableIntFieldUpdateOperationsInput | number | null
     canton_id?: NullableIntFieldUpdateOperationsInput | number | null
@@ -13678,96 +15629,10 @@ export namespace Prisma {
 
   export type reportUncheckedUpdateManyWithoutDistrict_report_districtTodistrictInput = {
     report_id?: IntFieldUpdateOperationsInput | number
-    neighbor_id?: NullableIntFieldUpdateOperationsInput | number | null
+    author_id?: NullableIntFieldUpdateOperationsInput | number | null
     report_title?: NullableStringFieldUpdateOperationsInput | string | null
     problem_id?: NullableIntFieldUpdateOperationsInput | number | null
     canton_id?: NullableIntFieldUpdateOperationsInput | number | null
-    neighborhood?: NullableStringFieldUpdateOperationsInput | string | null
-    street?: NullableStringFieldUpdateOperationsInput | string | null
-    report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type alertCreateManyMunicipalityInput = {
-    alert_id?: number
-    alert_title?: string | null
-    alert_date?: Date | string | null
-    alert_time?: Date | string | null
-    description?: string | null
-  }
-
-  export type alertUpdateWithoutMunicipalityInput = {
-    alert_title?: NullableStringFieldUpdateOperationsInput | string | null
-    alert_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    alert_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type alertUncheckedUpdateWithoutMunicipalityInput = {
-    alert_id?: IntFieldUpdateOperationsInput | number
-    alert_title?: NullableStringFieldUpdateOperationsInput | string | null
-    alert_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    alert_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type alertUncheckedUpdateManyWithoutMunicipalityInput = {
-    alert_id?: IntFieldUpdateOperationsInput | number
-    alert_title?: NullableStringFieldUpdateOperationsInput | string | null
-    alert_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    alert_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type reportCreateManyNeighborInput = {
-    report_id?: number
-    report_title?: string | null
-    problem_id?: number | null
-    canton_id?: number | null
-    district?: number | null
-    neighborhood?: string | null
-    street?: string | null
-    report_date?: Date | string | null
-    report_time?: Date | string | null
-    status?: string | null
-    updated_at?: Date | string | null
-  }
-
-  export type reportUpdateWithoutNeighborInput = {
-    report_title?: NullableStringFieldUpdateOperationsInput | string | null
-    neighborhood?: NullableStringFieldUpdateOperationsInput | string | null
-    street?: NullableStringFieldUpdateOperationsInput | string | null
-    report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    canton?: cantonUpdateOneWithoutReportNestedInput
-    district_report_districtTodistrict?: districtUpdateOneWithoutReport_report_districtTodistrictNestedInput
-    problem?: problemUpdateOneWithoutReportNestedInput
-  }
-
-  export type reportUncheckedUpdateWithoutNeighborInput = {
-    report_id?: IntFieldUpdateOperationsInput | number
-    report_title?: NullableStringFieldUpdateOperationsInput | string | null
-    problem_id?: NullableIntFieldUpdateOperationsInput | number | null
-    canton_id?: NullableIntFieldUpdateOperationsInput | number | null
-    district?: NullableIntFieldUpdateOperationsInput | number | null
-    neighborhood?: NullableStringFieldUpdateOperationsInput | string | null
-    street?: NullableStringFieldUpdateOperationsInput | string | null
-    report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type reportUncheckedUpdateManyWithoutNeighborInput = {
-    report_id?: IntFieldUpdateOperationsInput | number
-    report_title?: NullableStringFieldUpdateOperationsInput | string | null
-    problem_id?: NullableIntFieldUpdateOperationsInput | number | null
-    canton_id?: NullableIntFieldUpdateOperationsInput | number | null
-    district?: NullableIntFieldUpdateOperationsInput | number | null
     neighborhood?: NullableStringFieldUpdateOperationsInput | string | null
     street?: NullableStringFieldUpdateOperationsInput | string | null
     report_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13778,7 +15643,7 @@ export namespace Prisma {
 
   export type reportCreateManyProblemInput = {
     report_id?: number
-    neighbor_id?: number | null
+    author_id?: number | null
     report_title?: string | null
     canton_id?: number | null
     district?: number | null
@@ -13800,12 +15665,12 @@ export namespace Prisma {
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     canton?: cantonUpdateOneWithoutReportNestedInput
     district_report_districtTodistrict?: districtUpdateOneWithoutReport_report_districtTodistrictNestedInput
-    neighbor?: neighborUpdateOneWithoutReportNestedInput
+    author?: UserUpdateOneWithoutReportsNestedInput
   }
 
   export type reportUncheckedUpdateWithoutProblemInput = {
     report_id?: IntFieldUpdateOperationsInput | number
-    neighbor_id?: NullableIntFieldUpdateOperationsInput | number | null
+    author_id?: NullableIntFieldUpdateOperationsInput | number | null
     report_title?: NullableStringFieldUpdateOperationsInput | string | null
     canton_id?: NullableIntFieldUpdateOperationsInput | number | null
     district?: NullableIntFieldUpdateOperationsInput | number | null
@@ -13819,7 +15684,7 @@ export namespace Prisma {
 
   export type reportUncheckedUpdateManyWithoutProblemInput = {
     report_id?: IntFieldUpdateOperationsInput | number
-    neighbor_id?: NullableIntFieldUpdateOperationsInput | number | null
+    author_id?: NullableIntFieldUpdateOperationsInput | number | null
     report_title?: NullableStringFieldUpdateOperationsInput | string | null
     canton_id?: NullableIntFieldUpdateOperationsInput | number | null
     district?: NullableIntFieldUpdateOperationsInput | number | null

@@ -144,4 +144,67 @@
 .status-desconocido {
   background-color: #f0f0f0;
   color: #333;
+}
+
+/* Add a new rule for form-group inside the modal for specific adjustments */
+.modal-content .form-group {
+    margin-bottom: 10px; /* Less margin than a full page form */
+}
+
+.modal-content .form-group label {
+    display: block;
+    color: #cccccc;
+    margin-bottom: 8px;
+    font-size: 0.9em; /* Slightly smaller to fit the modal context */
+    font-weight: 500;
+}
+
+/* This is the new flex container for the select and button */
+.status-update-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between the select and the button */
+}
+
+/* Styles for the select element, inheriting from global styles but can be overridden */
+.status-update-controls select {
+    flex-grow: 1; /* Make the select box take up available space */
+    /* It will automatically get styles from .form-group select via App.css */
+    /* No need to redeclare padding, background, border etc. unless we want to change them */
+}
+
+/* Specific styling for the update button */
+.status-update-button {
+    padding: 12px 18px; /* Same padding as global buttons for consistency */
+    background-color: #00A9B5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em; /* Slightly smaller to match the label */
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.status-update-button:hover:not(:disabled) {
+    background-color: #008C9E;
+}
+
+.status-update-button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Making the error message consistent with the global one */
+.modal-content .error-message {
+    color: #e74c3c;
+    margin-top: 10px;
+    text-align: left; /* Align to the left under the controls */
+    font-size: 0.9em;
+}
+
+.modal-footer {
+    display: flex;
 } 

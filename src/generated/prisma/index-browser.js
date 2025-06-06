@@ -120,13 +120,38 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  password: 'password',
+  role: 'role',
+  created_at: 'created_at'
+};
+
+exports.Prisma.NeighborProfileScalarFieldEnum = {
+  id: 'id',
+  first_name: 'first_name',
+  last_name: 'last_name',
+  second_last_name: 'second_last_name',
+  identification: 'identification',
+  phone_number: 'phone_number',
+  userId: 'userId'
+};
+
+exports.Prisma.MunicipalityProfileScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  canton: 'canton',
+  userId: 'userId'
+};
+
 exports.Prisma.AlertScalarFieldEnum = {
-  alert_id: 'alert_id',
-  muni_id: 'muni_id',
-  alert_title: 'alert_title',
-  alert_date: 'alert_date',
-  alert_time: 'alert_time',
-  description: 'description'
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  authorId: 'authorId'
 };
 
 exports.Prisma.CantonScalarFieldEnum = {
@@ -138,22 +163,6 @@ exports.Prisma.DistrictScalarFieldEnum = {
   district_id: 'district_id',
   district_name: 'district_name',
   canton_id: 'canton_id'
-};
-
-exports.Prisma.MunicipalityScalarFieldEnum = {
-  muni_id: 'muni_id',
-  email: 'email',
-  password: 'password'
-};
-
-exports.Prisma.NeighborScalarFieldEnum = {
-  identification: 'identification',
-  first_name: 'first_name',
-  last_name: 'last_name',
-  second_last_name: 'second_last_name',
-  email: 'email',
-  password: 'password',
-  phone_number: 'phone_number'
 };
 
 exports.Prisma.ProblemScalarFieldEnum = {
@@ -169,7 +178,7 @@ exports.Prisma.Problem_typeScalarFieldEnum = {
 
 exports.Prisma.ReportScalarFieldEnum = {
   report_id: 'report_id',
-  neighbor_id: 'neighbor_id',
+  author_id: 'author_id',
   report_title: 'report_title',
   problem_id: 'problem_id',
   canton_id: 'canton_id',
@@ -196,14 +205,18 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.Role = exports.$Enums.Role = {
+  NEIGHBOR: 'NEIGHBOR',
+  MUNICIPALITY: 'MUNICIPALITY'
+};
 
 exports.Prisma.ModelName = {
-  alert: 'alert',
+  User: 'User',
+  NeighborProfile: 'NeighborProfile',
+  MunicipalityProfile: 'MunicipalityProfile',
+  Alert: 'Alert',
   canton: 'canton',
   district: 'district',
-  municipality: 'municipality',
-  neighbor: 'neighbor',
   problem: 'problem',
   problem_type: 'problem_type',
   report: 'report'

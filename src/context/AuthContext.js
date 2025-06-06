@@ -7,69 +7,59 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  // This effect synchronizes the user state to localStorage
   useEffect(() => {
-    // Don't interact with localStorage for 'currentUser' while the context is still loading its initial state.
     if (isLoading) {
       return;
     }
     if (user) {
       localStorage.setItem('currentUser', JSON.stringify(user));
     } else {
-      // Only remove currentUser from localStorage if user becomes null *after* initial loading is complete.
-      // This is typically after a logout action.
       localStorage.removeItem('currentUser');
     }
-    // We also need to manage isAuthenticated based on user presence AND token
-    // This effect primarily syncs user to localStorage, not auth state directly from user object.
-  }, [user, isLoading]); // Added isLoading to the dependency array
+  }, [user, isLoading]);
 
+  // This effect initializes the user state from localStorage on app load
   useEffect(() => {
-    const rawStoredUser = localStorage.getItem('currentUser');
-    const token = localStorage.getItem('authToken');
-    console.log('AuthContext Init: rawStoredUser from localStorage:', rawStoredUser);
-    console.log('AuthContext Init: token from localStorage:', token);
+    try {
+      const token = localStorage.getItem('authToken');
+      const storedUser = localStorage.getItem('currentUser');
 
-    if (token) {
-      setIsAuthenticated(true);
-      if (rawStoredUser && rawStoredUser !== 'undefined') { // Check if it's not null, empty, or the string "undefined"
-        try {
-          const parsedUser = JSON.parse(rawStoredUser);
-          setUser(parsedUser);
-          console.log('AuthContext Init: Successfully parsed and set user:', parsedUser);
-        } catch (e) {
-          console.error("AuthContext Init: Error parsing stored user:", e);
-          localStorage.removeItem('currentUser');
-        }
-      } else {
-        console.warn('AuthContext Init: Token found but no valid currentUser data in localStorage. rawStoredUser:', rawStoredUser);
+      if (token && storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+        setIsAuthenticated(true);
+        console.log('AuthContext Init: Session restored for user:', parsedUser);
       }
-    } else {
-      setIsAuthenticated(false);
+    } catch (error) {
+      console.error("AuthContext Init: Error restoring session", error);
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('currentUser');
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, []);
 
   const login = (loginData) => {
     if (loginData && loginData.user && loginData.token) {
-      console.log('AuthContext Login: User object to be stored:', loginData.user);
-      const stringifiedUser = JSON.stringify(loginData.user);
-      console.log('AuthContext Login: Stringified user for localStorage:', stringifiedUser);
-      localStorage.setItem('currentUser', stringifiedUser);
+      // The user object from the backend is now { id, email, role, profile: {...} }
+      // This is the object we will store and provide in the context
+      localStorage.setItem('currentUser', JSON.stringify(loginData.user));
       localStorage.setItem('authToken', loginData.token);
       setUser(loginData.user);
       setIsAuthenticated(true);
-      console.log('AuthContext Login: User logged in, token and user stored.');
+      console.log('AuthContext Login: User logged in, session stored.', loginData.user);
     } else {
-      console.error('AuthContext Login: Login data is invalid. User or token missing.', loginData);
+      console.error('AuthContext Login: Login data is invalid.', loginData);
     }
   };
 
   const logout = () => {
     localStorage.removeItem('currentUser');
-    localStorage.removeItem('authToken'); // Remove token on logout
+    localStorage.removeItem('authToken');
     setUser(null);
     setIsAuthenticated(false);
-    console.log('AuthContext: User logged out, token removed.');
+    console.log('AuthContext: User logged out, session cleared.');
   };
 
   return (

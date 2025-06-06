@@ -10,7 +10,9 @@ import DashboardPage from './pages/DashboardPage.js';
 import ReportListPage from './pages/ReportListPage.js';
 import SettingsPage from './pages/SettingsPage.js';
 import ProfilePage from './pages/ProfilePage.js';
+import AlertsPage from './pages/AlertsPage.js';
 import EditReportPage from './pages/EditReportPage.js';
+import AlertFormPage from './pages/AlertFormPage.js';
 
 // Layout for authenticated users (with Sidebar)
 const MainLayout = ({ children }) => (
@@ -56,6 +58,9 @@ function App() {
         <Route path="/reportes" element={<ProtectedRoute><MainLayout><ReportListPage /></MainLayout></ProtectedRoute>} />
         <Route path="/reportes/nuevo" element={<ProtectedRoute><MainLayout><ReportFormPage /></MainLayout></ProtectedRoute>} />
         <Route path="/reportes/:reportId/editar" element={<ProtectedRoute><MainLayout><EditReportPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/alertas" element={<ProtectedRoute><MainLayout><AlertsPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/alertas/nueva" element={<ProtectedRoute><MainLayout><AlertFormPage /></MainLayout></ProtectedRoute>} />
+        <Route path="/alertas/:alertId/editar" element={<ProtectedRoute><MainLayout><AlertFormPage /></MainLayout></ProtectedRoute>} />
         <Route path="/configuracion" element={<ProtectedRoute><MainLayout><SettingsPage /></MainLayout></ProtectedRoute>} />
         <Route path="/perfil" element={<ProtectedRoute><MainLayout><ProfilePage /></MainLayout></ProtectedRoute>} />
         

@@ -2,12 +2,12 @@ import React from 'react';
 // Link is no longer needed here directly
 import './ReportCard.css';
 
-function ReportCard({ report, currentUserId, onCardClick }) { // Add onCardClick, remove currentUserId if not used elsewhere in card
+function ReportCard({ report, onCardClick }) { // currentUserId is no longer needed here
   const {
     report_id,
     report_title,
     problem,
-    neighbor,
+    author, // Changed from neighbor
     status,
     report_date,
     canton,
@@ -20,7 +20,11 @@ function ReportCard({ report, currentUserId, onCardClick }) { // Add onCardClick
   const problemName = problem?.problem_name || 'Problemática no especificada';
   const fullProblemDescription = `${problemTypeName} - ${problemName}`;
 
-  const reporterName = neighbor ? `${neighbor.first_name || ''} ${neighbor.last_name || ''}`.trim() : 'Anónimo';
+  // New logic to determine reporter's name from nested profiles
+  const reporterName = author
+    ? (author.neighborProfile?.first_name ? `${author.neighborProfile.first_name} ${author.neighborProfile.last_name}` : author.municipalityProfile?.name) || 'Anónimo'
+    : 'Anónimo';
+  
   const cantonName = canton?.canton_name || 'Cantón no especificado';
   const districtName = district_report_districtTodistrict?.district_name || 'Distrito no especificado';
 

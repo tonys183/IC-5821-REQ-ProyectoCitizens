@@ -1,0 +1,79 @@
+.alerts-page-container {
+  padding: 20px;
+  width: 100%;
+}
+
+.alerts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 20px;
+}
+
+.alerts-header h1 {
+  color: #00A9B5; /* Teal accent */
+  font-size: 2em;
+  margin: 0;
+}
+
+.create-alert-button {
+  background-color: #00A9B5;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.create-alert-button:hover {
+  background-color: #008C9E;
+}
+
+.alerts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* This is a temporary placeholder style */
+.alert-card-placeholder {
+  background-color: #2d2d30;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  border-left: 5px solid #00A9B5;
+}
+ 
+.alert-card-placeholder h2 {
+  margin-top: 0;
+  color: #f1f1f1;
+}
+
+.alert-card-placeholder p {
+  line-height: 1.6;
+}
+
+.alert-card-placeholder small {
+  color: #a0a0a0;
+}
+
+/* === RESPONSIVE ADJUSTMENTS === */
+@media (max-width: 768px) {
+  .alerts-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .alerts-header h1 {
+    font-size: 1.6em;
+  }
+
+  .create-alert-button {
+    width: 100%;
+    text-align: center;
+  }
+} 
