@@ -1,56 +1,47 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext.js'; // Re-import useAuth
-import { FaCog, FaQuestionCircle } from 'react-icons/fa'; // Import icons
+import { NavLink } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.js';
 import './Sidebar.css';
+import { FaCog, FaQuestionCircle } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 function Sidebar() {
-  const { user } = useAuth(); // Get user from context
-  const location = useLocation(); 
-
-  const isActive = (path) => location.pathname === path;
-  const isBasePathActive = (basePath) => location.pathname.startsWith(basePath);
+  const { user } = useAuth();
+  const { t } = useTranslation();
 
   return (
     <aside className="sidebar">
       <nav className="sidebar-nav top-nav">
         <ul>
-          <li className={isBasePathActive('/reportes') ? 'active' : ''}>
-            <Link to="/reportes">Reportes</Link>
-          </li>
-          <li className={isActive('/alertas') ? 'active' : ''}> 
-            <Link to="/alertas">Alertas</Link> 
-          </li>
+          <li><NavLink to="/dashboard" end>{t('sidebar.dashboard')}</NavLink></li>
+          <li><NavLink to="/reportes">{t('sidebar.reports')}</NavLink></li>
+          <li><NavLink to="/alertas">{t('sidebar.alerts')}</NavLink></li>
         </ul>
       </nav>
 
       <div className="sidebar-separator"></div>
 
       <nav className="sidebar-nav bottom-nav">
-        <ul>
-          <li className={isActive('/perfil') ? 'active' : ''}> 
-            <Link to="/perfil">Perfil</Link>
-          </li>
-        </ul>
+         <ul>
+           <li><NavLink to="/perfil" end>{t('sidebar.profile')}</NavLink></li>
+         </ul>
       </nav>
 
       <div className="sidebar-footer">
-        {user && (
-          <div className="user-info">
-            <p>
-              {(user.role === 'NEIGHBOR' && user.profile?.first_name) ||
-               (user.role === 'MUNICIPALITY' && user.profile?.name) ||
-               user.email}
-            </p> 
-          </div>
-        )}
+        <div className="user-info">
+          <p>
+            {(user?.role === 'NEIGHBOR' && user?.profile?.first_name) ||
+             (user?.role === 'MUNICIPALITY' && user?.profile?.name) ||
+             user?.email}
+          </p>
+        </div>
         <div className="footer-icons">
-          <Link to="/ayuda" className="sidebar-icon-link" title="Ayuda">
+          <NavLink to="/contacto" className="sidebar-icon-link" title={t('sidebar.contact')} end>
             <FaQuestionCircle />
-          </Link>
-          <Link to="/configuracion" className={`sidebar-icon-link ${isActive('/configuracion') ? 'active' : ''}`} title="Configuración">
+          </NavLink>
+          <NavLink to="/configuracion" className="sidebar-icon-link" title={t('sidebar.settings')} end>
             <FaCog />
-          </Link>
+          </NavLink>
         </div>
       </div>
     </aside>

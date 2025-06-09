@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.js';
+import { useTranslation } from 'react-i18next';
 import './ProfilePage.css'; // We will create this CSS file
 
 function ProfilePage() {
+  const { t } = useTranslation();
   const { user, setUser, logout, isLoading: isAuthLoading } = useAuth();
   const navigate = useNavigate();
 
@@ -94,10 +96,10 @@ function ProfilePage() {
       });
       const data = await response.json(); 
       if (!response.ok) {
-        throw new Error(data.message || 'Error al actualizar el perfil');
+        throw new Error(data.message || t('profilePage.errors.updateError'));
       }
       
-      setSuccessMessage(data.message || 'Información actualizada con éxito.');
+      setSuccessMessage(data.message || t('profilePage.success.updateSuccess'));
       
       // We need to update the user object in the context
       // The backend should return the updated profile data
@@ -118,7 +120,7 @@ function ProfilePage() {
   };
 
   const handleDeleteAccount = async () => {
-    if (window.confirm('¿Estás seguro de que quieres eliminar tu cuenta? Esta acción es irreversible.')) {
+    if (window.confirm(t('profilePage.dangerZone.confirmDelete'))) {
       setIsLoading(true);
       setError(null);
       const token = localStorage.getItem('authToken');
@@ -129,7 +131,7 @@ function ProfilePage() {
         });
         const data = await response.json();
         if (!response.ok) {
-          throw new Error(data.message || 'Error al eliminar la cuenta');
+          throw new Error(data.message || t('profilePage.errors.deleteError'));
         }
         logout(); // This will clear context and localStorage
         navigate('/registrarse'); // Navigate to a public page
@@ -141,30 +143,30 @@ function ProfilePage() {
   };
 
   if (isLoading || isAuthLoading) {
-      return <p>Cargando perfil...</p>;
+      return <p>{t('profilePage.loading')}</p>;
   }
 
   // Render different profile views based on role
   const renderNeighborProfile = () => (
     <>
       <div className="form-group">
-        <label htmlFor="identification">Cédula</label>
+        <label htmlFor="identification">{t('profilePage.labels.identification')}</label>
         <input type="text" id="identification" name="identification" value={formData.identification} disabled />
       </div>
       <div className="form-group">
-        <label htmlFor="firstName">Nombre</label>
+        <label htmlFor="firstName">{t('profilePage.labels.firstName')}</label>
         <input type="text" id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} disabled={!isEditing || isLoading} required />
       </div>
       <div className="form-group">
-        <label htmlFor="lastName">Primer Apellido</label>
+        <label htmlFor="lastName">{t('profilePage.labels.lastName')}</label>
         <input type="text" id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} disabled={!isEditing || isLoading} required />
       </div>
       <div className="form-group">
-        <label htmlFor="secondLastName">Segundo Apellido</label>
+        <label htmlFor="secondLastName">{t('profilePage.labels.secondLastName')}</label>
         <input type="text" id="secondLastName" name="secondLastName" value={formData.secondLastName} onChange={handleChange} disabled={!isEditing || isLoading} />
       </div>
       <div className="form-group">
-        <label htmlFor="phoneNumber">Número de Teléfono</label>
+        <label htmlFor="phoneNumber">{t('profilePage.labels.phoneNumber')}</label>
         <input type="tel" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} disabled={!isEditing || isLoading} />
       </div>
     </>
@@ -173,11 +175,11 @@ function ProfilePage() {
   const renderMunicipalityProfile = () => (
     <>
       <div className="form-group">
-        <label htmlFor="name">Nombre de la Institución</label>
+        <label htmlFor="name">{t('profilePage.labels.institutionName')}</label>
         <input type="text" id="name" name="name" value={formData.name} disabled />
       </div>
       <div className="form-group">
-        <label htmlFor="canton">Cantón</label>
+        <label htmlFor="canton">{t('profilePage.labels.canton')}</label>
         <input type="text" id="canton" name="canton" value={formData.canton} disabled />
       </div>
     </>
@@ -186,14 +188,14 @@ function ProfilePage() {
 
   return (
     <div className="profile-page-container">
-      <h2 className="profile-title">Mi Perfil</h2>
+      <h2 className="profile-title">{t('profilePage.title')}</h2>
 
       {error && <p className="error-message">{error}</p>}
       {successMessage && <p className="success-message">{successMessage}</p>}
 
       <form className="profile-form" onSubmit={handleSaveChanges}>
         <div className="form-group">
-          <label htmlFor="email">Correo Electrónico</label>
+          <label htmlFor="email">{t('profilePage.labels.email')}</label>
           <input type="email" id="email" name="email" value={formData.email} disabled />
         </div>
 
@@ -203,26 +205,26 @@ function ProfilePage() {
         {user.role === 'NEIGHBOR' && ( // Only neighbors can edit their profile for now
           isEditing ? (
             <div className="form-actions">
-              <button type="submit" className="profile-button save-button" disabled={isLoading}>
-                {isLoading ? 'Guardando...' : 'Guardar Cambios'}
+              <button type="submit" className="save-button submit-button" disabled={isLoading}>
+                {isLoading ? t('profilePage.buttons.saving') : t('profilePage.buttons.saveChanges')}
               </button>
-              <button type="button" className="profile-button cancel-button" onClick={handleEditToggle} disabled={isLoading}>
-                Cancelar
+              <button type="button" className="cancel-button" onClick={handleEditToggle} disabled={isLoading}>
+                {t('profilePage.buttons.cancel')}
               </button>
             </div>
           ) : (
-            <button type="button" className="profile-button edit-button" onClick={handleEditToggle} disabled={isLoading || !!error}>
-              Editar Información
+            <button type="button" className="edit-button action-button" onClick={handleEditToggle} disabled={isLoading || !!error}>
+              {t('profilePage.buttons.editInfo')}
             </button>
           )
         )}
       </form>
 
       <div className="profile-section danger-zone">
-        <h3 className="profile-section-title">Zona Peligrosa</h3>
-        <p>La eliminación de la cuenta es permanente.</p>
-        <button type="button" onClick={handleDeleteAccount} className="profile-button delete-button" disabled={isLoading}>
-          {isLoading ? 'Eliminando...' : 'Eliminar Mi Cuenta'}
+        <h3 className="profile-section-title">{t('profilePage.dangerZone.title')}</h3>
+        <p>{t('profilePage.dangerZone.description')}</p>
+        <button type="button" onClick={handleDeleteAccount} className="delete-button action-button" disabled={isLoading}>
+          {isLoading ? t('profilePage.buttons.deleting') : t('profilePage.buttons.deleteAccount')}
         </button>
       </div>
     </div>

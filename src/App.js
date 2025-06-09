@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Sidebar from './components/Sidebar.js';
 import ReportFormPage from './pages/ReportFormPage.js';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from './context/AuthContext.js';
 import LoginPage from './pages/LoginPage.js';
 import RegistrationPage from './pages/RegistrationPage.js';
@@ -14,16 +14,22 @@ import AlertsPage from './pages/AlertsPage.js';
 import EditReportPage from './pages/EditReportPage.js';
 import AlertFormPage from './pages/AlertFormPage.js';
 import MunicipalityRegistrationPage from './pages/MunicipalityRegistrationPage.js';
+import ContactPage from './pages/ContactPage.js';
 
 // Layout for authenticated users (with Sidebar)
-const MainLayout = ({ children }) => (
-  <div className="App">
-    <Sidebar />
-    <main className="main-content">
-      {children}
-    </main>
-  </div>
-);
+const MainLayout = ({ children }) => {
+  const location = useLocation();
+  const mainContentClass = location.pathname === '/reportes' ? 'main-content no-padding' : 'main-content';
+
+  return (
+    <div className="App">
+      <Sidebar />
+      <main className={mainContentClass}>
+        {children}
+      </main>
+    </div>
+  );
+};
 
 // Layout for public pages (Login, Register - no Sidebar)
 const AuthLayout = ({ children }) => (
@@ -65,6 +71,7 @@ function App() {
         <Route path="/alertas/:alertId/editar" element={<ProtectedRoute><MainLayout><AlertFormPage /></MainLayout></ProtectedRoute>} />
         <Route path="/configuracion" element={<ProtectedRoute><MainLayout><SettingsPage /></MainLayout></ProtectedRoute>} />
         <Route path="/perfil" element={<ProtectedRoute><MainLayout><ProfilePage /></MainLayout></ProtectedRoute>} />
+        <Route path="/contacto" element={<ProtectedRoute><MainLayout><ContactPage /></MainLayout></ProtectedRoute>} />
         
         {/* Redirect root based on auth state */}
         <Route 

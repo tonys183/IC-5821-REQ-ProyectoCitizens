@@ -1,8 +1,8 @@
 /* Sidebar styles based on the provided image */
 .sidebar {
   width: 200px; /* Adjusted width based on image proportions */
-  background-color: #00A9B5; /* Teal color from image (approximate) */
-  color: #ffffff; /* White text */
+  background-color: var(--accent-color); /* Teal color from image (approximate) */
+  color: var(--button-text); /* White text */
   height: 100vh;
   position: fixed;
   left: 0;
@@ -12,11 +12,8 @@
   padding-top: 0; /* No top padding, header will handle it */
 }
 
-/* No explicit sidebar-header needed if links start directly */
-
 .sidebar-nav {
-  flex-grow: 1; /* Pushes footer to bottom */
-  /* padding-top: 15px; */ /* Optional: if some space needed above first link */
+  /* This style applies to both top-nav and bottom-nav */
 }
 
 .sidebar-nav.top-nav {
@@ -33,67 +30,72 @@
   display: block;
   padding: 15px 25px; /* Generous padding */
   text-decoration: none;
-  color: #ffffff;
+  color: var(--button-text);
   font-size: 1.1em;
   font-weight: 500; /* Medium weight */
   transition: background-color 0.2s ease-in-out;
 }
 
 .sidebar-nav li a:hover {
-  background-color: #008C9E; /* Slightly darker teal on hover */
+  background-color: var(--accent-hover);
 }
 
 .sidebar-nav li.active a {
-  background-color: #00BBD4; /* Lighter teal for active, or same with bold text */
-  /* Or keep same background and just make text bolder/brighter */
-  font-weight: 700; /* Bold for active link */
-  color: #ffffff;
+  background-color: var(--accent-hover); /* Use hover color for active state */
+  font-weight: 700;
+  color: var(--button-text); /* Ensure text is readable */
 }
 
 .sidebar-separator {
   height: 1px;
-  background-color: #008C9E; /* Darker teal for separator */
+  background-color: var(--accent-hover); /* Darker teal for separator */
   margin: 15px 10px; /* Vertical and horizontal margin */
 }
 
 .sidebar-nav.bottom-nav {
-  /* Styles for nav items below separator if needed, e.g., different padding */
+  flex-grow: 1; /* Pushes footer to bottom */
 }
 
 .sidebar-footer {
   padding: 10px 15px; /* Adjusted padding */
   display: flex;
-  justify-content: space-between; /* Space between user info and icons */
+  justify-content: space-between;
   align-items: center;
-  border-top: 1px solid #008C9E; /* Separator line above icons */
+  border-top: 1px solid var(--accent-hover); /* Separator line above icons */
 }
 
 .sidebar-footer .user-info {
   font-size: 0.85em;
-  color: #f0f0f0; /* Slightly off-white for user name */
+  color: var(--button-text);
   text-align: left;
-  flex-grow: 1; /* Allow user info to take available space */
+  flex-grow: 1;
+  min-width: 0; /* Important fix for text-overflow to work in a flex container */
 }
 
 .sidebar-footer .user-info p {
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* Prevent long names from breaking layout */
+  text-overflow: ellipsis;
 }
 
-.sidebar-footer .footer-icons span {
-  font-size: 1.2em; /* Icon size */
-  color: #ffffff;
+.footer-icons {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Spacing between icons */
+}
+
+.sidebar-icon-link {
+  font-size: 1.2em;
+  color: var(--button-text);
   cursor: pointer;
-  margin-left: 10px; /* Space between icons if they are close */
+  transition: color 0.2s ease;
 }
 
-.sidebar-footer .footer-icons span:first-child {
-  margin-left: 0; /* No left margin for the first icon in the group */
+.sidebar-icon-link:hover {
+  opacity: 0.8;
 }
 
-/* Responsive - if sidebar needs to change on small screens */
 @media (max-width: 768px) {
   .sidebar {
     width: 100%;
@@ -104,6 +106,6 @@
     margin-left: 0;
   }
   .sidebar-footer {
-    justify-content: space-around; /* Center items on mobile if layout changes */
+    justify-content: space-around;
   }
 } 

@@ -2,15 +2,15 @@
   max-width: 800px;
   margin: 2rem auto;
   padding: 2rem;
-  background-color: #fff; /* Light background for the content area */
+  background-color: var(--bg-card);
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  color: #333; /* Darker text for readability */
+  box-shadow: 0 4px 12px var(--shadow-color);
+  color: var(--text-primary);
 }
 
 .settings-title {
   text-align: center;
-  color: #2c3e50; /* Similar to other titles */
+  color: var(--accent-color);
   margin-bottom: 2rem;
   font-size: 2rem;
 }
@@ -18,7 +18,7 @@
 .settings-section {
   margin-bottom: 2.5rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid #ecf0f1; /* Light separator for sections */
+  border-bottom: 1px solid var(--border-color);
 }
 
 .settings-section:last-child {
@@ -29,7 +29,7 @@
 
 .settings-section-title {
   font-size: 1.5rem;
-  color: #34495e;
+  color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
@@ -48,49 +48,73 @@
 }
 
 .settings-option-item:hover {
-  background-color: #f8f9fa; /* Slight hover effect for items */
+  /* background-color: var(--bg-secondary); */ /* Removed hover effect as requested */
 }
 
 .settings-option-item span {
   font-size: 1rem;
 }
 
-/* General button styling for settings actions */
-.settings-action-button, 
-.settings-logout-button {
-  padding: 0.6rem 1.2rem;
-  font-size: 0.95rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
-  border: 1px solid transparent;
-  text-align: center;
+.language-buttons {
+  display: flex;
+  gap: 10px;
 }
 
-.settings-action-button {
-  background-color: #3498db; /* Blue for general actions */
-  color: white;
-  border-color: #2980b9;
-}
-
-.settings-action-button:hover {
-  background-color: #2980b9;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
+/* 
+  Button styles are now primarily inherited from global styles in App.css.
+  The .settings-action-button and .settings-logout-button classes in the JS
+  should be paired with the global .action-button class.
+  We only override what's necessary.
+*/
 
 .settings-logout-button {
-  background-color: #e74c3c; /* Red for destructive actions like logout */
-  color: white;
-  border-color: #c0392b;
+  background-color: var(--error-color);
 }
 
 .settings-logout-button:hover {
-  background-color: #c0392b;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background-color: #c0392b; /* Darker red */
+  opacity: 1; /* Override any other opacity */
 }
 
 /* If you want the logout button to be less prominent or aligned differently */
 .settings-option-item .settings-logout-button {
   /* Example: make it take full width or align differently if needed */
   /* width: auto; */ 
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .settings-page-container {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  .settings-title {
+    font-size: 1.8rem;
+  }
+
+  .settings-section-title {
+    font-size: 1.3rem;
+  }
+
+  .settings-option-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .settings-option-item span {
+    margin-bottom: 0.5rem;
+  }
+
+  .language-buttons {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .settings-action-button,
+  .settings-logout-button {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+  }
 } 

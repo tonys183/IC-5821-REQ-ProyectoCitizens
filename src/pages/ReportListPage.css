@@ -1,14 +1,15 @@
 /* Report List Page Styles */
 .report-list-page-container {
-  display: flex; 
-  gap: 20px; 
-  /* padding: 20px; /* Padding is handled by .main-content in App.css */
+  display: flex;
+  align-items: flex-start; /* Align items to the top instead of stretching */
+  gap: 20px; /* Add space between main content and sidebar */
+  padding: 30px; /* Add padding to the container itself */
 }
 
 .report-list-main-content {
-  flex-grow: 1; 
-  display: flex;
-  flex-direction: column;
+  flex-grow: 1; /* Allows the main content to take up available space */
+  padding: 0; /* Remove padding, as it's now on the parent */
+  max-width: calc(100% - 270px); /* Ajusta el ancho máximo menos el sidebar y un poco de espacio */
 }
 
 .report-list-header {
@@ -16,39 +17,38 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 25px;
-  flex-wrap: wrap; 
-  gap: 15px; 
+}
+
+.controls-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .search-bar-container {
-  display: flex;
-  align-items: center;
-  background-color: #007ba7; /* Consistent with other UI elements */
-  padding: 5px 10px;
-  border-radius: 4px;
-  flex-grow: 1; 
-  max-width: 500px; 
+  /* No longer needs to grow */
 }
 
 .search-input {
-  flex-grow: 1;
-  padding: 8px;
-  border: none;
-  border-radius: 3px; /* Simple border radius */
-  background-color: #3c3c3c; /* Dark input background to match forms */
-  color: #fff;
-  font-size: 0.95em;
+  width: 100%;
+  max-width: 300px; /* Reduced max-width */
+  padding: 10px; /* Adjusted padding */
+  border: 1px solid var(--input-border);
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+  border-radius: 4px;
+  font-size: 0.95em; /* Adjusted font size */
 }
 
 .search-input::placeholder {
-  color: #a0a0a0; /* Lighter grey for placeholder */
+  color: var(--text-secondary);
 }
 
 /* Search button is currently commented out in JSX, keeping styles minimal */
 .search-button {
-  background-color: #00A9B5; /* Teal button */
+  background-color: var(--button-bg);
   border: none;
-  color: white;
+  color: var(--button-text);
   padding: 8px 12px;
   border-radius: 0 3px 3px 0; 
   cursor: pointer;
@@ -56,22 +56,24 @@
 }
 
 .search-button:hover {
-  background-color: #008C9E;
+  background-color: var(--accent-hover);
 }
 
 .create-report-button {
-  background-color: #00A9B5; /* Teal to match theme */
-  color: white;
-  padding: 10px 20px;
+  padding: 10px 20px; /* Adjusted padding */
+  background-color: var(--button-bg);
+  color: var(--button-text);
   text-decoration: none;
   border-radius: 4px;
-  font-weight: 500; /* Slightly less bold than main submit buttons */
-  transition: background-color 0.2s ease;
-  white-space: nowrap; 
+  font-weight: 500;
+  white-space: nowrap; /* Prevent button text from wrapping */
+  transition: background-color 0.3s ease;
+  font-size: 0.95em; /* Adjusted font size */
+  height: fit-content; /* Align button height with inputs */
 }
 
 .create-report-button:hover {
-  background-color: #008C9E; /* Darker teal */
+  background-color: var(--accent-hover);
 }
 
 .reports-grid {
@@ -81,28 +83,31 @@
 }
 
 .no-reports-message {
-  color: #ccc;
-  font-style: italic;
   text-align: center;
-  padding: 20px;
+  margin-top: 50px;
+  font-size: 1.2rem;
+  color: var(--text-secondary);
 }
 
+/* Sidebar Styles */
 .nuevos-avisos-sidebar {
-  width: 250px; 
-  background-color: #2d2d30; /* Darker grey, consistent with ReportCard */
+  width: 250px;
   padding: 20px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  color: #e0e0e0;
-  height: fit-content; 
-  flex-shrink: 0; 
-  border: 1px solid #444444;
+  color: var(--text-primary);
+  flex-shrink: 0;
+  height: fit-content; /* Make height based on content */
+  /* La altura se ajustará automáticamente por el contenedor flex */
 }
 
 .nuevos-avisos-sidebar h4 {
   margin-top: 0;
-  color: #00A9B5; /* Teal accent */
   margin-bottom: 15px;
-  border-bottom: 1px solid #444444;
+  color: var(--accent-color);
+  font-size: 1.3rem;
+  border-bottom: 1px solid var(--border-color);
   padding-bottom: 10px;
 }
 
@@ -111,37 +116,126 @@
   line-height: 1.5;
 }
 
-/* Responsive adjustments */
-@media (max-width: 992px) { 
+.alert-preview-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.alert-preview-item {
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 15px;
+}
+
+.alert-preview-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.alert-preview-link {
+  text-decoration: none;
+  color: var(--accent-color);
+  font-weight: 600;
+  font-size: 1.05rem;
+  display: block; /* Makes the whole area clickable */
+  margin-bottom: 5px;
+}
+
+.alert-preview-link:hover {
+  text-decoration: underline;
+}
+
+.alert-preview-author {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  display: block;
+}
+
+.filters-container {
+  display: flex;
+  gap: 15px;
+}
+
+.filter-select {
+  padding: 10px;
+  border: 1px solid var(--input-border);
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+  border-radius: 4px;
+  min-width: 200px;
+  font-size: 0.95em;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cccccc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 1em;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px var(--accent-hover);
+}
+
+/* === RESPONSIVE STYLES === */
+
+/* For tablets and smaller desktops */
+@media (max-width: 992px) {
   .report-list-page-container {
-    flex-direction: column-reverse; 
+    flex-direction: column;
+    align-items: stretch;
   }
+
   .report-list-main-content {
-    width: 100%; 
+    max-width: 100%;
   }
+
   .nuevos-avisos-sidebar {
-    width: 100%; 
-    margin-bottom: 20px; 
-  }
-  .reports-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    width: 100%;
+    margin-top: 20px;
   }
 }
 
-@media (max-width: 768px) { 
+/* For mobile devices */
+@media (max-width: 768px) {
+  .report-list-page-container {
+    padding: 15px;
+  }
+
   .report-list-header {
-    flex-direction: column; 
-    align-items: stretch; 
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
   }
-  .search-bar-container {
-    max-width: none; 
+
+  .controls-left {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
   }
+
+  .search-input {
+    max-width: 100%;
+  }
+
+  .filters-container {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .filter-select {
+    min-width: 100%;
+  }
+  
   .create-report-button {
-    text-align: center; 
-    width: 100%; /* Make button full width on small screens */
-    padding: 12px; /* Adjust padding for full width */
+    text-align: center;
   }
+
   .reports-grid {
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
   }
 } 

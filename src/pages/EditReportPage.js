@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.js';
 import { FaTimes } from 'react-icons/fa'; // Import the close icon
-// import './ReportFormPage.css'; // Can reuse if styles are identical or create EditReportPage.css
+import { useTranslation } from 'react-i18next';
+import './ReportFormPage.css'; // Reuse the same CSS file
 
 function EditReportPage() {
+  const { t } = useTranslation();
   const { reportId } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -49,7 +51,7 @@ function EditReportPage() {
         setCantons(cantonsData);
       } catch (err) {
         console.error("Error fetching initial data:", err);
-        setError(prev => prev || err.message || 'Error al cargar datos iniciales.');
+        setError(prev => prev || err.message || t('reportForm.errors.loadInitialData'));
       }
     };
     fetchInitialData();
@@ -99,7 +101,7 @@ function EditReportPage() {
   useEffect(() => {
     if (!reportId || !user) {
         if (!user && !isLoadingReport) {
-             setError("Usuario no autenticado.");
+             setError(t('reportForm.errors.notAuthenticated'));
              setIsLoadingReport(false);
         }
         return;
@@ -110,7 +112,7 @@ function EditReportPage() {
       setError(null);
       const token = localStorage.getItem('authToken');
       if (!token) {
-        setError('No autenticado. Redirigiendo a inicio de sesión.');
+        setError(t('reportForm.errors.noAuthTokenRedirect'));
         setIsLoadingReport(false);
         navigate('/login');
         return;
@@ -122,7 +124,7 @@ function EditReportPage() {
         });
         const data = await response.json();
         if (!response.ok) {
-          throw new Error(data.message || `Error al cargar el reporte`);
+          throw new Error(data.message || t('reportForm.errors.loadReportError'));
         }
         
         // Populate form, ensuring all values are strings for select elements
@@ -182,13 +184,13 @@ function EditReportPage() {
     e.preventDefault();
     const token = localStorage.getItem('authToken');
     if (!user || !token) {
-      setError('Usuario no autenticado. Por favor, inicie sesión de nuevo.');
+      setError(t('reportForm.errors.notAuthenticated'));
       return;
     }
     
     const { report_title, problem_id, canton_id, district_id, neighborhood, street } = formData;
     if (!report_title || !problem_id || !canton_id || !district_id || !neighborhood || !street) {
-        setError('Por favor complete todos los campos requeridos (*).');
+        setError(t('reportForm.errors.fillAllFields'));
         return;
     }
 
@@ -217,10 +219,10 @@ function EditReportPage() {
 
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.message || 'Error al actualizar el reporte');
+        throw new Error(data.message || t('reportForm.errors.updateError'));
       }
 
-      setSuccessMessage('Reporte actualizado con éxito. Redirigiendo...');
+      setSuccessMessage(t('reportForm.success.reportUpdated'));
       setTimeout(() => {
         navigate('/reportes');
       }, 2000);
@@ -233,24 +235,33 @@ function EditReportPage() {
   };
 
   if (isLoadingReport) {
-    return <div className="form-container">Cargando datos del reporte...</div>;
+    return <div className="form-container">{t('reportForm.loadingReportData')}</div>;
   }
 
   return (
-    <div className="report-form-container">
-      <div className="form-header">
-        <h2>Editar Reporte</h2>
-        <button onClick={handleCancel} className="close-button" aria-label="Cerrar">
-          <FaTimes />
-        </button>
-      </div>
-
+    <div className="form-container">
+      <button 
+        onClick={handleCancel}
+        title={t('reportForm.cancelAndReturn')}
+        className="close-form-button"
+      >
+        <FaTimes />
+      </button>
+      <h2 className="form-title">{t('reportForm.titleEdit')}</h2>
+      
       <form onSubmit={handleSubmit} noValidate>
         {error && <p className="error-message">{error}</p>}
         {successMessage && <p className="success-message">{successMessage}</p>}
         
-        <div className="form-group">
-          <label htmlFor="report_title">Título del Reporte *</label>
+        <div className="contact-prompt">
+          <p>
+          {t('reportForm.contactPrompt.text')}{' '}
+            <Link to="/contacto">{t('reportForm.contactPrompt.link')}</Link>.
+          </p>
+        </div>
+
+        <div className="form-group full-width">
+          <label htmlFor="report_title">{t('reportForm.labels.reportTitle')} *</label>
           <input
             type="text"
             id="report_title"
@@ -262,9 +273,9 @@ function EditReportPage() {
           />
         </div>
         
-        <div className="form-row">
+        <div className="form-grid">
           <div className="form-group">
-            <label htmlFor="problem_type_id">Tipo de Problemática *</label>
+            <label htmlFor="problem_type_id">{t('reportForm.labels.problemType')} *</label>
             <select
               id="problem_type_id"
               name="problem_type_id"
@@ -272,7 +283,7 @@ function EditReportPage() {
               onChange={handleChange}
               required
             >
-              <option value="">-- Seleccione un tipo --</option>
+              <option value="">{t('reportForm.placeholders.selectType')}</option>
               {problemTypes.map(pt => (
                 <option key={pt.problem_type_id} value={pt.problem_type_id}>
                   {pt.type_name}
@@ -281,32 +292,26 @@ function EditReportPage() {
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="problem_id">Problemática Específica *</label>
+            <label htmlFor="problem_id">{t('reportForm.labels.specificProblem')} *</label>
             <select
               id="problem_id"
               name="problem_id"
               value={formData.problem_id}
               onChange={handleChange}
               required
-              disabled={isFetchingProblems || problems.length === 0}
+              disabled={!formData.problem_type_id || isFetchingProblems}
             >
-              <option value="">-- Seleccione una problemática --</option>
-              {isFetchingProblems ? (
-                  <option>Cargando...</option>
-              ) : (
-                problems.map(p => (
+              <option value="">{isFetchingProblems ? t('reportForm.placeholders.loading') : (formData.problem_type_id ? t('reportForm.placeholders.selectProblem') : t('reportForm.placeholders.selectTypeFirst'))}</option>
+              {problems.map(p => (
                   <option key={p.problem_id} value={p.problem_id}>
                     {p.problem_name}
                   </option>
-                ))
-              )}
+                ))}
             </select>
           </div>
-        </div>
 
-        <div className="form-row">
           <div className="form-group">
-            <label htmlFor="canton_id">Cantón *</label>
+            <label htmlFor="canton_id">{t('reportForm.labels.canton')} *</label>
             <select
               id="canton_id"
               name="canton_id"
@@ -314,7 +319,7 @@ function EditReportPage() {
               onChange={handleChange}
               required
             >
-              <option value="">-- Seleccione un cantón --</option>
+              <option value="">{t('reportForm.placeholders.selectCanton')}</option>
               {cantons.map(c => (
                 <option key={c.canton_id} value={c.canton_id}>
                   {c.canton_name}
@@ -323,31 +328,27 @@ function EditReportPage() {
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="district_id">Distrito *</label>
+            <label htmlFor="district_id">{t('reportForm.labels.district')} *</label>
             <select
               id="district_id"
               name="district_id"
               value={formData.district_id}
               onChange={handleChange}
               required
-              disabled={isFetchingDistricts || districts.length === 0}
+              disabled={!formData.canton_id || isFetchingDistricts}
             >
-              <option value="">-- Seleccione un distrito --</option>
-              {isFetchingDistricts ? (
-                  <option>Cargando...</option>
-              ) : (
-                districts.map(d => (
+              <option value="">{isFetchingDistricts ? t('reportForm.placeholders.loading') : (formData.canton_id ? t('reportForm.placeholders.selectDistrict') : t('reportForm.placeholders.selectCantonFirst'))}</option>
+              {districts.map(d => (
                   <option key={d.district_id} value={d.district_id}>
                     {d.district_name}
                   </option>
-                ))
-              )}
+                ))}
             </select>
           </div>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="neighborhood">Barrio *</label>
+        <div className="form-group full-width">
+          <label htmlFor="neighborhood">{t('reportForm.labels.neighborhood')} *</label>
           <input
             type="text"
             id="neighborhood"
@@ -359,8 +360,8 @@ function EditReportPage() {
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="street">Dirección Exacta *</label>
+        <div className="form-group full-width">
+          <label htmlFor="street">{t('reportForm.labels.exactAddress')} *</label>
           <textarea
             id="street"
             name="street"
@@ -374,10 +375,10 @@ function EditReportPage() {
 
         <div className="form-actions">
           <button type="button" onClick={handleCancel} className="cancel-button">
-            Cancelar
+            {t('reportForm.buttons.cancel')}
           </button>
           <button type="submit" disabled={isSubmitting || isLoadingReport} className="submit-button">
-            {isSubmitting ? 'Guardando Cambios...' : 'Guardar Cambios'}
+            {isSubmitting ? t('reportForm.buttons.saving') : t('reportForm.buttons.saveChanges')}
           </button>
         </div>
       </form>

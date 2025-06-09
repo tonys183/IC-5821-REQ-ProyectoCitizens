@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.js';
 import { FaTimes } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 function AlertFormPage() {
+  const { t } = useTranslation();
   const { alertId } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -23,10 +25,10 @@ function AlertFormPage() {
         try {
           // Note: No token needed for public GET, but good practice if it were secured
           const response = await fetch(`/api/alerts`); 
-          if (!response.ok) throw new Error('Failed to fetch alerts');
+          if (!response.ok) throw new Error(t('alertForm.errors.fetchFailed'));
           const alerts = await response.json();
           const currentAlert = alerts.find(a => a.id === parseInt(alertId));
-          if (!currentAlert) throw new Error('Alert not found');
+          if (!currentAlert) throw new Error(t('alertForm.errors.notFound'));
           
           setFormData({
             title: currentAlert.title,
@@ -73,7 +75,7 @@ function AlertFormPage() {
       });
       const data = await response.json();
       if (!response.ok) {
-        throw new Error(data.message || `Failed to ${isEditing ? 'update' : 'create'} alert`);
+        throw new Error(data.message || t(isEditing ? 'alertForm.errors.updateFailed' : 'alertForm.errors.createFailed'));
       }
       navigate('/alertas'); // Redirect to alerts list on success
     } catch (err) {
@@ -88,14 +90,14 @@ function AlertFormPage() {
   };
 
   if (!user || user.role !== 'MUNICIPALITY') {
-    return <p>Acceso denegado.</p>; // Or a loading spinner while redirecting
+    return <p>{t('alertForm.accessDenied')}</p>; // Or a loading spinner while redirecting
   }
 
   return (
     <div className="report-form-container"> {/* Reusing styles from report form */}
       <div className="form-header">
-        <h2>{isEditing ? 'Editar Alerta' : 'Crear Nueva Alerta'}</h2>
-        <button onClick={handleCancel} className="close-button" aria-label="Cerrar">
+        <h2>{isEditing ? t('alertForm.titleEdit') : t('alertForm.titleCreate')}</h2>
+        <button onClick={handleCancel} className="close-button" aria-label={t('alertForm.close')}>
           <FaTimes />
         </button>
       </div>
@@ -103,7 +105,7 @@ function AlertFormPage() {
       <form onSubmit={handleSubmit}>
         {error && <p className="error-message">{error}</p>}
         <div className="form-group">
-          <label htmlFor="title">Título</label>
+          <label htmlFor="title">{t('alertForm.labels.title')}</label>
           <input
             type="text"
             id="title"
@@ -115,7 +117,7 @@ function AlertFormPage() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="content">Contenido</label>
+          <label htmlFor="content">{t('alertForm.labels.content')}</label>
           <textarea
             id="content"
             name="content"
@@ -128,10 +130,10 @@ function AlertFormPage() {
         </div>
         <div className="form-actions">
           <button type="button" onClick={handleCancel} className="cancel-button">
-            Cancelar
+            {t('alertForm.buttons.cancel')}
           </button>
           <button type="submit" disabled={isLoading} className="submit-button">
-            {isLoading ? 'Guardando...' : (isEditing ? 'Guardar Cambios' : 'Crear Alerta')}
+            {isLoading ? t('alertForm.buttons.saving') : (isEditing ? t('alertForm.buttons.saveChanges') : t('alertForm.buttons.createAlert'))}
           </button>
         </div>
       </form>

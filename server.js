@@ -222,10 +222,23 @@ app.post('/api/auth/login', async (req, res) => {
 
 // Get All Reports Route (Refactored for User/Author model)
 app.get('/api/reports', async (req, res) => {
+  const { cantonId, status } = req.query;
+
+  const whereClause = {};
+
+  if (cantonId && !isNaN(parseInt(cantonId))) {
+    whereClause.canton_id = parseInt(cantonId);
+  }
+
+  if (status && status !== 'ALL') {
+    whereClause.status = status;
+  }
+
   try {
     const reports = await prisma.report.findMany({
+      where: whereClause,
       orderBy: {
-        report_date: 'desc',
+        updated_at: 'desc',
       },
       include: {
         author: { // Changed from neighbor
@@ -470,6 +483,7 @@ app.post('/api/reports', authenticateToken, async (req, res) => {
         report_date: new Date(), // Set server-side
         report_time: new Date(), // Set server-side
         status: 'Waiting',       // Default status
+        updated_at: new Date(),  // Ensure updated_at is set on creation
       },
     });
 

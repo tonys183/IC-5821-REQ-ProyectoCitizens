@@ -1,0 +1,122 @@
+.contact-page {
+  display: flex;
+}
+
+.contact-container {
+  flex-grow: 1;
+  padding: 40px;
+  background-color: var(--bg-secondary);
+}
+
+.contact-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+}
+
+.contact-container > p {
+  text-align: center;
+  font-size: 1.1em;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+}
+
+.contact-info,
+.contact-form-container {
+  background-color: var(--bg-card);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px var(--shadow-color);
+  margin-bottom: 30px;
+}
+
+.contact-info h2,
+.contact-form-container h2 {
+  margin-top: 0;
+  color: var(--accent-color);
+  border-bottom: 2px solid var(--accent-color);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.contact-info p {
+  font-size: 1em;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.contact-info p strong {
+  color: var(--text-primary);
+}
+
+.contact-form .form-group {
+  margin-bottom: 20px;
+}
+
+.contact-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #0056b3;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 86, 179, 0.2);
+}
+
+.submit-btn {
+  background-color: #0056b3;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.submit-btn:hover {
+  background-color: #004494;
+}
+
+.back-link {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .contact-container {
+    padding: 20px;
+  }
+
+  .contact-container h1 {
+    font-size: 1.8rem;
+  }
+
+  .contact-info,
+  .contact-form-container {
+    padding: 20px;
+  }
+} 

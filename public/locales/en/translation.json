@@ -1,0 +1,207 @@
+{
+  "sidebar": {
+    "dashboard": "Home",
+    "reports": "Reports",
+    "alerts": "Alerts",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "title": "Welcome to the Application",
+    "subtitle": "This is your main dashboard.",
+    "description": "From here you can access the different functionalities of the application once they are implemented."
+  },
+  "settings": {
+    "title": "Settings",
+    "themeTitle": "Theme",
+    "currentTheme": "Current Theme",
+    "lightTheme": "Light",
+    "darkTheme": "Dark",
+    "toggleTheme": "Toggle Theme",
+    "languageTitle": "Language",
+    "accountTitle": "Account",
+    "currentLanguage": "Current Language",
+    "spanish": "Spanish",
+    "english": "English",
+    "logout": "Log Out"
+  },
+  "reportList": {
+    "searchPlaceholder": "Search reports... (title, problem, location)",
+    "filterCanton": "All Cantons",
+    "filterStatus": "All Statuses",
+    "status": {
+      "waiting": "Pending",
+      "inProgress": "In Progress",
+      "resolved": "Resolved",
+      "rejected": "Rejected"
+    },
+    "createReport": "Create Report",
+    "loading": "Loading reports...",
+    "error": "Error loading reports.",
+    "noReports": "No reports available.",
+    "noReportsFound": "No reports found with the search criteria.",
+    "newAlertsTitle": "New Announcements",
+    "newAlertsBody": "The most recent or important announcements will be displayed here."
+  },
+  "reportCard": {
+    "problem": "Problem",
+    "location": "Location",
+    "status": "Status",
+    "reportedBy": "Reported by",
+    "lastUpdated": "Last Updated",
+    "anonymous": "Anonymous",
+    "unspecified": "Unspecified"
+  },
+  "reportModal": {
+    "problemDetails": "Problem Details",
+    "problem": "Problem",
+    "location": "Location",
+    "statusAndDates": "Status & Dates",
+    "currentStatus": "Current Status",
+    "reportDate": "Report Date",
+    "lastUpdated": "Last Updated",
+    "reportedBy": "Reported by",
+    "updateStatusTitle": "Update Report Status",
+    "newStatus": "New Status",
+    "save": "Save",
+    "updating": "Updating...",
+    "editMyReport": "Edit My Report",
+    "reportId": "Report ID"
+  },
+  "reportForm": {
+    "titleCreate": "Create Report",
+    "titleEdit": "Edit Report",
+    "cancelAndReturn": "Cancel and return to list",
+    "contactPrompt": {
+      "text": "Can't find the problem you're looking for?",
+      "link": "Contact us"
+    },
+    "labels": {
+      "reportTitle": "Report Title",
+      "problemType": "Problem Type",
+      "specificProblem": "Specific Problem",
+      "canton": "Canton",
+      "district": "District",
+      "neighborhood": "Neighborhood",
+      "exactAddress": "Exact Address"
+    },
+    "placeholders": {
+      "loading": "Loading...",
+      "selectType": "Select a type",
+      "selectProblem": "Select a problem",
+      "selectTypeFirst": "Select type first",
+      "selectCanton": "Select a canton",
+      "selectDistrict": "Select a district",
+      "selectCantonFirst": "Select canton first"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "createReport": "Create Report",
+      "sending": "Sending...",
+      "saveChanges": "Save Changes",
+      "saving": "Saving Changes..."
+    },
+    "errors": {
+      "loadProblemTypes": "Error loading problem types.",
+      "loadCantons": "Error loading cantons.",
+      "loadProblems": "Error loading problems.",
+      "loadDistricts": "Error loading districts.",
+      "notAuthenticated": "User not authenticated. Please log in.",
+      "noAuthToken": "Authentication token not found. Please log in again.",
+      "noAuthTokenRedirect": "Not authenticated. Redirecting to login.",
+      "fillAllFields": "Please fill all required fields (*).",
+      "authError": "Authentication error. Please try logging in again.",
+      "createError": "Error creating the report.",
+      "updateError": "Error updating the report.",
+      "submitError": "An error occurred while submitting the report.",
+      "loadInitialData": "Error loading initial data.",
+      "loadReportError": "Error loading the report"
+    },
+    "success": {
+      "reportCreated": "Report created successfully! Redirecting...",
+      "reportUpdated": "Report updated successfully. Redirecting..."
+    },
+    "loadingReportData": "Loading report data..."
+  },
+  "alertsPage": {
+    "title": "Municipality Alerts",
+    "createButton": "Create New Alert",
+    "loading": "Loading alerts...",
+    "noAlerts": "No alerts available at this time.",
+    "confirmDelete": "Are you sure you want to delete this alert?",
+    "errors": {
+      "load": "Error loading alerts.",
+      "delete": "Error deleting the alert."
+    }
+  },
+  "alertForm": {
+    "titleCreate": "Create New Alert",
+    "titleEdit": "Edit Alert",
+    "close": "Close",
+    "accessDenied": "Access denied.",
+    "labels": {
+      "title": "Title",
+      "content": "Content"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "createAlert": "Create Alert",
+      "saveChanges": "Save Changes",
+      "saving": "Saving..."
+    },
+    "errors": {
+      "fetchFailed": "Failed to fetch the alert.",
+      "notFound": "Alert not found.",
+      "createFailed": "Failed to create the alert.",
+      "updateFailed": "Failed to update the alert."
+    }
+  },
+  "alertCard": {
+    "publishedBy": "Published by",
+    "lastUpdated": "Last updated",
+    "defaultAuthor": "Municipality"
+  },
+  "profilePage": {
+    "title": "My Profile",
+    "loading": "Loading profile...",
+    "labels": {
+      "identification": "ID Number",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "secondLastName": "Second Last Name",
+      "phoneNumber": "Phone Number",
+      "institutionName": "Institution Name",
+      "canton": "Canton",
+      "email": "Email"
+    },
+    "buttons": {
+      "saveChanges": "Save Changes",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "editInfo": "Edit Information",
+      "deleteAccount": "Delete My Account",
+      "deleting": "Deleting..."
+    },
+    "dangerZone": {
+      "title": "Danger Zone",
+      "description": "Account deletion is permanent.",
+      "confirmDelete": "Are you sure you want to delete your account? This action is irreversible."
+    },
+    "errors": {
+      "updateError": "Error updating profile.",
+      "deleteError": "Error deleting account."
+    },
+    "success": {
+      "updateSuccess": "Information updated successfully."
+    }
+  },
+  "contactPage": {
+    "title": "Contact Page",
+    "intro": "If you have any questions, suggestions, or problems, do not hesitate to contact us.",
+    "infoTitle": "Contact Information",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "addressLabel": "Address",
+    "addressValue": "Headquarters, San José, Costa Rica"
+  }
+} 

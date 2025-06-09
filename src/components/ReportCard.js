@@ -1,32 +1,42 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 // Link is no longer needed here directly
 import './ReportCard.css';
 
 function ReportCard({ report, onCardClick }) { // currentUserId is no longer needed here
+  const { t } = useTranslation();
   const {
-    report_id,
     report_title,
+    status,
+    updated_at,
     problem,
     author, // Changed from neighbor
-    status,
-    report_date,
     canton,
     district_report_districtTodistrict,
     neighborhood,
     street
   } = report || {};
 
-  const problemTypeName = problem?.problem_type?.type_name || 'Tipo no especificado';
-  const problemName = problem?.problem_name || 'Problemática no especificada';
+  const problemTypeName = problem?.problem_type?.type_name || t('reportCard.unspecified');
+  const problemName = problem?.problem_name || t('reportCard.unspecified');
   const fullProblemDescription = `${problemTypeName} - ${problemName}`;
 
   // New logic to determine reporter's name from nested profiles
   const reporterName = author
-    ? (author.neighborProfile?.first_name ? `${author.neighborProfile.first_name} ${author.neighborProfile.last_name}` : author.municipalityProfile?.name) || 'Anónimo'
-    : 'Anónimo';
+    ? (author.neighborProfile?.first_name ? `${author.neighborProfile.first_name} ${author.neighborProfile.last_name}` : author.municipalityProfile?.name) || t('reportCard.anonymous')
+    : t('reportCard.anonymous');
   
-  const cantonName = canton?.canton_name || 'Cantón no especificado';
-  const districtName = district_report_districtTodistrict?.district_name || 'Distrito no especificado';
+  const cantonName = canton?.canton_name || t('reportCard.unspecified');
+  const districtName = district_report_districtTodistrict?.district_name || t('reportCard.unspecified');
+
+  const getStatusKey = (statusString) => {
+    switch(statusString) {
+      case 'Waiting': return 'reportList.status.waiting';
+      case 'In Progress': return 'reportList.status.inProgress';
+      case 'Resolved': return 'reportList.status.resolved';
+      default: return 'reportCard.unspecified';
+    }
+  };
 
   const formatDate = (dateString) => {
     if (!dateString) return '-';
@@ -54,12 +64,12 @@ function ReportCard({ report, onCardClick }) { // currentUserId is no longer nee
   return (
     <div className="report-card" onClick={handleCardClick} style={{ cursor: 'pointer' }}>
       <h4 className="report-card-title">{report_title || 'Reporte Sin Título'}</h4>
-      <p className="report-card-description"><strong>Problema:</strong> {fullProblemDescription}</p>
+      <p className="report-card-description"><strong>{t('reportCard.problem')}:</strong> {fullProblemDescription}</p>
       <div className="report-card-details">
-        <p><strong>Ubicación:</strong> {`${street || '-'}, ${neighborhood || '-'}, ${districtName}, ${cantonName}`}</p>
-        <p><strong>Estado:</strong> <span className={`status status-${(status || 'Desconocido').toLowerCase().replace(' ', '-')}`}>{status || 'Desconocido'}</span></p>
-        <p><strong>Reportado por:</strong> {reporterName}</p>
-        <p><strong>Fecha:</strong> {formatDate(report_date)}</p>
+        <p><strong>{t('reportCard.location')}:</strong> {`${street || '-'}, ${neighborhood || '-'}, ${districtName}, ${cantonName}`}</p>
+        <p><strong>{t('reportCard.status')}:</strong> <span className={`status status-${(status || 'Desconocido').toLowerCase().replace(/\s+/g, '-')}`}>{t(getStatusKey(status))}</span></p>
+        <p><strong>{t('reportCard.reportedBy')}:</strong> {reporterName}</p>
+        <p><strong>{t('reportCard.lastUpdated')}:</strong> {formatDate(updated_at)}</p>
         {/* ID del Reporte can be shown in the modal if needed */}
       </div>
       {/* Edit button is removed from here and placed in the modal */}

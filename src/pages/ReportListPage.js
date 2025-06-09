@@ -3,24 +3,76 @@ import { Link } from 'react-router-dom'; // For the "Crear Reporte" button
 import ReportCard from '../components/ReportCard.js'; // Added .js extension
 import ReportDetailModal from '../components/ReportDetailModal.js'; // Import the modal
 import { useAuth } from '../context/AuthContext.js'; // Import useAuth
+import { useTranslation } from 'react-i18next'; // Import useTranslation
 import './ReportListPage.css';
 
 function ReportListPage() {
+  const { t } = useTranslation(); // Initialize translation hook
   const [reports, setReports] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const { user } = useAuth(); // Get the authenticated user
 
+  const [cantons, setCantons] = useState([]);
+  const [filterCanton, setFilterCanton] = useState('');
+  const [filterStatus, setFilterStatus] = useState('');
+
   const [selectedReport, setSelectedReport] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [alerts, setAlerts] = useState([]);
+
+  // Fetch alerts for the sidebar
+  useEffect(() => {
+    const fetchAlerts = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/alerts');
+        if (!response.ok) {
+          // Don't throw an error that would overwrite the main report error
+          console.error(`HTTP error! status: ${response.status}`);
+          return;
+        }
+        const data = await response.json();
+        setAlerts(data);
+      } catch (err) {
+        console.error("Failed to fetch alerts for sidebar:", err);
+      }
+    };
+    fetchAlerts();
+  }, []);
+
+  // Fetch all cantons for the filter dropdown
+  useEffect(() => {
+    const fetchCantons = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/cantons');
+        if (!response.ok) throw new Error('Failed to fetch cantons');
+        const data = await response.json();
+        setCantons(data);
+      } catch (err) {
+        console.error(err);
+        // Optional: set an error state for the cantons dropdown
+      }
+    };
+    fetchCantons();
+  }, []);
+
 
   useEffect(() => {
     const fetchReports = async () => {
       setIsLoading(true);
       setError(null);
+      
+      const query = new URLSearchParams();
+      if (filterCanton) {
+        query.append('cantonId', filterCanton);
+      }
+      if (filterStatus) {
+        query.append('status', filterStatus);
+      }
+      
       try {
-        const response = await fetch('http://localhost:3001/api/reports');
+        const response = await fetch(`http://localhost:3001/api/reports?${query.toString()}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -28,14 +80,14 @@ function ReportListPage() {
         setReports(data);
       } catch (err) {
         console.error("Failed to fetch reports:", err);
-        setError(err.message || "Error al cargar los reportes.");
+        setError(err.message || t('reportList.error'));
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchReports();
-  }, []);
+  }, [filterCanton, filterStatus]);
 
   // Filter reports based on searchTerm (simple title/description search)
   const filteredReports = reports.filter(report => {
@@ -45,17 +97,13 @@ function ReportListPage() {
     const lowerSearchTerm = searchTerm.toLowerCase();
 
     // Add other fields to search if desired, e.g., status, neighbor name, canton, district
-    const status = report.status?.toLowerCase() || '';
     const canton = report.canton?.canton_name?.toLowerCase() || '';
-    const district = report.district_report_districtTodistrict?.district_name?.toLowerCase() || '';
     const neighborhood = report.neighborhood?.toLowerCase() || '';
 
     return problemName.includes(lowerSearchTerm) || 
            problemTypeName.includes(lowerSearchTerm) ||
            currentReportTitle.includes(lowerSearchTerm) ||
-           status.includes(lowerSearchTerm) ||
            canton.includes(lowerSearchTerm) ||
-           district.includes(lowerSearchTerm) ||
            neighborhood.includes(lowerSearchTerm);
   });
 
@@ -81,24 +129,47 @@ function ReportListPage() {
   return (
     <div className="report-list-page-container">
       <div className="report-list-main-content">
-      <div className="report-list-header">
-        <div className="search-bar-container">
-          <input
-            type="text"
-              placeholder="Buscar reportes... (título, problema, estado, ubicación)"
-              className="search-input"
-            value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-          />
-            {/* <button className="search-button">🔍</button> */}
-        </div>
+        <div className="report-list-header">
+          <div className="controls-left">
+            <div className="search-bar-container">
+              <input
+                type="text"
+                placeholder={t('reportList.searchPlaceholder')}
+                className="search-input"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <div className="filters-container">
+              <select
+                value={filterCanton}
+                onChange={(e) => setFilterCanton(e.target.value)}
+                className="filter-select"
+              >
+                <option value="">{t('reportList.filterCanton')}</option>
+                {cantons.map(c => (
+                  <option key={c.canton_id} value={c.canton_id}>{c.canton_name}</option>
+                ))}
+              </select>
+              <select
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+                className="filter-select"
+              >
+                <option value="">{t('reportList.filterStatus')}</option>
+                <option value="Waiting">{t('reportList.status.waiting')}</option>
+                <option value="In_Progress">{t('reportList.status.inProgress')}</option>
+                <option value="Resolved">{t('reportList.status.resolved')}</option>
+              </select>
+            </div>
+          </div>
           <Link to="/reportes/nuevo" className="create-report-button">
-          Crear Reporte
-        </Link>
-      </div>
+            {t('reportList.createReport')}
+          </Link>
+        </div>
 
-        {isLoading && <p>Cargando reportes...</p>}
-        {error && <p className="error-message" style={{color: 'red'}}>Error: {error}</p>}
+        {isLoading && <p>{t('reportList.loading')}</p>}
+        {error && <p className="error-message" style={{ color: 'red' }}>Error: {error}</p>}
         
         {!isLoading && !error && (
           filteredReports.length > 0 ? (
@@ -114,17 +185,30 @@ function ReportListPage() {
         </div>
       ) : (
             <p className="no-reports-message">
-              {reports.length === 0 ? "No hay reportes disponibles." : "No se encontraron reportes con los criterios de búsqueda."}
+              {reports.length === 0 ? t('reportList.noReports') : t('reportList.noReportsFound')}
             </p>
           )
       )}
       </div>
 
-      {/* Nuevos Avisos Sidebar (static for now) */}
       <aside className="nuevos-avisos-sidebar">
-        <h4>Nuevos avisos</h4>
-        <p>Aquí se mostrarán los avisos más recientes o importantes.</p>
-        {/* Placeholder content or future dynamic content */}
+        <h4>{t('reportList.newAlertsTitle')}</h4>
+        {alerts.length > 0 ? (
+          <ul className="alert-preview-list">
+            {alerts.slice(0, 5).map(alert => (
+              <li key={alert.id} className="alert-preview-item">
+                <Link to={`/alertas`} className="alert-preview-link">
+                  {alert.title}
+                </Link>
+                <span className="alert-preview-author">
+                  {alert.author?.municipalityProfile?.name || 'Municipalidad'}
+                </span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>{t('reportList.newAlertsBody')}</p>
+        )}
       </aside>
 
       <ReportDetailModal 

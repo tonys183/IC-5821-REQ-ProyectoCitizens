@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App.js'; // Ensured .js extension
 import reportWebVitals from './reportWebVitals.js'; // Ensured .js extension
 import { AuthProvider } from './context/AuthContext.js'; // Ensured .js extension
+import { ThemeProvider } from './context/ThemeContext.js'; // Import ThemeProvider
+import './i18n.js'; // Import i18n configuration
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <Suspense fallback={<div>Cargando...</div>}>
+      <ThemeProvider>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </ThemeProvider>
+    </Suspense>
   </React.StrictMode>
 );
 

@@ -107,10 +107,10 @@ function MunicipalityRegistrationPage() {
             onChange={handleChange}
             required
           />
-          <div className="password-requirements" style={{ fontSize: '0.8rem', marginTop: '5px' }}>
+          <div className="password-requirements">
             {passwordRequirements.map((req, index) => (
-              <div key={index} style={{ color: req.met ? 'green' : '#a9a9a9' }}>
-                {req.met ? '✓' : '•'} {req.text}
+              <div key={index} className={`requirement ${req.met ? 'met' : 'unmet'}`}>
+                <span className="requirement-icon">{req.met ? '✓' : '•'}</span> {req.text}
               </div>
             ))}
           </div>
@@ -123,6 +123,9 @@ function MunicipalityRegistrationPage() {
           {isLoading ? 'Registrando...' : 'Registrar Cuenta'}
         </button>
       </form>
+      <p style={{ textAlign: 'center', marginTop: '20px' }}>
+        ¿Ya tienes cuenta? <Link to="/login">Iniciar Sesión</Link>
+      </p>
       <div className="registration-links">
         <p>¿No eres empleado municipal?</p>
         <Link to="/register" className="register-link-button">Regístrate aquí</Link>

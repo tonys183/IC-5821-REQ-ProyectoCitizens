@@ -5,8 +5,50 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #1e1e1e; /* Dark background for the whole page */
-  color: #fff; /* Default text color */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Light Theme Variables */
+body.light-theme {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f0f2f5;
+  --bg-card: #ffffff;
+  --bg-card-inset: #f7f7f7;
+  --text-primary: #050505;
+  --text-secondary: #65676b;
+  --accent-color: #008C9E;
+  --accent-hover: #00A9B5;
+  --border-color: #ced0d4;
+  --input-bg: #f0f2f5;
+  --input-border: #ccd0d5;
+  --button-bg: #008C9E;
+  --button-text: #ffffff;
+  --error-color: #e74c3c;
+  --shadow-color: rgba(0, 0, 0, 0.12);
+}
+
+/* Dark Theme Variables */
+body.dark-theme {
+  --bg-primary: #1e1e1e;
+  --bg-secondary: #242526;
+  --bg-card: #3c3c3c;
+  --bg-card-inset: #303030;
+  --text-primary: #e4e6eb;
+  --text-secondary: #b0b3b8;
+  --accent-color: #00A9B5;
+  --accent-hover: #008C9E;
+  --border-color: #3e4042;
+  --input-bg: #3c3c3c;
+  --input-border: #555555;
+  --button-bg: #00A9B5;
+  --button-text: #ffffff;
+  --error-color: #e74c3c;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 *,
@@ -18,93 +60,49 @@ body {
 .App {
   display: flex;
   min-height: 100vh;
-  background-color: #1e1e1e; /* Dark background for the main area */
-  color: #ffffff; /* Default text color for content area */
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 .main-content {
   flex-grow: 1;
   padding: 25px;
-  margin-left: 200px; /* Should be equal to sidebar width from Sidebar.css */
-  overflow-y: auto; 
+  margin-left: 200px;
+  overflow-y: auto;
+  background-color: var(--bg-secondary);
 }
 
-/* Styles for ReportFormPage - Consider moving to ReportFormPage.css */
-.report-form-container {
-  background-color: #2d2d30; /* Darker grey for form backgrounds */
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  width: 100%;
-  max-width: 600px; /* Max width for this specific form */
-  margin: auto; 
+/* Remove padding for specific full-page layouts */
+.main-content.no-padding {
+  padding: 0;
 }
-
-/* .report-form-container h2 is covered by global .form-title if we make it consistent */
-/* If ReportFormPage needs a specifically styled h2, it should be in its own CSS or a more specific class */
-
-.report-form .form-group { 
-  /* Uses global .form-group */
-}
-
-.report-form label { 
-  /* Uses global .form-group label */
-}
-
-.report-form input[type="text"],
-.report-form select,
-.report-form textarea { 
-  /* Uses global .form-group input/select/textarea styles */
-}
-
-.report-form textarea { 
-  min-height: 100px; 
-  resize: vertical;
-}
-
-.report-form .submit-button { /* submit-button specifically within report-form */
-  float: right; 
-  width: auto; /* Override potential full-width from global .submit-button */
-  max-width: none; /* Override potential max-width from global .submit-button */
-}
-
-.report-form::after { /* Clearfix for floated button */
-  content: "";
-  clear: both;
-  display: table;
-}
-/* End of Styles for ReportFormPage */
-
 
 /* === GLOBAL / SHARED STYLES === */
 
-/* Standalone Page Background (Login, Register) */
 .standalone-page-background {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #1e1e1e; 
+  background-color: var(--bg-primary); 
   padding: 20px;
 }
 
-/* Shared Form Title */
 .form-title { 
   text-align: center;
-  color: #00A9B5; /* Teal accent color */
+  color: var(--accent-color);
   margin-bottom: 25px;
   font-size: 1.8em;
   font-weight: 600;
 }
 
-/* Shared Form Group & Input Styling */
 .form-group { 
   margin-bottom: 20px;
 }
 
 .form-group label { 
   display: block;
-  color: #cccccc; 
+  color: var(--text-secondary); 
   margin-bottom: 8px;
   font-size: 0.95em;
 }
@@ -118,9 +116,9 @@ body {
 .form-group select {
   width: 100%;
   padding: 12px;
-  background-color: #3c3c3c; 
-  border: 1px solid #555555; 
-  color: #ffffff; 
+  background-color: var(--input-bg); 
+  border: 1px solid var(--input-border); 
+  color: var(--text-primary); 
   border-radius: 4px;
   box-sizing: border-box;
   font-size: 1em;
@@ -134,11 +132,10 @@ body {
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #00A9B5; 
-  box-shadow: 0 0 0 2px rgba(0, 169, 181, 0.3);
+  border-color: var(--accent-color); 
+  box-shadow: 0 0 0 2px var(--accent-hover);
 }
 
-/* Form Header Styles */
 .form-header {
   display: flex;
   justify-content: space-between;
@@ -148,14 +145,14 @@ body {
 
 .form-header h2 {
   margin: 0;
-  color: #00A9B5;
+  color: var(--accent-color);
   font-size: 1.8em;
 }
 
 .close-button {
   background: none;
   border: none;
-  color: #888;
+  color: var(--text-secondary);
   font-size: 1.8rem;
   cursor: pointer;
   padding: 5px;
@@ -163,10 +160,9 @@ body {
   transition: color 0.2s ease;
 }
 .close-button:hover {
-  color: #fff;
+  color: var(--text-primary);
 }
 
-/* Form Actions container */
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -174,58 +170,46 @@ body {
   margin-top: 30px;
 }
 
-/* Shared Submit/Action Button Style */
 .submit-button,
 .action-button,
 .cancel-button {
   width: auto;
   padding: 12px 25px;
-  background-color: #00A9B5; /* Teal for primary buttons */
-  color: white;
+  background-color: var(--button-bg);
+  color: var(--button-text);
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 1.0em; /* Standardized size */
+  font-size: 1.0em;
   font-weight: 500;
   transition: background-color 0.3s ease;
-  display: inline-block; /* Changed from block */
-  margin: 0; /* Removed auto margins */
+  display: inline-block;
+  margin: 0;
 }
 
-/* Secondary button style for Cancel */
 .cancel-button {
-  background-color: #4f4f52;
+  background-color: var(--text-secondary);
 }
 .cancel-button:hover {
-  background-color: #6a6a6e;
+  opacity: 0.8;
 }
 
 .submit-button:hover,
 .action-button:hover {
-  background-color: #008C9E; /* Darker teal on hover */
+  background-color: var(--accent-hover);
 }
 
-/* Specific Button for Auth Pages (Login, Register) */
 .account-button { 
-  background-color: #00A9B5; /* Teal to match theme */
-  color: white;
-  /* padding: 12px 25px; /* Covered by .submit-button if it inherits */
-  /* border: none; /* Covered */
-  /* border-radius: 4px; /* Covered */
-  /* cursor: pointer; /* Covered */
-  /* font-size: 1.1em; /* Covered */
-  font-weight: bold; /* Slightly bolder for these specific buttons */
-  /* display: block; /* Covered */
-  /* margin: 20px auto 0; /* Covered */
-  /* transition: background-color 0.3s ease; /* Covered */
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  font-weight: bold;
   max-width: 300px; 
 }
 
 .account-button:hover {
-  background-color: #008C9E; 
+  background-color: var(--accent-hover); 
 }
 
-/* Auth Page Link (e.g., "Already have an account?") */
 .auth-switch-link { 
   text-align: center;
   margin-top: 20px;
@@ -233,7 +217,7 @@ body {
 }
 
 .auth-switch-link a {
-  color: #00A9B5; /* Teal for links */
+  color: var(--accent-color);
   text-decoration: none;
 }
 
@@ -241,9 +225,8 @@ body {
   text-decoration: underline;
 }
 
-/* Error Message Style */
 .error-message { 
-  color: #e74c3c; 
+  color: var(--error-color); 
   text-align: center;
   margin-top: 15px;
   margin-bottom: 10px; 
@@ -253,23 +236,26 @@ body {
 /* === RESPONSIVE ADJUSTMENTS === */
 @media (max-width: 768px) {
   .main-content {
-    margin-left: 0; 
+    margin-left: 0;
     padding: 15px;
   }
-  
+
+  .main-content.no-padding {
+    padding: 0;
+  }
+
   .form-title {
-    font-size: 1.6em;
+    font-size: 1.5em;
   }
 
   .standalone-page-background {
     padding: 15px;
   }
 
-  /* Report form specific responsive adjustments */
   .report-form .submit-button {
     float: none; 
     width: 100%;
     margin-top: 10px;
-    max-width: 100%; /* Ensure it can be full width on mobile */
+    max-width: 100%;
   }
 } 

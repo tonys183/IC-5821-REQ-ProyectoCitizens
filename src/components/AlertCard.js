@@ -1,13 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import './AlertCard.css';
 
 function AlertCard({ alert, userRole, onDelete }) {
+  const { t, i18n } = useTranslation();
   const { id, title, content, updated_at, author } = alert;
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleString('es-CR', {
+    const lang = i18n.language === 'es' ? 'es-CR' : 'en-US';
+    return new Date(dateString).toLocaleString(lang, {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
@@ -16,7 +19,7 @@ function AlertCard({ alert, userRole, onDelete }) {
     });
   };
 
-  const authorName = author?.municipalityProfile?.name || 'Municipalidad';
+  const authorName = author?.municipalityProfile?.name || t('alertCard.defaultAuthor');
 
   return (
     <div className="alert-card">
@@ -37,8 +40,8 @@ function AlertCard({ alert, userRole, onDelete }) {
         <p>{content}</p>
       </div>
       <div className="alert-card-footer">
-        <span>Publicado por: <strong>{authorName}</strong></span>
-        <span>Última actualización: {formatDate(updated_at)}</span>
+        <span>{t('alertCard.publishedBy')}: <strong>{authorName}</strong></span>
+        <span>{t('alertCard.lastUpdated')}: {formatDate(updated_at)}</span>
       </div>
     </div>
   );

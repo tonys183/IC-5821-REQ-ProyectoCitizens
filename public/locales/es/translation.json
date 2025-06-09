@@ -1,0 +1,207 @@
+{
+  "sidebar": {
+    "dashboard": "Inicio",
+    "reports": "Reportes",
+    "alerts": "Alertas",
+    "profile": "Perfil",
+    "settings": "Configuración"
+  },
+  "dashboard": {
+    "title": "Bienvenido a la Aplicación",
+    "subtitle": "Este es tu panel principal.",
+    "description": "Desde aquí podrás acceder a las diferentes funcionalidades de la aplicación una vez que estén implementadas."
+  },
+  "settings": {
+    "title": "Configuración",
+    "themeTitle": "Tema",
+    "currentTheme": "Tema Actual",
+    "lightTheme": "Claro",
+    "darkTheme": "Oscuro",
+    "toggleTheme": "Cambiar Tema",
+    "languageTitle": "Idioma",
+    "accountTitle": "Cuenta",
+    "currentLanguage": "Idioma Actual",
+    "spanish": "Español",
+    "english": "Inglés",
+    "logout": "Cerrar Sesión"
+  },
+  "reportList": {
+    "searchPlaceholder": "Buscar reportes... (título, problema, ubicación)",
+    "filterCanton": "Todos los Cantones",
+    "filterStatus": "Todos los Estados",
+    "status": {
+      "waiting": "Pendiente",
+      "inProgress": "En Progreso",
+      "resolved": "Resuelto",
+      "rejected": "Rechazado"
+    },
+    "createReport": "Crear Reporte",
+    "loading": "Cargando reportes...",
+    "error": "Error al cargar los reportes.",
+    "noReports": "No hay reportes disponibles.",
+    "noReportsFound": "No se encontraron reportes con los criterios de búsqueda.",
+    "newAlertsTitle": "Nuevos avisos",
+    "newAlertsBody": "Aquí se mostrarán los avisos más recientes o importantes."
+  },
+  "reportCard": {
+    "problem": "Problema",
+    "location": "Ubicación",
+    "status": "Estado",
+    "reportedBy": "Reportado por",
+    "lastUpdated": "Última Actualización",
+    "anonymous": "Anónimo",
+    "unspecified": "No especificado"
+  },
+  "reportModal": {
+    "problemDetails": "Detalles del Problema",
+    "problem": "Problema",
+    "location": "Ubicación",
+    "statusAndDates": "Estado y Fechas",
+    "currentStatus": "Estado Actual",
+    "reportDate": "Fecha de Reporte",
+    "lastUpdated": "Última Actualización",
+    "reportedBy": "Reportado por",
+    "updateStatusTitle": "Actualizar Estado del Reporte",
+    "newStatus": "Nuevo Estado",
+    "save": "Guardar",
+    "updating": "Actualizando...",
+    "editMyReport": "Editar mi Reporte",
+    "reportId": "ID del Reporte"
+  },
+  "reportForm": {
+    "titleCreate": "Crear Reporte",
+    "titleEdit": "Editar Reporte",
+    "cancelAndReturn": "Cancelar y volver a la lista",
+    "contactPrompt": {
+      "text": "¿No encuentras la problemática que buscas?",
+      "link": "Contáctanos"
+    },
+    "labels": {
+      "reportTitle": "Título del Reporte",
+      "problemType": "Tipo de problemática",
+      "specificProblem": "Problemática específica",
+      "canton": "Cantón",
+      "district": "Distrito",
+      "neighborhood": "Barrio",
+      "exactAddress": "Dirección Exacta"
+    },
+    "placeholders": {
+      "loading": "Cargando...",
+      "selectType": "Seleccione un tipo",
+      "selectProblem": "Seleccione problemática",
+      "selectTypeFirst": "Seleccione tipo primero",
+      "selectCanton": "Seleccione cantón",
+      "selectDistrict": "Seleccione distrito",
+      "selectCantonFirst": "Seleccione cantón primero"
+    },
+    "buttons": {
+      "cancel": "Cancelar",
+      "createReport": "Crear Reporte",
+      "sending": "Enviando...",
+      "saveChanges": "Guardar Cambios",
+      "saving": "Guardando Cambios..."
+    },
+    "errors": {
+      "loadProblemTypes": "Error al cargar tipos de problema.",
+      "loadCantons": "Error al cargar cantones.",
+      "loadProblems": "Error al cargar problemáticas.",
+      "loadDistricts": "Error al cargar distritos.",
+      "notAuthenticated": "Usuario no autenticado. Por favor, inicie sesión.",
+      "noAuthToken": "No se encontró token de autenticación. Por favor, inicie sesión de nuevo.",
+      "noAuthTokenRedirect": "No autenticado. Redirigiendo a inicio de sesión.",
+      "fillAllFields": "Por favor complete todos los campos requeridos (*).",
+      "authError": "Error de autenticación. Por favor, intente iniciar sesión de nuevo.",
+      "createError": "Error al crear el reporte.",
+      "updateError": "Error al actualizar el reporte.",
+      "submitError": "Ocurrió un error al enviar el reporte.",
+      "loadInitialData": "Error al cargar datos iniciales.",
+      "loadReportError": "Error al cargar el reporte"
+    },
+    "success": {
+      "reportCreated": "¡Reporte creado con éxito! Redirigiendo...",
+      "reportUpdated": "Reporte actualizado con éxito. Redirigiendo..."
+    },
+    "loadingReportData": "Cargando datos del reporte..."
+  },
+  "alertsPage": {
+    "title": "Alertas de la Municipalidad",
+    "createButton": "Crear Nueva Alerta",
+    "loading": "Cargando alertas...",
+    "noAlerts": "No hay alertas disponibles en este momento.",
+    "confirmDelete": "¿Estás seguro de que quieres eliminar esta alerta?",
+    "errors": {
+      "load": "Error al cargar las alertas.",
+      "delete": "Error al eliminar la alerta."
+    }
+  },
+  "alertForm": {
+    "titleCreate": "Crear Nueva Alerta",
+    "titleEdit": "Editar Alerta",
+    "close": "Cerrar",
+    "accessDenied": "Acceso denegado.",
+    "labels": {
+      "title": "Título",
+      "content": "Contenido"
+    },
+    "buttons": {
+      "cancel": "Cancelar",
+      "createAlert": "Crear Alerta",
+      "saveChanges": "Guardar Cambios",
+      "saving": "Guardando..."
+    },
+    "errors": {
+      "fetchFailed": "Error al obtener la alerta.",
+      "notFound": "Alerta no encontrada.",
+      "createFailed": "Error al crear la alerta.",
+      "updateFailed": "Error al actualizar la alerta."
+    }
+  },
+  "alertCard": {
+    "publishedBy": "Publicado por",
+    "lastUpdated": "Última actualización",
+    "defaultAuthor": "Municipalidad"
+  },
+  "profilePage": {
+    "title": "Mi Perfil",
+    "loading": "Cargando perfil...",
+    "labels": {
+      "identification": "Cédula",
+      "firstName": "Nombre",
+      "lastName": "Primer Apellido",
+      "secondLastName": "Segundo Apellido",
+      "phoneNumber": "Número de Teléfono",
+      "institutionName": "Nombre de la Institución",
+      "canton": "Cantón",
+      "email": "Correo Electrónico"
+    },
+    "buttons": {
+      "saveChanges": "Guardar Cambios",
+      "saving": "Guardando...",
+      "cancel": "Cancelar",
+      "editInfo": "Editar Información",
+      "deleteAccount": "Eliminar Mi Cuenta",
+      "deleting": "Eliminando..."
+    },
+    "dangerZone": {
+      "title": "Zona Peligrosa",
+      "description": "La eliminación de la cuenta es permanente.",
+      "confirmDelete": "¿Estás seguro de que quieres eliminar tu cuenta? Esta acción es irreversible."
+    },
+    "errors": {
+      "updateError": "Error al actualizar el perfil.",
+      "deleteError": "Error al eliminar la cuenta."
+    },
+    "success": {
+      "updateSuccess": "Información actualizada con éxito."
+    }
+  },
+  "contactPage": {
+    "title": "Página de Contacto",
+    "intro": "Si tienes alguna pregunta, sugerencia o problema, no dudes en contactarnos.",
+    "infoTitle": "Información de Contacto",
+    "emailLabel": "Email",
+    "phoneLabel": "Teléfono",
+    "addressLabel": "Dirección",
+    "addressValue": "Oficinas Centrales, San José, Costa Rica"
+  }
+} 

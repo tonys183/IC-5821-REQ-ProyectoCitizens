@@ -1,11 +1,14 @@
 import React from 'react';
+import './DashboardPage.css';
+import { useTranslation } from 'react-i18next';
 
 function DashboardPage() {
+  const { t } = useTranslation();
   return (
     <div className="dashboard-container">
-      <h1>Bienvenido a la Aplicación</h1>
-      <p>Este es tu panel principal.</p>
-      <p>Desde aquí podrás acceder a las diferentes funcionalidades de la aplicación una vez que estén implementadas.</p>
+      <h1>{t('dashboard.title')}</h1>
+      <p>{t('dashboard.subtitle')}</p>
+      <p>{t('dashboard.description')}</p>
       {/* You can add more placeholder content or components here later */}
     </div>
   );

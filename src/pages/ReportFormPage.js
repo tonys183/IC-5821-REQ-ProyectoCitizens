@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.js';
 import { FaTimes } from 'react-icons/fa'; // Import the close icon
-// import './ReportFormPage.css'; // If you create a specific CSS file
+import { useTranslation } from 'react-i18next';
+import './ReportFormPage.css'; // Import the new CSS file
 
 function ReportFormPage() {
-  const { user } = useAuth();
+  const { t } = useTranslation();
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -41,7 +43,7 @@ function ReportFormPage() {
         setProblemTypes(problemTypesData);
       } catch (err) {
         console.error("Error fetching problem types:", err);
-        setError(prev => prev || err.message || 'Error al cargar tipos de problema.');
+        setError(prev => prev || err.message || t('reportForm.errors.loadProblemTypes'));
       }
     };
     fetchProblemTypes();
@@ -58,7 +60,7 @@ function ReportFormPage() {
         setCantons(cantonsData);
       } catch (err) {
         console.error("Error fetching cantons:", err);
-        setError(prev => prev || err.message || 'Error al cargar cantones.');
+        setError(prev => prev || err.message || t('reportForm.errors.loadCantons'));
       } finally {
         setIsFetchingCantons(false);
       }
@@ -80,7 +82,7 @@ function ReportFormPage() {
           setProblems(data);
         } catch (err) {
           console.error("Error fetching specific problems:", err);
-          setError(prev => prev || err.message || 'Error al cargar problemáticas.');
+          setError(prev => prev || err.message || t('reportForm.errors.loadProblems'));
         } finally {
           setIsFetchingProblems(false);
         }
@@ -106,7 +108,7 @@ function ReportFormPage() {
           setDistricts(data);
         } catch (err) {
           console.error("Error fetching districts:", err);
-          setError(prev => prev || err.message || 'Error al cargar distritos.');
+          setError(prev => prev || err.message || t('reportForm.errors.loadDistricts'));
         } finally {
           setIsFetchingDistricts(false);
         }
@@ -130,14 +132,14 @@ function ReportFormPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!user || !user.identification) {
-      setError('Usuario no autenticado o falta ID de usuario. Por favor, inicie sesión.');
+    if (!isAuthenticated) {
+      setError(t('reportForm.errors.notAuthenticated'));
       return;
     }
     
     const { report_title, problem_id, canton_id, district_id, neighborhood, street } = formData;
     if (!report_title || !problem_id || !canton_id || !district_id || !neighborhood || !street) {
-        setError('Por favor complete todos los campos requeridos (*).');
+        setError(t('reportForm.errors.fillAllFields'));
         return;
     }
 
@@ -161,7 +163,7 @@ function ReportFormPage() {
     if (token) {
       headers['Authorization'] = `Bearer ${token}`;
     } else {
-      setError('No se encontró token de autenticación. Por favor, inicie sesión de nuevo.');
+      setError(t('reportForm.errors.noAuthToken'));
       setIsLoading(false);
       return;
     }
@@ -177,47 +179,45 @@ function ReportFormPage() {
 
       if (!response.ok) {
         if (response.status === 401 || response.status === 403) {
-            setError(responseData.message || 'Error de autenticación. Por favor, intente iniciar sesión de nuevo.');
+            setError(responseData.message || t('reportForm.errors.authError'));
         } else {
-            throw new Error(responseData.message || 'Error al crear el reporte.');
+            throw new Error(responseData.message || t('reportForm.errors.createError'));
         }
       } else {
-        setSuccessMessage('Reporte creado con éxito! Redirigiendo...');
+        setSuccessMessage(t('reportForm.success.reportCreated'));
         setTimeout(() => {
           navigate('/reportes'); 
         }, 2000);
       }
     } catch (err) {
       console.error("Error submitting report:", err);
-      setError(err.message || 'Ocurrió un error al enviar el reporte.');
+      setError(err.message || t('reportForm.errors.submitError'));
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="report-form-container" style={{ position: 'relative' }}> {/* Added relative positioning for absolute child */}
+    <div className="form-container">
       <button 
         onClick={handleCancel}
-        title="Cancelar y volver a la lista"
-        style={{
-          position: 'absolute',
-          top: '15px',
-          right: '15px',
-          background: 'none',
-          border: 'none',
-          fontSize: '1.5rem', // Adjust size as needed
-          cursor: 'pointer',
-          color: '#555' // Adjust color as needed
-        }}
+        title={t('reportForm.cancelAndReturn')}
+        className="close-form-button"
       >
         <FaTimes />
       </button>
-      <h2 className="form-title">Crear Reporte</h2>
-      <form onSubmit={handleSubmit} className="report-form">
+      <h2 className="form-title">{t('reportForm.titleCreate')}</h2>
+      
+      <form onSubmit={handleSubmit}>
+        <div className="contact-prompt">
+          <p>
+            {t('reportForm.contactPrompt.text')}{' '}
+            <Link to="/contacto">{t('reportForm.contactPrompt.link')}</Link>.
+          </p>
+        </div>
         
-        <div className="form-group">
-          <label htmlFor="report_title">Título del Reporte *</label>
+        <div className="form-group full-width">
+          <label htmlFor="report_title">{t('reportForm.labels.reportTitle')} *</label>
           <input
             type="text"
             id="report_title"
@@ -228,83 +228,85 @@ function ReportFormPage() {
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="problem_type_id">Tipo de problemática *</label>
-          <select
-            id="problem_type_id"
-            name="problem_type_id"
-            value={formData.problem_type_id}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Seleccione un tipo</option>
-            {problemTypes.map(pt => (
-              <option key={pt.problem_type_id} value={pt.problem_type_id}>
-                {pt.type_name}
-              </option>
-            ))}
-          </select>
-        </div>
+        <div className="form-grid">
+          <div className="form-group">
+            <label htmlFor="problem_type_id">{t('reportForm.labels.problemType')} *</label>
+            <select
+              id="problem_type_id"
+              name="problem_type_id"
+              value={formData.problem_type_id}
+              onChange={handleChange}
+              required
+            >
+              <option value="">{t('reportForm.placeholders.selectType')}</option>
+              {problemTypes.map(pt => (
+                <option key={pt.problem_type_id} value={pt.problem_type_id}>
+                  {pt.type_name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="problem_id">Problemática Específica *</label>
-          <select
-            id="problem_id"
-            name="problem_id"
-            value={formData.problem_id}
-            onChange={handleChange}
-            required
-            disabled={!formData.problem_type_id || isFetchingProblems}
-          >
-            <option value="">{isFetchingProblems ? 'Cargando...' : (formData.problem_type_id ? 'Seleccione problemática' : 'Seleccione tipo primero')}</option>
-            {problems.map(p => (
-              <option key={p.problem_id} value={p.problem_id}>
-                {p.problem_name}
-              </option>
-            ))}
-          </select>
-        </div>
+          <div className="form-group">
+            <label htmlFor="problem_id">{t('reportForm.labels.specificProblem')} *</label>
+            <select
+              id="problem_id"
+              name="problem_id"
+              value={formData.problem_id}
+              onChange={handleChange}
+              required
+              disabled={!formData.problem_type_id || isFetchingProblems}
+            >
+              <option value="">{isFetchingProblems ? t('reportForm.placeholders.loading') : (formData.problem_type_id ? t('reportForm.placeholders.selectProblem') : t('reportForm.placeholders.selectTypeFirst'))}</option>
+              {problems.map(p => (
+                <option key={p.problem_id} value={p.problem_id}>
+                  {p.problem_name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="canton_id">Cantón *</label> 
-          <select
-            id="canton_id"
-            name="canton_id"
-            value={formData.canton_id}
-            onChange={handleChange}
-            required
-            disabled={isFetchingCantons}
-          >
-            <option value="">{isFetchingCantons ? 'Cargando...' : 'Seleccione cantón'}</option>
-            {cantons.map(c => (
-              <option key={c.canton_id} value={c.canton_id}>
-                {c.canton_name}
-              </option>
-            ))}
-          </select>
-        </div>
+          <div className="form-group">
+            <label htmlFor="canton_id">{t('reportForm.labels.canton')} *</label>
+            <select
+              id="canton_id"
+              name="canton_id"
+              value={formData.canton_id}
+              onChange={handleChange}
+              required
+              disabled={isFetchingCantons}
+            >
+              <option value="">{isFetchingCantons ? t('reportForm.placeholders.loading') : t('reportForm.placeholders.selectCanton')}</option>
+              {cantons.map(c => (
+                <option key={c.canton_id} value={c.canton_id}>
+                  {c.canton_name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="district_id">Distrito *</label>
-          <select
-            id="district_id"
-            name="district_id"
-            value={formData.district_id}
-            onChange={handleChange}
-            required
-            disabled={!formData.canton_id || isFetchingDistricts}
-          >
-            <option value="">{isFetchingDistricts ? 'Cargando...' : (formData.canton_id ? 'Seleccione distrito' : 'Seleccione cantón primero')}</option>
-            {districts.map(d => (
-              <option key={d.district_id} value={d.district_id}>
-                {d.district_name}
-              </option>
-            ))}
-          </select>
+          <div className="form-group">
+            <label htmlFor="district_id">{t('reportForm.labels.district')} *</label>
+            <select
+              id="district_id"
+              name="district_id"
+              value={formData.district_id}
+              onChange={handleChange}
+              required
+              disabled={!formData.canton_id || isFetchingDistricts}
+            >
+              <option value="">{isFetchingDistricts ? t('reportForm.placeholders.loading') : (formData.canton_id ? t('reportForm.placeholders.selectDistrict') : t('reportForm.placeholders.selectCantonFirst'))}</option>
+              {districts.map(d => (
+                <option key={d.district_id} value={d.district_id}>
+                  {d.district_name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-
-        <div className="form-group">
-          <label htmlFor="neighborhood">Barrio *</label>
+        
+        <div className="form-group full-width">
+          <label htmlFor="neighborhood">{t('reportForm.labels.neighborhood')} *</label>
           <input
             type="text"
             id="neighborhood"
@@ -314,26 +316,30 @@ function ReportFormPage() {
             required
           />
         </div>
-
-        <div className="form-group">
-          <label htmlFor="street">Señas Exactas / Calle *</label>
+        
+        <div className="form-group full-width">
+          <label htmlFor="street">{t('reportForm.labels.exactAddress')} *</label>
           <textarea
             id="street"
             name="street"
             value={formData.street}
             onChange={handleChange}
-            rows="3"
             required
+            rows="3"
           ></textarea>
         </div>
-        
-        {isLoading && <p style={{textAlign: 'center'}}>Enviando reporte...</p>}
-        {error && <p className="error-message" style={{color: 'red', textAlign: 'center'}}>{error}</p>}
-        {successMessage && <p style={{color: 'green', textAlign: 'center'}}>{successMessage}</p>}
 
-        <button type="submit" className="submit-button account-button" disabled={isLoading || isFetchingProblems || isFetchingCantons || isFetchingDistricts}>
-          {isLoading ? 'Enviando...' : 'Crear Reporte'}
-        </button>
+        {error && <p className="error-message">{error}</p>}
+        {successMessage && <p className="success-message">{successMessage}</p>}
+
+        <div className="form-actions">
+          <button type="button" className="cancel-button" onClick={handleCancel}>
+            {t('reportForm.buttons.cancel')}
+          </button>
+          <button type="submit" className="submit-button" disabled={isLoading}>
+            {isLoading ? t('reportForm.buttons.sending') : t('reportForm.buttons.createReport')}
+          </button>
+        </div>
       </form>
     </div>
   );

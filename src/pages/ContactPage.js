@@ -1,0 +1,31 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import './ContactPage.css';
+
+const ContactPage = () => {
+  const { t } = useTranslation();
+
+  return (
+    <div className="contact-page">
+      <div className="contact-container">
+        <h1>{t('contactPage.title')}</h1>
+        <p>{t('contactPage.intro')}</p>
+        <div className="contact-info">
+          <h2>{t('contactPage.infoTitle')}</h2>
+          <p>
+            <strong>{t('contactPage.emailLabel')}:</strong> support@municipalidad.app
+          </p>
+          <p>
+            <strong>{t('contactPage.phoneLabel')}:</strong> +506 8888-8888
+          </p>
+          <p>
+            <strong>{t('contactPage.addressLabel')}:</strong> {t('contactPage.addressValue')}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ContactPage; 

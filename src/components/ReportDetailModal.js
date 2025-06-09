@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaTimes } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import './ReportDetailModal.css';
 
 function ReportDetailModal({ report, user, onClose, show, onReportUpdate }) {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [newStatus, setNewStatus] = useState('');
   const [isUpdating, setIsUpdating] = useState(false);
@@ -36,20 +37,29 @@ function ReportDetailModal({ report, user, onClose, show, onReportUpdate }) {
     street
   } = report;
 
-  const problemTypeName = problem?.problem_type?.type_name || 'Tipo no especificado';
-  const problemName = problem?.problem_name || 'Problemática no especificada';
+  const problemTypeName = problem?.problem_type?.type_name || t('reportCard.unspecified');
+  const problemName = problem?.problem_name || t('reportCard.unspecified');
   const fullProblemDescription = `${problemTypeName} - ${problemName}`;
 
   const reporterName = author
-    ? (author.neighborProfile?.first_name ? `${author.neighborProfile.first_name} ${author.neighborProfile.last_name}` : author.municipalityProfile?.name) || 'Anónimo'
-    : 'Anónimo';
+    ? (author.neighborProfile?.first_name ? `${author.neighborProfile.first_name} ${author.neighborProfile.last_name}` : author.municipalityProfile?.name) || t('reportCard.anonymous')
+    : t('reportCard.anonymous');
 
-  const cantonName = canton?.canton_name || 'Cantón no especificado';
-  const districtName = district_report_districtTodistrict?.district_name || 'Distrito no especificado';
+  const cantonName = canton?.canton_name || t('reportCard.unspecified');
+  const districtName = district_report_districtTodistrict?.district_name || t('reportCard.unspecified');
+
+  const getStatusKey = (statusString) => {
+    switch(statusString) {
+      case 'Waiting': return 'reportList.status.waiting';
+      case 'In Progress': return 'reportList.status.inProgress';
+      case 'Resolved': return 'reportList.status.resolved';
+      default: return 'reportCard.unspecified';
+    }
+  };
 
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleDateString('es-CR', {
+    return new Date(dateString).toLocaleDateString(i18n.language, {
       year: 'numeric', month: 'long', day: 'numeric',
     });
   };
@@ -102,27 +112,27 @@ function ReportDetailModal({ report, user, onClose, show, onReportUpdate }) {
         </div>
         <div className="modal-body">
           <div className="modal-section">
-            <h4 className="modal-section-title">Detalles del Problema</h4>
-            <p><strong>Problema:</strong> {fullProblemDescription}</p>
-            <p><strong>Ubicación:</strong> {`${street || '-'}, ${neighborhood || '-'}, ${districtName}, ${cantonName}`}</p>
+            <h4 className="modal-section-title">{t('reportModal.problemDetails')}</h4>
+            <p><strong>{t('reportModal.problem')}:</strong> {fullProblemDescription}</p>
+            <p><strong>{t('reportModal.location')}:</strong> {`${street || '-'}, ${neighborhood || '-'}, ${districtName}, ${cantonName}`}</p>
           </div>
           <div className="modal-section">
-            <h4 className="modal-section-title">Estado y Fechas</h4>
-            <p><strong>Estado Actual:</strong> <span className={`status status-${(status || '').toLowerCase().replace(' ', '-')}`}>{status}</span></p>
-            <p><strong>Fecha de Reporte:</strong> {formatDate(report_date)}</p>
-            <p><strong>Última Actualización:</strong> {formatDate(updated_at || report_date)}</p>
+            <h4 className="modal-section-title">{t('reportModal.statusAndDates')}</h4>
+            <p><strong>{t('reportModal.currentStatus')}:</strong> <span className={`status status-${(status || '').toLowerCase().replace(' ', '-')}`}>{t(getStatusKey(status))}</span></p>
+            <p><strong>{t('reportModal.reportDate')}:</strong> {formatDate(report_date)}</p>
+            <p><strong>{t('reportModal.lastUpdated')}:</strong> {formatDate(updated_at || report_date)}</p>
           </div>
           <div className="modal-section">
-            <h4 className="modal-section-title">Reportado por</h4>
+            <h4 className="modal-section-title">{t('reportModal.reportedBy')}</h4>
             <p>{reporterName}</p>
           </div>
 
           {/* Municipality Status Update Section */}
           {user?.role === 'MUNICIPALITY' && (
             <div className="modal-section status-update-section">
-              <h4 className="modal-section-title">Actualizar Estado del Reporte</h4>
+              <h4 className="modal-section-title">{t('reportModal.updateStatusTitle')}</h4>
               <div className="form-group"> 
-                <label htmlFor="status-select">Nuevo Estado</label>
+                <label htmlFor="status-select">{t('reportModal.newStatus')}</label>
                 <div className="status-update-controls">
                   <select 
                       id="status-select"
@@ -131,17 +141,17 @@ function ReportDetailModal({ report, user, onClose, show, onReportUpdate }) {
                       className="status-select"
                       disabled={isUpdating}
                   >
-                    <option value="Waiting">En espera</option>
-                    <option value="In Progress">En progreso</option>
-                    <option value="Resolved">Resuelto</option>
-                    <option value="Rejected">Rechazado</option>
+                    <option value="Waiting">{t('reportList.status.waiting')}</option>
+                    <option value="In Progress">{t('reportList.status.inProgress')}</option>
+                    <option value="Resolved">{t('reportList.status.resolved')}</option>
+                    <option value="Rejected">{t('reportList.status.rejected')}</option>
                   </select>
                   <button 
                       onClick={handleStatusUpdate} 
                       className="status-update-button"
                       disabled={isUpdating || newStatus === status}
                   >
-                    {isUpdating ? 'Actualizando...' : 'Guardar'}
+                    {isUpdating ? t('reportModal.updating') : t('reportModal.save')}
                   </button>
                 </div>
               </div>
@@ -153,10 +163,10 @@ function ReportDetailModal({ report, user, onClose, show, onReportUpdate }) {
         <div className="modal-footer">
           {isOwner && (
             <button onClick={handleEditClick} className="modal-button edit-button">
-              Editar mi Reporte
+              {t('reportModal.editMyReport')}
             </button>
           )}
-          <p className="modal-report-id">ID del Reporte: {report_id}</p>
+          <p className="modal-report-id">{t('reportModal.reportId')}: {report_id}</p>
         </div>
       </div>
     </div>
