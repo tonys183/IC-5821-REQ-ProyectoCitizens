@@ -9,7 +9,7 @@ function DashboardPage() {
       <h1>{t('dashboard.title')}</h1>
       <p>{t('dashboard.subtitle')}</p>
       <p>{t('dashboard.description')}</p>
-      {/* You can add more placeholder content or components here later */}
+      {}
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import './AuthForm.css'; // Import the shared CSS file
-// import './RegistrationPage.css'; // You can create and import this for styling
+import './AuthForm.css';
 
 function RegistrationPage() {
   const [formData, setFormData] = useState({
@@ -38,7 +37,6 @@ function RegistrationPage() {
     setError(null);
     setSuccessMessage('');
 
-    // --- Client-side validation ---
     const MUNI_DOMAIN = '@munialajuela.go.cr';
     if (formData.email.endsWith(MUNI_DOMAIN)) {
       setError(
@@ -58,18 +56,16 @@ function RegistrationPage() {
       return;
     }
     
-    // Client-side validation for identification (must be a number)
     if (isNaN(parseInt(formData.identification))) {
       setError('La cédula debe ser un número.');
       setIsLoading(false);
       return;
     }
 
-    // Prepare data for submission, ensure identification and phoneNumber are numbers if provided
     const submissionData = {
       ...formData,
-      identification: parseInt(formData.identification), // Ensure it's a number
-      phoneNumber: formData.phoneNumber ? parseInt(formData.phoneNumber) : null, // Ensure it's a number or null
+      identification: parseInt(formData.identification), 
+      phoneNumber: formData.phoneNumber ? parseInt(formData.phoneNumber) : null, 
     };
 
 
@@ -79,7 +75,7 @@ function RegistrationPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(submissionData), // Use submissionData
+        body: JSON.stringify(submissionData), 
       });
 
       const data = await response.json();
@@ -91,7 +87,7 @@ function RegistrationPage() {
       setSuccessMessage(data.message + ' Redirigiendo a Iniciar Sesión...');
       setTimeout(() => {
         navigate('/login');
-      }, 2000); // Wait 2 seconds before redirecting
+      }, 2000); 
 
     } catch (err) {
       setError(err.message);
@@ -102,13 +98,13 @@ function RegistrationPage() {
   };
 
   return (
-    <div className="registration-container form-container-styles"> {/* form-container-styles is for the teal box */}
+    <div className="registration-container form-container-styles"> {}
       <h2>Registrarse</h2>
       <form onSubmit={handleSubmit} className="registration-form">
         <div className="form-group">
           <label htmlFor="identification">Cédula</label>
           <input
-            type="number" // Use type="number" for better UX
+            type="number" 
             id="identification"
             name="identification"
             value={formData.identification}
@@ -193,7 +189,7 @@ function RegistrationPage() {
           {isLoading ? 'Registrando...' : 'Registrarme'}
         </button>
       </form>
-      <p style={{ textAlign: 'center', marginTop: '20px' }}> {/* Adjusted margin */}
+      <p style={{ textAlign: 'center', marginTop: '20px' }}> {}
         ¿Ya tienes cuenta? <Link to="/login">Iniciar Sesión</Link>
       </p>
       <div className="registration-links">

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.js';
-import './AuthForm.css'; // Import the shared CSS file
-// import './LoginPage.css'; // You can create and import this for styling
+import './AuthForm.css';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -10,8 +9,7 @@ function LoginPage() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { login } = useAuth(); // Get the login function from AuthContext
-
+  const { login } = useAuth(); 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -32,11 +30,9 @@ function LoginPage() {
         throw new Error(data.message || 'Failed to login');
       }
 
-      // Call the login function from AuthContext with user data from backend
-      // The backend should return user data (excluding password) and optionally a token
-      login(data); // Pass the whole data object { user, token, message }
+      login(data);
       
-      navigate('/dashboard'); // Navigate to dashboard on successful login
+      navigate('/dashboard'); 
 
     } catch (err) {
       setError(err.message);
@@ -47,7 +43,7 @@ function LoginPage() {
   };
 
   return (
-    <div className="login-container form-container-styles"> {/* form-container-styles is for the teal box */}
+    <div className="login-container form-container-styles"> {}
       <h2>Iniciar Sesión</h2>
       <form onSubmit={handleSubmit} className="login-form">
         <div className="form-group">

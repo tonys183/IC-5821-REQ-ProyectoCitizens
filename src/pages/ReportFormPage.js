@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.js';
-import { FaTimes } from 'react-icons/fa'; // Import the close icon
+import { FaTimes } from 'react-icons/fa'; 
 import { useTranslation } from 'react-i18next';
-import './ReportFormPage.css'; // Import the new CSS file
+import './ReportFormPage.css'; 
 
 function ReportFormPage() {
   const { t } = useTranslation();
@@ -11,29 +11,28 @@ function ReportFormPage() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    report_title: '',    // New
+    report_title: '',    
     problem_type_id: '',
     problem_id: '',
-    canton_id: '',       // New (was canton_name)
-    district_id: '',     // New (was district_name)
-    neighborhood: '',    // New
-    street: '',           // Existing (repurposed for Señas Exactas / Calle)
+    canton_id: '',       
+    district_id: '',     
+    neighborhood: '',    
+    street: '',           
   });
 
   const [problemTypes, setProblemTypes] = useState([]);
   const [problems, setProblems] = useState([]);
-  const [cantons, setCantons] = useState([]);             // New
-  const [districts, setDistricts] = useState([]);         // New
+  const [cantons, setCantons] = useState([]);            
+  const [districts, setDistricts] = useState([]);         
   
-  const [isLoading, setIsLoading] = useState(false); // General loading for submission
+  const [isLoading, setIsLoading] = useState(false); 
   const [isFetchingProblems, setIsFetchingProblems] = useState(false);
-  const [isFetchingCantons, setIsFetchingCantons] = useState(false);     // New
-  const [isFetchingDistricts, setIsFetchingDistricts] = useState(false); // New
+  const [isFetchingCantons, setIsFetchingCantons] = useState(false);     
+  const [isFetchingDistricts, setIsFetchingDistricts] = useState(false); 
 
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
 
-  // Fetch initial Problem Types
   useEffect(() => {
     const fetchProblemTypes = async () => {
       try {
@@ -42,14 +41,12 @@ function ReportFormPage() {
         const problemTypesData = await problemTypesRes.json();
         setProblemTypes(problemTypesData);
       } catch (err) {
-        console.error("Error fetching problem types:", err);
         setError(prev => prev || err.message || t('reportForm.errors.loadProblemTypes'));
       }
     };
     fetchProblemTypes();
-  }, []);
+  }, [t]);
 
-  // Fetch initial Cantons
   useEffect(() => {
     const fetchCantons = async () => {
       setIsFetchingCantons(true);
@@ -59,16 +56,14 @@ function ReportFormPage() {
         const cantonsData = await cantonsRes.json();
         setCantons(cantonsData);
       } catch (err) {
-        console.error("Error fetching cantons:", err);
         setError(prev => prev || err.message || t('reportForm.errors.loadCantons'));
       } finally {
         setIsFetchingCantons(false);
       }
     };
     fetchCantons();
-  }, []);
+  }, [t]);
 
-  // Fetch Problems when problem_type_id changes
   useEffect(() => {
     if (formData.problem_type_id) {
       const fetchProblemsByType = async () => {
@@ -81,7 +76,6 @@ function ReportFormPage() {
           const data = await res.json();
           setProblems(data);
         } catch (err) {
-          console.error("Error fetching specific problems:", err);
           setError(prev => prev || err.message || t('reportForm.errors.loadProblems'));
         } finally {
           setIsFetchingProblems(false);
@@ -92,22 +86,20 @@ function ReportFormPage() {
       setProblems([]);
       setFormData(prev => ({ ...prev, problem_id: '' }));
     }
-  }, [formData.problem_type_id]);
+  }, [formData.problem_type_id, t]);
 
-  // Fetch Districts when canton_id changes
   useEffect(() => {
     if (formData.canton_id) {
       const fetchDistrictsByCanton = async () => {
         setIsFetchingDistricts(true);
         setDistricts([]);
-        setFormData(prev => ({ ...prev, district_id: '' })); // Reset selected district
+        setFormData(prev => ({ ...prev, district_id: '' }));
         try {
           const res = await fetch(`/api/districts?cantonId=${formData.canton_id}`);
           if (!res.ok) throw new Error('Failed to fetch districts for the selected canton');
           const data = await res.json();
           setDistricts(data);
         } catch (err) {
-          console.error("Error fetching districts:", err);
           setError(prev => prev || err.message || t('reportForm.errors.loadDistricts'));
         } finally {
           setIsFetchingDistricts(false);
@@ -118,16 +110,16 @@ function ReportFormPage() {
       setDistricts([]);
       setFormData(prev => ({ ...prev, district_id: '' }));
     }
-  }, [formData.canton_id]);
+  }, [formData.canton_id, t]);
 
   const handleCancel = () => {
-    navigate('/reportes'); // Navigate to the report list page
+    navigate('/reportes'); 
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    setError(null); // Clear error on change
+    setError(null); 
   };
 
   const handleSubmit = async (e) => {
@@ -190,7 +182,6 @@ function ReportFormPage() {
         }, 2000);
       }
     } catch (err) {
-      console.error("Error submitting report:", err);
       setError(err.message || t('reportForm.errors.submitError'));
     } finally {
       setIsLoading(false);
@@ -225,6 +216,7 @@ function ReportFormPage() {
             value={formData.report_title}
             onChange={handleChange}
             required
+            maxLength="100"
           />
         </div>
 
@@ -241,7 +233,7 @@ function ReportFormPage() {
               <option value="">{t('reportForm.placeholders.selectType')}</option>
               {problemTypes.map(pt => (
                 <option key={pt.problem_type_id} value={pt.problem_type_id}>
-                  {pt.type_name}
+                  {t(`problemTypes.${pt.type_name}`, pt.type_name)}
                 </option>
               ))}
             </select>
@@ -257,10 +249,17 @@ function ReportFormPage() {
               required
               disabled={!formData.problem_type_id || isFetchingProblems}
             >
-              <option value="">{isFetchingProblems ? t('reportForm.placeholders.loading') : (formData.problem_type_id ? t('reportForm.placeholders.selectProblem') : t('reportForm.placeholders.selectTypeFirst'))}</option>
+              <option value="">
+                {isFetchingProblems 
+                  ? t('reportForm.placeholders.loading') 
+                  : (formData.problem_type_id 
+                      ? t('reportForm.placeholders.selectProblem') 
+                      : t('reportForm.placeholders.selectTypeFirst'))
+                }
+              </option>
               {problems.map(p => (
                 <option key={p.problem_id} value={p.problem_id}>
-                  {p.problem_name}
+                  {t(`problems.${p.problem_name}`, p.problem_name)}
                 </option>
               ))}
             </select>
@@ -295,7 +294,14 @@ function ReportFormPage() {
               required
               disabled={!formData.canton_id || isFetchingDistricts}
             >
-              <option value="">{isFetchingDistricts ? t('reportForm.placeholders.loading') : (formData.canton_id ? t('reportForm.placeholders.selectDistrict') : t('reportForm.placeholders.selectCantonFirst'))}</option>
+              <option value="">
+                {isFetchingDistricts 
+                  ? t('reportForm.placeholders.loading') 
+                  : (formData.canton_id 
+                      ? t('reportForm.placeholders.selectDistrict') 
+                      : t('reportForm.placeholders.selectCantonFirst'))
+                }
+              </option>
               {districts.map(d => (
                 <option key={d.district_id} value={d.district_id}>
                   {d.district_name}
@@ -314,6 +320,7 @@ function ReportFormPage() {
             value={formData.neighborhood}
             onChange={handleChange}
             required
+            maxLength="100"
           />
         </div>
         
@@ -325,6 +332,7 @@ function ReportFormPage() {
             value={formData.street}
             onChange={handleChange}
             required
+            maxLength="255"
             rows="3"
           ></textarea>
         </div>
@@ -337,7 +345,7 @@ function ReportFormPage() {
             {t('reportForm.buttons.cancel')}
           </button>
           <button type="submit" className="submit-button" disabled={isLoading}>
-            {isLoading ? t('reportForm.buttons.sending') : t('reportForm.buttons.createReport')}
+            {isLoading ? t('reportForm.buttons.submitting') : t('reportForm.buttons.createReport')}
           </button>
         </div>
       </form>

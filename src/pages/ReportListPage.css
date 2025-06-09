@@ -1,15 +1,14 @@
-/* Report List Page Styles */
 .report-list-page-container {
   display: flex;
-  align-items: flex-start; /* Align items to the top instead of stretching */
-  gap: 20px; /* Add space between main content and sidebar */
-  padding: 30px; /* Add padding to the container itself */
+  align-items: flex-start;
+  gap: 20px; 
+  padding: 30px; 
 }
 
 .report-list-main-content {
-  flex-grow: 1; /* Allows the main content to take up available space */
-  padding: 0; /* Remove padding, as it's now on the parent */
-  max-width: calc(100% - 270px); /* Ajusta el ancho máximo menos el sidebar y un poco de espacio */
+  flex-grow: 1; 
+  padding: 0; 
+  max-width: calc(100% - 270px); 
 }
 
 .report-list-header {
@@ -26,25 +25,23 @@
 }
 
 .search-bar-container {
-  /* No longer needs to grow */
 }
 
 .search-input {
   width: 100%;
-  max-width: 300px; /* Reduced max-width */
-  padding: 10px; /* Adjusted padding */
+  max-width: 300px; 
+  padding: 10px; 
   border: 1px solid var(--input-border);
   background-color: var(--input-bg);
   color: var(--text-primary);
   border-radius: 4px;
-  font-size: 0.95em; /* Adjusted font size */
+  font-size: 0.95em; 
 }
 
 .search-input::placeholder {
   color: var(--text-secondary);
 }
 
-/* Search button is currently commented out in JSX, keeping styles minimal */
 .search-button {
   background-color: var(--button-bg);
   border: none;
@@ -60,16 +57,16 @@
 }
 
 .create-report-button {
-  padding: 10px 20px; /* Adjusted padding */
+  padding: 10px 20px; 
   background-color: var(--button-bg);
   color: var(--button-text);
   text-decoration: none;
   border-radius: 4px;
   font-weight: 500;
-  white-space: nowrap; /* Prevent button text from wrapping */
+  white-space: nowrap; 
   transition: background-color 0.3s ease;
-  font-size: 0.95em; /* Adjusted font size */
-  height: fit-content; /* Align button height with inputs */
+  font-size: 0.95em; 
+  height: fit-content; 
 }
 
 .create-report-button:hover {
@@ -89,7 +86,6 @@
   color: var(--text-secondary);
 }
 
-/* Sidebar Styles */
 .nuevos-avisos-sidebar {
   width: 250px;
   padding: 20px;
@@ -98,8 +94,7 @@
   border-radius: 8px;
   color: var(--text-primary);
   flex-shrink: 0;
-  height: fit-content; /* Make height based on content */
-  /* La altura se ajustará automáticamente por el contenedor flex */
+  height: fit-content; 
 }
 
 .nuevos-avisos-sidebar h4 {
@@ -138,7 +133,7 @@
   color: var(--accent-color);
   font-weight: 600;
   font-size: 1.05rem;
-  display: block; /* Makes the whole area clickable */
+  display: block;
   margin-bottom: 5px;
 }
 
@@ -181,9 +176,7 @@
   box-shadow: 0 0 0 2px var(--accent-hover);
 }
 
-/* === RESPONSIVE STYLES === */
 
-/* For tablets and smaller desktops */
 @media (max-width: 992px) {
   .report-list-page-container {
     flex-direction: column;
@@ -200,7 +193,6 @@
   }
 }
 
-/* For mobile devices */
 @media (max-width: 768px) {
   .report-list-page-container {
     padding: 15px;

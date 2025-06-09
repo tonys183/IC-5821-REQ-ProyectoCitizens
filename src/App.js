@@ -16,7 +16,6 @@ import AlertFormPage from './pages/AlertFormPage.js';
 import MunicipalityRegistrationPage from './pages/MunicipalityRegistrationPage.js';
 import ContactPage from './pages/ContactPage.js';
 
-// Layout for authenticated users (with Sidebar)
 const MainLayout = ({ children }) => {
   const location = useLocation();
   const mainContentClass = location.pathname === '/reportes' ? 'main-content no-padding' : 'main-content';
@@ -31,21 +30,18 @@ const MainLayout = ({ children }) => {
   );
 };
 
-// Layout for public pages (Login, Register - no Sidebar)
 const AuthLayout = ({ children }) => (
   <div className="auth-layout-container">
     {children}
   </div>
 );
 
-// Protected Route Component
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
   if (isLoading) return <div>Loading...</div>;
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
-// Public Route Component (redirects if authenticated)
 const PublicRoute = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
   if (isLoading) return <div>Loading...</div>;
@@ -56,12 +52,12 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Public Routes - use AuthLayout */}
+        {}
         <Route path="/login" element={<PublicRoute><AuthLayout><LoginPage /></AuthLayout></PublicRoute>} />
         <Route path="/register" element={<PublicRoute><AuthLayout><RegistrationPage /></AuthLayout></PublicRoute>} />
         <Route path="/registro-municipalidad" element={<PublicRoute><AuthLayout><MunicipalityRegistrationPage /></AuthLayout></PublicRoute>} />
 
-        {/* Protected Routes - use MainLayout */}
+        {}
         <Route path="/dashboard" element={<ProtectedRoute><MainLayout><DashboardPage /></MainLayout></ProtectedRoute>} />
         <Route path="/reportes" element={<ProtectedRoute><MainLayout><ReportListPage /></MainLayout></ProtectedRoute>} />
         <Route path="/reportes/nuevo" element={<ProtectedRoute><MainLayout><ReportFormPage /></MainLayout></ProtectedRoute>} />
@@ -73,24 +69,23 @@ function App() {
         <Route path="/perfil" element={<ProtectedRoute><MainLayout><ProfilePage /></MainLayout></ProtectedRoute>} />
         <Route path="/contacto" element={<ProtectedRoute><MainLayout><ContactPage /></MainLayout></ProtectedRoute>} />
         
-        {/* Redirect root based on auth state */}
+        {}
         <Route 
           path="/"
           element={ <NavigateToDashboardOrLogin /> }
         />
 
-        {/* Fallback for any other route can be a 404 page or redirect */}
-        {/* For now, redirecting to dashboard, but a 404 component would be better for unkown paths */}
+        {}
+        {}
         <Route path="*" element={<Navigate to="/dashboard" replace />} /> 
       </Routes>
     </Router>
   );
 }
 
-// Helper component to decide initial redirect
 const NavigateToDashboardOrLogin = () => {
   const { isAuthenticated, isLoading } = useAuth();
-  if (isLoading) return <div>Loading...</div>; // Or your global loader
+  if (isLoading) return <div>Loading...</div>; 
   return isAuthenticated ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />;
 };
 

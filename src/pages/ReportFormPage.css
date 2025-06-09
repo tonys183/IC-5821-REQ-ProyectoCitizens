@@ -1,4 +1,3 @@
-/* === REPORT AND ALERT FORM STYLES === */
 
 .form-container {
   max-width: 800px;
@@ -46,7 +45,6 @@
   grid-column: 1 / -1;
 }
 
-/* Inherits global form-group styles */
 
 .contact-prompt {
   grid-column: 1 / -1;
@@ -66,7 +64,6 @@
   text-decoration: underline;
 }
 
-/* === RESPONSIVE STYLES === */
 
 @media (max-width: 768px) {
   .form-container {

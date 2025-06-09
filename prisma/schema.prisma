@@ -8,13 +8,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Define an enum for user roles for better type safety
 enum Role {
   NEIGHBOR
   MUNICIPALITY
 }
 
-// This is the new, unified User model for authentication
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
@@ -22,20 +20,16 @@ model User {
   role      Role     @default(NEIGHBOR)
   created_at DateTime @default(now())
   
-  // A user can have one of two profile types, but not both.
   neighborProfile     NeighborProfile?
   municipalityProfile MunicipalityProfile?
   
-  // A user (if municipality) can author alerts
   alerts    Alert[]
 
-  // A user (if neighbor) can author reports
   reports   report[]
 
   @@map("users")
 }
 
-// Profile for regular neighbors
 model NeighborProfile {
   id              Int     @id @default(autoincrement())
   first_name      String  @db.VarChar(100)
@@ -50,19 +44,17 @@ model NeighborProfile {
   @@map("neighbor_profiles")
 }
 
-// Profile for municipality users
 model MunicipalityProfile {
   id          Int    @id @default(autoincrement())
   name        String @db.VarChar(255) // e.g., "Municipalidad de Alajuela"
   canton      String @db.VarChar(100)
 
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId Int  @unique // one-to-one relation
+  userId Int  @unique 
 
   @@map("municipality_profiles")
 }
 
-// The Alert model is now linked to a User with the MUNICIPALITY role
 model Alert {
   id          Int      @id @default(autoincrement())
   title       String   @db.VarChar(255)
@@ -105,7 +97,6 @@ model problem_type {
   problem         problem[]
 }
 
-/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model report {
   report_id                          Int       @id @default(autoincrement())
   author_id                          Int?      // Changed from neighbor_id

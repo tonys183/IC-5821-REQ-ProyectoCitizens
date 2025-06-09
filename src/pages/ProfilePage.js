@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.js';
 import { useTranslation } from 'react-i18next';
-import './ProfilePage.css'; // We will create this CSS file
+import './ProfilePage.css'; 
 
 function ProfilePage() {
   const { t } = useTranslation();
@@ -10,16 +10,13 @@ function ProfilePage() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    // Neighbor fields
     firstName: '',
     lastName: '',
     secondLastName: '',
     phoneNumber: '',
     identification: '',
-    // Muni fields
     name: '',
     canton: '',
-    // Common field
     email: '',
   });
 
@@ -28,13 +25,11 @@ function ProfilePage() {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
 
-  // This function populates the form from the user object in AuthContext
   const populateFormFromUser = useCallback(() => {
     if (!user) return;
     
     setFormData({
       email: user.email || '',
-      // Populate fields based on role
       firstName: user.role === 'NEIGHBOR' ? user.profile?.first_name || '' : '',
       lastName: user.role === 'NEIGHBOR' ? user.profile?.last_name || '' : '',
       secondLastName: user.role === 'NEIGHBOR' ? user.profile?.second_last_name || '' : '',
@@ -47,14 +42,12 @@ function ProfilePage() {
 
   useEffect(() => {
     if (isAuthLoading) {
-      // If auth context is still figuring things out, wait.
       return;
     }
     if (user) {
       populateFormFromUser();
       setIsLoading(false);
     } else {
-      // If auth is done and there's no user, redirect.
       navigate('/login');
     }
   }, [user, isAuthLoading, navigate, populateFormFromUser]);
@@ -68,7 +61,6 @@ function ProfilePage() {
     setError(null);
     setSuccessMessage('');
     if (isEditing) {
-      // If canceling edit, revert to original data
       populateFormFromUser();
     }
   };
@@ -81,13 +73,13 @@ function ProfilePage() {
 
     const token = localStorage.getItem('authToken');
     try {
-      const response = await fetch(`/api/profile`, { // Use the new endpoint
+      const response = await fetch(`/api/profile`, { 
         method: 'PUT',
         headers: { 
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ // Only send neighbor fields for now as per backend logic
+        body: JSON.stringify({ 
           firstName: formData.firstName,
           lastName: formData.lastName,
           secondLastName: formData.secondLastName,
@@ -101,13 +93,12 @@ function ProfilePage() {
       
       setSuccessMessage(data.message || t('profilePage.success.updateSuccess'));
       
-      // We need to update the user object in the context
-      // The backend should return the updated profile data
+     
       setUser(prevUser => ({
           ...prevUser,
           profile: {
               ...prevUser.profile,
-              ...data.profile, // Assuming backend sends back the updated neighborProfile
+              ...data.profile, 
           }
       }));
       
@@ -125,7 +116,7 @@ function ProfilePage() {
       setError(null);
       const token = localStorage.getItem('authToken');
       try {
-        const response = await fetch(`/api/profile`, { // Use the new endpoint
+        const response = await fetch(`/api/profile`, { 
           method: 'DELETE',
           headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -133,8 +124,8 @@ function ProfilePage() {
         if (!response.ok) {
           throw new Error(data.message || t('profilePage.errors.deleteError'));
         }
-        logout(); // This will clear context and localStorage
-        navigate('/registrarse'); // Navigate to a public page
+        logout(); 
+        navigate('/registrarse'); 
       } catch (err) {
         setError(err.message);
         setIsLoading(false);
@@ -146,7 +137,6 @@ function ProfilePage() {
       return <p>{t('profilePage.loading')}</p>;
   }
 
-  // Render different profile views based on role
   const renderNeighborProfile = () => (
     <>
       <div className="form-group">
@@ -199,10 +189,10 @@ function ProfilePage() {
           <input type="email" id="email" name="email" value={formData.email} disabled />
         </div>
 
-        {/* Render role-specific fields */}
+        {}
         {user.role === 'NEIGHBOR' ? renderNeighborProfile() : renderMunicipalityProfile()}
 
-        {user.role === 'NEIGHBOR' && ( // Only neighbors can edit their profile for now
+        {user.role === 'NEIGHBOR' && ( 
           isEditing ? (
             <div className="form-actions">
               <button type="submit" className="save-button submit-button" disabled={isLoading}>

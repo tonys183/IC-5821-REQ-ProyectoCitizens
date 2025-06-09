@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // For the "Crear Reporte" button
-import ReportCard from '../components/ReportCard.js'; // Added .js extension
-import ReportDetailModal from '../components/ReportDetailModal.js'; // Import the modal
-import { useAuth } from '../context/AuthContext.js'; // Import useAuth
-import { useTranslation } from 'react-i18next'; // Import useTranslation
+import { Link } from 'react-router-dom'; 
+import ReportCard from '../components/ReportCard.js'; 
+import ReportDetailModal from '../components/ReportDetailModal.js'; 
+import { useAuth } from '../context/AuthContext.js';
+import { useTranslation } from 'react-i18next'; 
 import './ReportListPage.css';
 
 function ReportListPage() {
-  const { t } = useTranslation(); // Initialize translation hook
+  const { t } = useTranslation();
   const [reports, setReports] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const { user } = useAuth(); // Get the authenticated user
+  const { user } = useAuth(); 
 
   const [cantons, setCantons] = useState([]);
   const [filterCanton, setFilterCanton] = useState('');
@@ -22,13 +22,11 @@ function ReportListPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [alerts, setAlerts] = useState([]);
 
-  // Fetch alerts for the sidebar
   useEffect(() => {
     const fetchAlerts = async () => {
       try {
         const response = await fetch('http://localhost:3001/api/alerts');
         if (!response.ok) {
-          // Don't throw an error that would overwrite the main report error
           console.error(`HTTP error! status: ${response.status}`);
           return;
         }
@@ -41,7 +39,6 @@ function ReportListPage() {
     fetchAlerts();
   }, []);
 
-  // Fetch all cantons for the filter dropdown
   useEffect(() => {
     const fetchCantons = async () => {
       try {
@@ -51,7 +48,6 @@ function ReportListPage() {
         setCantons(data);
       } catch (err) {
         console.error(err);
-        // Optional: set an error state for the cantons dropdown
       }
     };
     fetchCantons();
@@ -89,14 +85,12 @@ function ReportListPage() {
     fetchReports();
   }, [filterCanton, filterStatus]);
 
-  // Filter reports based on searchTerm (simple title/description search)
   const filteredReports = reports.filter(report => {
     const problemName = report.problem?.problem_name?.toLowerCase() || '';
     const problemTypeName = report.problem?.problem_type?.type_name?.toLowerCase() || '';
     const currentReportTitle = report.report_title?.toLowerCase() || '';
     const lowerSearchTerm = searchTerm.toLowerCase();
 
-    // Add other fields to search if desired, e.g., status, neighbor name, canton, district
     const canton = report.canton?.canton_name?.toLowerCase() || '';
     const neighborhood = report.neighborhood?.toLowerCase() || '';
 
@@ -117,7 +111,6 @@ function ReportListPage() {
     setIsModalOpen(false);
   };
 
-  // Function to update a single report in the list
   const handleReportUpdate = (updatedReport) => {
     setReports(prevReports => 
       prevReports.map(report => 

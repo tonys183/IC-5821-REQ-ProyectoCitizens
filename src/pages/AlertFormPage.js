@@ -16,14 +16,11 @@ function AlertFormPage() {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    // Determine if we are in "edit" mode
     if (alertId) {
       setIsEditing(true);
       setIsLoading(true);
-      // Fetch the existing alert data
       const fetchAlert = async () => {
         try {
-          // Note: No token needed for public GET, but good practice if it were secured
           const response = await fetch(`/api/alerts`); 
           if (!response.ok) throw new Error(t('alertForm.errors.fetchFailed'));
           const alerts = await response.json();
@@ -44,7 +41,6 @@ function AlertFormPage() {
     }
   }, [alertId]);
   
-  // Redirect if user is not from municipality
   useEffect(() => {
     if (user && user.role !== 'MUNICIPALITY') {
       navigate('/alertas');
@@ -77,7 +73,7 @@ function AlertFormPage() {
       if (!response.ok) {
         throw new Error(data.message || t(isEditing ? 'alertForm.errors.updateFailed' : 'alertForm.errors.createFailed'));
       }
-      navigate('/alertas'); // Redirect to alerts list on success
+      navigate('/alertas');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -90,11 +86,11 @@ function AlertFormPage() {
   };
 
   if (!user || user.role !== 'MUNICIPALITY') {
-    return <p>{t('alertForm.accessDenied')}</p>; // Or a loading spinner while redirecting
+    return <p>{t('alertForm.accessDenied')}</p>;
   }
 
   return (
-    <div className="report-form-container"> {/* Reusing styles from report form */}
+    <div className="report-form-container">
       <div className="form-header">
         <h2>{isEditing ? t('alertForm.titleEdit') : t('alertForm.titleCreate')}</h2>
         <button onClick={handleCancel} className="close-button" aria-label={t('alertForm.close')}>

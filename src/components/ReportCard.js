@@ -1,16 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-// Link is no longer needed here directly
 import './ReportCard.css';
 
-function ReportCard({ report, onCardClick }) { // currentUserId is no longer needed here
+function ReportCard({ report, onCardClick }) {
   const { t } = useTranslation();
   const {
     report_title,
     status,
     updated_at,
     problem,
-    author, // Changed from neighbor
+    author,
     canton,
     district_report_districtTodistrict,
     neighborhood,
@@ -21,7 +20,7 @@ function ReportCard({ report, onCardClick }) { // currentUserId is no longer nee
   const problemName = problem?.problem_name || t('reportCard.unspecified');
   const fullProblemDescription = `${problemTypeName} - ${problemName}`;
 
-  // New logic to determine reporter's name from nested profiles
+  
   const reporterName = author
     ? (author.neighborProfile?.first_name ? `${author.neighborProfile.first_name} ${author.neighborProfile.last_name}` : author.municipalityProfile?.name) || t('reportCard.anonymous')
     : t('reportCard.anonymous');
@@ -41,13 +40,12 @@ function ReportCard({ report, onCardClick }) { // currentUserId is no longer nee
   const formatDate = (dateString) => {
     if (!dateString) return '-';
     try {
-      // Using a simpler approach for date formatting directly, assuming report_date is a valid date string or Date object
       const date = new Date(dateString);
       return date.toLocaleDateString('es-CR', { 
         day: '2-digit', 
         month: '2-digit', 
         year: 'numeric', 
-        timeZone: 'UTC' // Important if your dates are stored/handled as UTC
+        timeZone: 'UTC'
       });
     } catch (e) {
       console.error("Error formatting date in ReportCard:", dateString, e);
@@ -70,9 +68,9 @@ function ReportCard({ report, onCardClick }) { // currentUserId is no longer nee
         <p><strong>{t('reportCard.status')}:</strong> <span className={`status status-${(status || 'Desconocido').toLowerCase().replace(/\s+/g, '-')}`}>{t(getStatusKey(status))}</span></p>
         <p><strong>{t('reportCard.reportedBy')}:</strong> {reporterName}</p>
         <p><strong>{t('reportCard.lastUpdated')}:</strong> {formatDate(updated_at)}</p>
-        {/* ID del Reporte can be shown in the modal if needed */}
+        {}
       </div>
-      {/* Edit button is removed from here and placed in the modal */}
+      {}
     </div>
   );
 }

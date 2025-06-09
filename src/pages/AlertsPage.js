@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.js';
-import AlertCard from '../components/AlertCard.js'; // Import the real component
+import AlertCard from '../components/AlertCard.js';
 import { useTranslation } from 'react-i18next';
-import './AlertsPage.css'; // We will create this CSS file
+import './AlertsPage.css';
 
 function AlertsPage() {
   const { t } = useTranslation();
@@ -40,7 +40,6 @@ function AlertsPage() {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.status === 204) {
-            // Remove the alert from the state to update the UI
             setAlerts(alerts.filter(alert => alert.id !== alertId));
         } else {
             const data = await response.json();

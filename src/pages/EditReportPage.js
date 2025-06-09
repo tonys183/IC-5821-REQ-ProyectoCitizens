@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.js';
-import { FaTimes } from 'react-icons/fa'; // Import the close icon
+import { FaTimes } from 'react-icons/fa'; 
 import { useTranslation } from 'react-i18next';
-import './ReportFormPage.css'; // Reuse the same CSS file
+import './ReportFormPage.css'; 
 
 function EditReportPage() {
   const { t } = useTranslation();
@@ -26,16 +26,14 @@ function EditReportPage() {
   const [cantons, setCantons] = useState([]);
   const [districts, setDistricts] = useState([]);
   
-  const [isLoadingReport, setIsLoadingReport] = useState(true); // Loading initial report data
-  const [isSubmitting, setIsSubmitting] = useState(false); // For form submission
+  const [isLoadingReport, setIsLoadingReport] = useState(true); 
+  const [isSubmitting, setIsSubmitting] = useState(false); 
   const [isFetchingProblems, setIsFetchingProblems] = useState(false);
   const [isFetchingDistricts, setIsFetchingDistricts] = useState(false);
-  // Note: isFetchingCantons is not strictly needed if cantons are fetched once and don't depend on other form data for re-fetching in edit mode.
 
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
 
-  // Fetch initial Problem Types & Cantons (runs once)
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
@@ -57,7 +55,6 @@ function EditReportPage() {
     fetchInitialData();
   }, []);
 
-  // Fetch Problems when problem_type_id changes
   const fetchProblemsByType = useCallback(async (problemTypeId) => {
     if (!problemTypeId) {
       setProblems([]);
@@ -77,7 +74,6 @@ function EditReportPage() {
     }
   }, []);
 
-  // Fetch Districts when canton_id changes
   const fetchDistrictsByCanton = useCallback(async (cantonId) => {
     if (!cantonId) {
       setDistricts([]);
@@ -97,7 +93,6 @@ function EditReportPage() {
     }
   }, []);
 
-  // Fetch existing report data
   useEffect(() => {
     if (!reportId || !user) {
         if (!user && !isLoadingReport) {
@@ -127,7 +122,6 @@ function EditReportPage() {
           throw new Error(data.message || t('reportForm.errors.loadReportError'));
         }
         
-        // Populate form, ensuring all values are strings for select elements
         const initialFormData = {
           report_title: data.report_title || '',
           problem_type_id: data.problem_type_id?.toString() || '',
@@ -139,7 +133,6 @@ function EditReportPage() {
         };
         setFormData(initialFormData);
 
-        // Concurrently fetch problems and districts based on the loaded data
         if (initialFormData.problem_type_id) {
           fetchProblemsByType(initialFormData.problem_type_id);
         }
@@ -168,11 +161,11 @@ function EditReportPage() {
         const newState = { ...prev, [name]: value };
         if (name === 'problem_type_id') {
             newState.problem_id = '';
-            fetchProblemsByType(value); // Fetch new problems on type change
+            fetchProblemsByType(value); 
         }
         if (name === 'canton_id') {
             newState.district_id = '';
-            fetchDistrictsByCanton(value); // Fetch new districts on canton change
+            fetchDistrictsByCanton(value); 
         }
         return newState;
     });

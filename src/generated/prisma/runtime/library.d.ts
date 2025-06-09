@@ -27,10 +27,7 @@ export declare type Action = keyof typeof DMMF_2.ModelAction | 'executeRaw' | 'q
 
 declare type ActiveConnectorType = Exclude<ConnectorType, 'postgres' | 'prisma+postgres'>;
 
-/**
- * An interface that exposes some basic information about the
- * adapter like its name and provider type.
- */
+
 declare interface AdapterInfo {
     readonly provider: Provider;
     readonly adapterName: (typeof officialPrismaAdapters)[number] | (string & {});
@@ -68,27 +65,15 @@ export declare type Args<T, F extends Operation> = T extends {
 
 export declare type Args_3<T, F extends Operation> = Args<T, F>;
 
-/**
- * Original `quaint::ValueType` enum tag from Prisma's `quaint`.
- * Query arguments marked with this type are sanitized before being sent to the database.
- * Notice while a query argument may be `null`, `ArgType` is guaranteed to be defined.
- */
+
 declare type ArgType = 'Int32' | 'Int64' | 'Float' | 'Double' | 'Text' | 'Enum' | 'EnumArray' | 'Bytes' | 'Boolean' | 'Char' | 'Array' | 'Numeric' | 'Json' | 'Xml' | 'Uuid' | 'DateTime' | 'Date' | 'Time' | 'Unknown';
 
-/**
- * Attributes is a map from string to attribute values.
- *
- * Note: only the own enumerable keys are counted as valid attribute keys.
- */
+
 declare interface Attributes {
     [attributeKey: string]: AttributeValue | undefined;
 }
 
-/**
- * Attribute values may be any non-nullish primitive value except an object.
- *
- * null or undefined attribute values are invalid and will result in undefined behavior.
- */
+
 declare type AttributeValue = string | number | boolean | Array<null | undefined | string> | Array<null | undefined | number> | Array<null | undefined | boolean>;
 
 export declare type BaseDMMF = {
@@ -261,24 +246,16 @@ declare type ConnectorType = 'mysql' | 'mongodb' | 'sqlite' | 'postgresql' | 'po
 
 declare interface Context {
     /**
-     * Get a value from the context.
-     *
-     * @param key key which identifies a context value
+     * @param key 
      */
     getValue(key: symbol): unknown;
     /**
-     * Create a new context which inherits from this context and has
-     * the given key set to the given value.
-     *
-     * @param key context key for which to set the value
-     * @param value value to set for the given key
+     * @param key
+     * @param value
      */
     setValue(key: symbol, value: unknown): Context;
     /**
-     * Return a new context which inherits from this context but does
-     * not contain a value for the given key.
-     *
-     * @param key context key for which to clear a value
+     * @param key
      */
     deleteValue(key: symbol): Context;
 }
@@ -289,14 +266,14 @@ declare type Context_2<T> = T extends {
     };
 } ? C & T & {
     /**
-     * @deprecated Use `$name` instead.
+     * @deprecated
      */
     name?: string;
     $name?: string;
     $parent?: unknown;
 } : T & {
     /**
-     * @deprecated Use `$name` instead.
+     * @deprecated
      */
     name?: string;
     $name?: string;
@@ -309,35 +286,6 @@ export declare type Count<O> = {
 
 export declare function createParam(name: string): Param<unknown, string>;
 
-/**
- * Custom fetch function for `DataProxyEngine`.
- *
- * We can't use the actual type of `globalThis.fetch` because this will result
- * in API Extractor referencing Node.js type definitions in the `.d.ts` bundle
- * for the client runtime. We can only use such types in internal types that
- * don't end up exported anywhere.
-
- * It's also not possible to write a definition of `fetch` that would accept the
- * actual `fetch` function from different environments such as Node.js and
- * Cloudflare Workers (with their extensions to `RequestInit` and `Response`).
- * `fetch` is used in both covariant and contravariant positions in
- * `CustomDataProxyFetch`, making it invariant, so we need the exact same type.
- * Even if we removed the argument and left `fetch` in covariant position only,
- * then for an extension-supplied function to be assignable to `customDataProxyFetch`,
- * the platform-specific (or custom) `fetch` function needs to be assignable
- * to our `fetch` definition. This, in turn, requires the third-party `Response`
- * to be a subtype of our `Response` (which is not a problem, we could declare
- * a minimal `Response` type that only includes what we use) *and* requires the
- * third-party `RequestInit` to be a supertype of our `RequestInit` (i.e. we
- * have to declare all properties any `RequestInit` implementation in existence
- * could possibly have), which is not possible.
- *
- * Since `@prisma/extension-accelerate` redefines the type of
- * `__internalParams.customDataProxyFetch` to its own type anyway (probably for
- * exactly this reason), our definition is never actually used and is completely
- * ignored, so it doesn't matter, and we can just use `unknown` as the type of
- * `fetch` here.
- */
 declare type CustomDataProxyFetch = (fetch: unknown) => unknown;
 
 declare class DataLoader<T = unknown> {
@@ -396,14 +344,7 @@ export declare const Debug: typeof debugCreate & {
 };
 
 /**
- * Create a new debug instance with the given namespace.
- *
  * @example
- * ```ts
- * import Debug from '@prisma/debug'
- * const debug = Debug('prisma:client')
- * debug('Hello World')
- * ```
  */
 declare function debugCreate(namespace: string): ((...args: any[]) => void) & {
     color: string;
@@ -422,7 +363,6 @@ export declare namespace Decimal {
     export type Modulo = Rounding | 9;
     export type Value = string | number | Decimal;
 
-    // http://mikemcl.github.io/decimal.js/#constructor-properties
     export interface Config {
         precision?: number;
         rounding?: Rounding;
@@ -643,7 +583,7 @@ export declare class Decimal {
     static min(...n: Decimal.Value[]): Decimal;
     static mod(x: Decimal.Value, y: Decimal.Value): Decimal;
     static mul(x: Decimal.Value, y: Decimal.Value): Decimal;
-    static noConflict(): Decimal.Constructor;   // Browser only
+    static noConflict(): Decimal.Constructor;
     static pow(base: Decimal.Value, exponent: Decimal.Value): Decimal;
     static random(significantDigits?: number): Decimal;
     static round(n: Decimal.Value): Decimal;
@@ -3312,54 +3252,35 @@ declare enum SpanKind {
     CONSUMER = 4
 }
 
-/**
- * Options needed for span creation
- */
+
 declare interface SpanOptions {
     /**
-     * The SpanKind of a span
      * @default {@link SpanKind.INTERNAL}
      */
     kind?: SpanKind;
-    /** A span's attributes */
     attributes?: SpanAttributes;
     /** {@link Link}s span to other spans */
     links?: Link[];
-    /** A manually specified start time for the created `Span` object. */
     startTime?: TimeInput;
-    /** The new span should be a root span. (Ignore parent from context). */
     root?: boolean;
 }
 
 declare interface SpanStatus {
-    /** The status code of this message. */
     code: SpanStatusCode;
-    /** A developer-facing error message. */
     message?: string;
 }
 
-/**
- * An enumeration of status codes.
- */
+
 declare enum SpanStatusCode {
-    /**
-     * The default status.
-     */
+
     UNSET = 0,
-    /**
-     * The operation has been validated by an Application developer or
-     * Operator to have completed successfully.
-     */
+
     OK = 1,
-    /**
-     * The operation contains an error.
-     */
+
     ERROR = 2
 }
 
-/**
- * A SQL instance can be nested within each other to build SQL strings.
- */
+
 export declare class Sql {
     readonly values: Value[];
     readonly strings: string[];
@@ -3376,21 +3297,13 @@ export declare class Sql {
 }
 
 declare interface SqlDriverAdapter extends SqlQueryable {
-    /**
-     * Execute multiple SQL statements separated by semicolon.
-     */
+
     executeScript(script: string): Promise<void>;
-    /**
-     * Start new transaction.
-     */
+
     startTransaction(isolationLevel?: IsolationLevel): Promise<Transaction>;
-    /**
-     * Optional method that returns extra connection info
-     */
+
     getConnectionInfo?(): ConnectionInfo;
-    /**
-     * Dispose of the connection and release any resources.
-     */
+
     dispose(): Promise<void>;
 }
 
@@ -3408,74 +3321,39 @@ declare interface SqlQueryable extends Queryable<SqlQuery, SqlResultSet> {
 }
 
 declare interface SqlResultSet {
-    /**
-     * List of column types appearing in a database query, in the same order as `columnNames`.
-     * They are used within the Query Engine to convert values from JS to Quaint values.
-     */
+
     columnTypes: Array<ColumnType>;
-    /**
-     * List of column names appearing in a database query, in the same order as `columnTypes`.
-     */
+
     columnNames: Array<string>;
-    /**
-     * List of rows retrieved from a database query.
-     * Each row is a list of values, whose length matches `columnNames` and `columnTypes`.
-     */
+
     rows: Array<Array<unknown>>;
-    /**
-     * The last ID of an `INSERT` statement, if any.
-     * This is required for `AUTO_INCREMENT` columns in databases based on MySQL and SQLite.
-     */
+
     lastInsertId?: string;
 }
 
-/**
- * Create a SQL object from a template string.
- */
+
 export declare function sqltag(strings: readonly string[], ...values: readonly RawValue[]): Sql;
 
-/**
- * Defines TimeInput.
- *
- * hrtime, epoch milliseconds, performance.now() or Date
- */
 declare type TimeInput = HrTime_2 | number | Date;
 
 export declare type ToTuple<T> = T extends any[] ? T : [T];
 
 declare interface TraceState {
     /**
-     * Create a new TraceState which inherits from this TraceState and has the
-     * given key set.
-     * The new entry will always be added in the front of the list of states.
-     *
      * @param key key of the TraceState entry.
      * @param value value of the TraceState entry.
      */
     set(key: string, value: string): TraceState;
     /**
-     * Return a new TraceState which inherits from this TraceState but does not
-     * contain the given key.
-     *
      * @param key the key for the TraceState entry to be removed.
      */
     unset(key: string): TraceState;
     /**
-     * Returns the value to which the specified key is mapped, or `undefined` if
-     * this map contains no mapping for the key.
-     *
      * @param key with which the specified value is to be associated.
      * @returns the value to which the specified key is mapped, or `undefined` if
-     *     this map contains no mapping for the key.
      */
     get(key: string): string | undefined;
     /**
-     * Serializes the TraceState to a `list` as defined below. The `list` is a
-     * series of `list-members` separated by commas `,`, and a list-member is a
-     * key/value pair separated by an equals sign `=`. Spaces and horizontal tabs
-     * surrounding `list-members` are ignored. There can be a maximum of 32
-     * `list-members` in a `list`.
-     *
      * @returns the serialized string.
      */
     serialize(): string;
@@ -3490,17 +3368,11 @@ declare interface TracingHelper {
 }
 
 declare interface Transaction extends AdapterInfo, SqlQueryable {
-    /**
-     * Transaction options.
-     */
+
     readonly options: TransactionOptions;
-    /**
-     * Commit the transaction.
-     */
+
     commit(): Promise<void>;
-    /**
-     * Roll back the transaction.
-     */
+
     rollback(): Promise<void>;
 }
 
@@ -3540,7 +3412,6 @@ export declare type TypeMapCbDef = Fn<{
     extArgs: InternalArgs;
 }, TypeMapDef>;
 
-/** Shared */
 export declare type TypeMapDef = Record<any, any>;
 
 declare type TypeRef<AllowedLocations extends FieldLocation> = {
@@ -3595,9 +3466,7 @@ export declare type UnwrapTuple<Tuple extends readonly unknown[]> = {
     [K in keyof Tuple]: K extends `${number}` ? Tuple[K] extends PrismaPromise<infer X> ? X : UnwrapPromise<Tuple[K]> : UnwrapPromise<Tuple[K]>;
 };
 
-/**
- * Input that flows from the user into the Client.
- */
+
 declare type UserArgs_2 = any;
 
 declare namespace Utils {
@@ -3641,9 +3510,7 @@ declare function validator<C, M extends Exclude<keyof C, `$${string}`>, O extend
 
 declare function validator<C, M extends Exclude<keyof C, `$${string}`>, O extends keyof C[M] & Operation, P extends keyof Args<C[M], O>>(client: C, model: M, operation: O, prop: P): <S>(select: Exact<S, Args<C[M], O>[P]>) => S;
 
-/**
- * Values supported by SQL engine.
- */
+
 export declare type Value = unknown;
 
 export declare function warnEnvConflicts(envPaths: any): void;

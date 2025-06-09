@@ -26,7 +26,6 @@ function MunicipalityRegistrationPage() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    // Clear error message on change
     if (error) setError(null);
   };
 
@@ -36,7 +35,6 @@ function MunicipalityRegistrationPage() {
     setError(null);
     setSuccessMessage('');
 
-    // --- Client-side validation ---
     if (!formData.email.endsWith(MUNI_DOMAIN)) {
       setError(`El registro solo está permitido para correos institucionales (${MUNI_DOMAIN}).`);
       setIsLoading(false);

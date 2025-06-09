@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.js';
 import { useTheme } from '../context/ThemeContext.js';
-import './SettingsPage.css'; // We'll create this CSS file later
+import './SettingsPage.css'; 
 import { useTranslation } from 'react-i18next';
 
 function SettingsPage() {
@@ -61,29 +61,16 @@ function SettingsPage() {
               {t('settings.logout')}
             </button>
           </li>
-          {/* Add more account-related settings options here */}
-          {/* 
-          <li className="settings-option-item">
-            <button className="settings-action-button">Cambiar Contraseña</button>
-          </li>
-          */}
+          {}
+          {
+          }
         </ul>
       </div>
 
-      {/* Example of another settings section for future use */}
-      {/* 
-      <div className="settings-section">
-        <h3 className="settings-section-title">Notificaciones</h3>
-        <ul className="settings-options-list">
-          <li className="settings-option-item">
-            <span>Preferencias de Email</span>
-            <button className="settings-action-button">Gestionar</button>
-          </li>
-        </ul>
-      </div>
-      */}
+      {}
+      {}
 
-      {/* Add more sections as needed */}
+      {}
     </div>
   );
 }

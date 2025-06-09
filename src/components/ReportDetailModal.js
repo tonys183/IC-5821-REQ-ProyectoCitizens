@@ -70,7 +70,7 @@ function ReportDetailModal({ report, user, onClose, show, onReportUpdate }) {
   };
   
   const handleStatusUpdate = async () => {
-    if (newStatus === status) return; // Don't update if status hasn't changed
+    if (newStatus === status) return;
     
     setIsUpdating(true);
     setError('');
@@ -90,9 +90,8 @@ function ReportDetailModal({ report, user, onClose, show, onReportUpdate }) {
             throw new Error(data.message || 'Error al actualizar el estado.');
         }
         
-        // Call the parent component's handler to update the UI
         onReportUpdate(data.report);
-        onClose(); // Close modal on success
+        onClose();
 
     } catch (err) {
         setError(err.message);
@@ -127,7 +126,7 @@ function ReportDetailModal({ report, user, onClose, show, onReportUpdate }) {
             <p>{reporterName}</p>
           </div>
 
-          {/* Municipality Status Update Section */}
+          {}
           {user?.role === 'MUNICIPALITY' && (
             <div className="modal-section status-update-section">
               <h4 className="modal-section-title">{t('reportModal.updateStatusTitle')}</h4>

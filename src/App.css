@@ -8,7 +8,6 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* Light Theme Variables */
 body.light-theme {
   --bg-primary: #ffffff;
   --bg-secondary: #f0f2f5;
@@ -27,7 +26,6 @@ body.light-theme {
   --shadow-color: rgba(0, 0, 0, 0.12);
 }
 
-/* Dark Theme Variables */
 body.dark-theme {
   --bg-primary: #1e1e1e;
   --bg-secondary: #242526;
@@ -72,12 +70,10 @@ body {
   background-color: var(--bg-secondary);
 }
 
-/* Remove padding for specific full-page layouts */
 .main-content.no-padding {
   padding: 0;
 }
 
-/* === GLOBAL / SHARED STYLES === */
 
 .standalone-page-background {
   display: flex;
@@ -233,7 +229,6 @@ body {
   font-size: 0.9em;
 }
 
-/* === RESPONSIVE ADJUSTMENTS === */
 @media (max-width: 768px) {
   .main-content {
     margin-left: 0;

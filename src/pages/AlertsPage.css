@@ -13,7 +13,7 @@
 }
 
 .alerts-header h1 {
-  color: #00A9B5; /* Teal accent */
+  color: #00A9B5; 
   font-size: 2em;
   margin: 0;
 }
@@ -38,7 +38,6 @@
   gap: 20px;
 }
 
-/* This is a temporary placeholder style */
 .alert-card-placeholder {
   background-color: #2d2d30;
   padding: 20px;
@@ -60,10 +59,9 @@
   color: #a0a0a0;
 }
 
-/* === RESPONSIVE ADJUSTMENTS === */
 @media (max-width: 768px) {
   .alerts-page-container {
-    padding: 15px; /* Reduce padding on mobile */
+    padding: 15px; 
   }
 
   .alerts-header {

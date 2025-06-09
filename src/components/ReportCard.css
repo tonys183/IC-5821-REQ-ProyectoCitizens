@@ -7,7 +7,7 @@
   box-shadow: 0 2px 5px var(--shadow-color);
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Pushes details to bottom if content is short */
+  justify-content: space-between;
 }
 
 .report-card-title {
@@ -22,13 +22,13 @@
   font-size: 0.95em;
   line-height: 1.6;
   margin-bottom: 15px;
-  flex-grow: 1; /* Allows description to take up available space */
+  flex-grow: 1;
 }
 
 .report-card-details {
   font-size: 0.85em;
   color: var(--text-secondary);
-  border-top: 1px solid var(--border-color); /* Separator line */
+  border-top: 1px solid var(--border-color);
   padding-top: 10px;
   margin-top: 10px;
 }
