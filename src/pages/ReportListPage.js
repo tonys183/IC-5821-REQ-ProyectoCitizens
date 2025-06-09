@@ -83,7 +83,7 @@ function ReportListPage() {
     };
 
     fetchReports();
-  }, [filterCanton, filterStatus]);
+  }, [filterCanton, filterStatus, t]);
 
   const filteredReports = reports.filter(report => {
     const problemName = report.problem?.problem_name?.toLowerCase() || '';

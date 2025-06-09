@@ -39,7 +39,7 @@ function AlertFormPage() {
       };
       fetchAlert();
     }
-  }, [alertId]);
+  }, [alertId, t]);
   
   useEffect(() => {
     if (user && user.role !== 'MUNICIPALITY') {

@@ -143,7 +143,6 @@ function ReportDetailModal({ report, user, onClose, show, onReportUpdate }) {
                     <option value="Waiting">{t('reportList.status.waiting')}</option>
                     <option value="In Progress">{t('reportList.status.inProgress')}</option>
                     <option value="Resolved">{t('reportList.status.resolved')}</option>
-                    <option value="Rejected">{t('reportList.status.rejected')}</option>
                   </select>
                   <button 
                       onClick={handleStatusUpdate} 

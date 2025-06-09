@@ -28,7 +28,7 @@ function AlertsPage() {
       }
     };
     fetchAlerts();
-  }, []);
+  }, [t]);
 
   const handleDelete = async (alertId) => {
     if (!window.confirm(t('alertsPage.confirmDelete'))) return;
