@@ -53,7 +53,7 @@ function EditReportPage() {
       }
     };
     fetchInitialData();
-  }, [t]);
+  }, []);
 
   const fetchProblemsByType = useCallback(async (problemTypeId) => {
     if (!problemTypeId) {
@@ -149,7 +149,7 @@ function EditReportPage() {
     };
 
     fetchReportData();
-  }, [reportId, user, navigate, fetchProblemsByType, fetchDistrictsByCanton, isLoadingReport, t]);
+  }, [reportId, user, navigate, fetchProblemsByType, fetchDistrictsByCanton]);
 
   const handleCancel = () => {
     navigate('/reportes');

@@ -79,7 +79,7 @@ function MunicipalityRegistrationPage() {
   return (
     <div className="registration-container form-container-styles">
       <h2>Registro para Municipalidad</h2>
-      <p style={{ textAlign: 'center', color: '#666', marginTop: '-10px', marginBottom: '20px' }}>
+      <p style={{ textAlign: 'center', color: '#e6e6e6', marginTop: '-10px', marginBottom: '20px' }}>
         Exclusivo para personal con correo {MUNI_DOMAIN}
       </p>
       <form onSubmit={handleSubmit} className="registration-form">
@@ -121,12 +121,13 @@ function MunicipalityRegistrationPage() {
           {isLoading ? 'Registrando...' : 'Registrar Cuenta'}
         </button>
       </form>
-      <p style={{ textAlign: 'center', marginTop: '20px' }}>
-        ¿Ya tienes cuenta? <Link to="/login">Iniciar Sesión</Link>
-      </p>
-      <div className="registration-links">
-        <p>¿No eres empleado municipal?</p>
-        <Link to="/register" className="register-link-button">Regístrate aquí</Link>
+      <div className="auth-switch-link-container">
+        <div className="auth-switch-link">
+          ¿Ya tienes cuenta? <Link to="/login">Iniciar Sesión</Link>
+        </div>
+        <div className="auth-switch-link">
+          ¿No eres empleado municipal? <Link to="/register">Regístrate aquí</Link>
+        </div>
       </div>
     </div>
   );

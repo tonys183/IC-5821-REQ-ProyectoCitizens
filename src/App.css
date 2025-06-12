@@ -12,6 +12,7 @@ body.light-theme {
   --bg-primary: #ffffff;
   --bg-secondary: #f0f2f5;
   --bg-card: #ffffff;
+  --bg-dashboard-container: #f4f4f4;
   --bg-card-inset: #f7f7f7;
   --text-primary: #050505;
   --text-secondary: #65676b;
@@ -30,6 +31,7 @@ body.dark-theme {
   --bg-primary: #1e1e1e;
   --bg-secondary: #242526;
   --bg-card: #3c3c3c;
+  --bg-dashboard-container: #2b2b2b;
   --bg-card-inset: #303030;
   --text-primary: #e4e6eb;
   --text-secondary: #b0b3b8;

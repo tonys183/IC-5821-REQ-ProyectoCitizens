@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useReports } from '../context/ReportContext.js';
 import './ReportDetailModal.css';
 
-function ReportDetailModal({ report, user, onClose, show, onReportUpdate }) {
+function ReportDetailModal({ report, user, onClose, show }) {
   const { t, i18n } = useTranslation();
+  const { updateReportStatus } = useReports();
   const navigate = useNavigate();
   const [newStatus, setNewStatus] = useState('');
   const [isUpdating, setIsUpdating] = useState(false);
@@ -50,10 +52,17 @@ function ReportDetailModal({ report, user, onClose, show, onReportUpdate }) {
 
   const getStatusKey = (statusString) => {
     switch(statusString) {
-      case 'Waiting': return 'reportList.status.waiting';
-      case 'In Progress': return 'reportList.status.inProgress';
-      case 'Resolved': return 'reportList.status.resolved';
-      default: return 'reportCard.unspecified';
+      case 'Waiting':
+      case 'En espera':
+        return 'reportList.status.waiting';
+      case 'In Progress':
+      case 'En progreso':
+        return 'reportList.status.inProgress';
+      case 'Resolved':
+      case 'Completado':
+        return 'reportList.status.resolved';
+      default: 
+        return 'reportCard.unspecified';
     }
   };
 
@@ -74,24 +83,11 @@ function ReportDetailModal({ report, user, onClose, show, onReportUpdate }) {
     
     setIsUpdating(true);
     setError('');
-    const token = localStorage.getItem('authToken');
 
     try {
-        const response = await fetch(`/api/reports/${report_id}/status`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ status: newStatus })
-        });
-        const data = await response.json();
-        if(!response.ok) {
-            throw new Error(data.message || 'Error al actualizar el estado.');
-        }
-        
-        onReportUpdate(data.report);
-        onClose();
+      await updateReportStatus(report_id, newStatus);
+      const updatedReportFromContext = { ...report, status: newStatus };
+      onClose();
 
     } catch (err) {
         setError(err.message);
@@ -117,7 +113,7 @@ function ReportDetailModal({ report, user, onClose, show, onReportUpdate }) {
           </div>
           <div className="modal-section">
             <h4 className="modal-section-title">{t('reportModal.statusAndDates')}</h4>
-            <p><strong>{t('reportModal.currentStatus')}:</strong> <span className={`status status-${(status || '').toLowerCase().replace(' ', '-')}`}>{t(getStatusKey(status))}</span></p>
+            <p><strong>{t('reportModal.currentStatus')}:</strong> <span className={`status status-${(status || 'desconocido').toLowerCase().replace(' ', '-')}`}>{t(getStatusKey(status))}</span></p>
             <p><strong>{t('reportModal.reportDate')}:</strong> {formatDate(report_date)}</p>
             <p><strong>{t('reportModal.lastUpdated')}:</strong> {formatDate(updated_at || report_date)}</p>
           </div>
@@ -140,9 +136,9 @@ function ReportDetailModal({ report, user, onClose, show, onReportUpdate }) {
                       className="status-select"
                       disabled={isUpdating}
                   >
-                    <option value="Waiting">{t('reportList.status.waiting')}</option>
-                    <option value="In Progress">{t('reportList.status.inProgress')}</option>
-                    <option value="Resolved">{t('reportList.status.resolved')}</option>
+                    <option value="En espera">{t('reportList.status.waiting')}</option>
+                    <option value="En progreso">{t('reportList.status.inProgress')}</option>
+                    <option value="Completado">{t('reportList.status.resolved')}</option>
                   </select>
                   <button 
                       onClick={handleStatusUpdate} 

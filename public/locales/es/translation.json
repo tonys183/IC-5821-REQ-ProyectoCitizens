@@ -30,10 +30,9 @@
     "filterCanton": "Todos los Cantones",
     "filterStatus": "Todos los Estados",
     "status": {
-      "waiting": "Pendiente",
-      "inProgress": "En Progreso",
-      "resolved": "Resuelto",
-      "rejected": "Rechazado"
+      "waiting": "En espera",
+      "inProgress": "En progreso",
+      "resolved": "Completado"
     },
     "createReport": "Crear Reporte",
     "loading": "Cargando reportes...",

@@ -33,6 +33,13 @@
   font-size: 1.1em;
   font-weight: 500;
   transition: background-color 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-nav li a svg {
+  margin-right: 10px;
+  font-size: 1.2em;
 }
 
 .sidebar-nav li a:hover {

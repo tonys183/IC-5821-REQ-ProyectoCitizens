@@ -8,14 +8,64 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model alert {
-  alert_id     Int           @id @default(autoincrement())
-  muni_id      Int?
-  alert_title  String?       @db.VarChar(100)
-  alert_date   DateTime?     @db.Date
-  alert_time   DateTime?     @db.Time(6)
-  description  String?
-  municipality municipality? @relation(fields: [muni_id], references: [muni_id], onDelete: NoAction, onUpdate: NoAction)
+enum Role {
+  NEIGHBOR
+  MUNICIPALITY
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  email      String   @unique
+  password   String
+  role       Role     @default(NEIGHBOR)
+  created_at DateTime @default(now())
+
+  neighborProfile     NeighborProfile?
+  municipalityProfile MunicipalityProfile?
+
+  alerts Alert[]
+
+  reports report[]
+
+  @@map("users")
+}
+
+model NeighborProfile {
+  id               Int     @id @default(autoincrement())
+  first_name       String  @db.VarChar(100)
+  last_name        String  @db.VarChar(100)
+  second_last_name String? @db.VarChar(100)
+  identification   Int     @unique // Cédula
+  phone_number     Int?
+
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int  @unique // one-to-one relation
+
+  @@map("neighbor_profiles")
+}
+
+model MunicipalityProfile {
+  id     Int    @id @default(autoincrement())
+  name   String @db.VarChar(255) // e.g., "Municipalidad de Alajuela"
+  canton String @db.VarChar(100)
+
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int  @unique
+
+  @@map("municipality_profiles")
+}
+
+model Alert {
+  id         Int      @id @default(autoincrement())
+  title      String   @db.VarChar(255)
+  content    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  author   User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId Int
+
+  @@map("alerts")
 }
 
 model canton {
@@ -33,24 +83,6 @@ model district {
   report_report_districtTodistrict report[] @relation("report_districtTodistrict")
 }
 
-model municipality {
-  muni_id  Int     @id @default(autoincrement())
-  email    String?
-  password String?
-  alert    alert[]
-}
-
-model neighbor {
-  identification   Int      @id
-  first_name       String   @db.VarChar(100)
-  last_name        String   @db.VarChar(100)
-  second_last_name String?  @db.VarChar(100)
-  email            String   @unique
-  password         String
-  phone_number     Int?
-  report           report[]
-}
-
 model problem {
   problem_id      Int           @id @default(autoincrement())
   problem_type_id Int?
@@ -65,10 +97,9 @@ model problem_type {
   problem         problem[]
 }
 
-/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model report {
   report_id                          Int       @id @default(autoincrement())
-  neighbor_id                        Int?
+  author_id                          Int? // Changed from neighbor_id
   report_title                       String?   @db.VarChar(100)
   problem_id                         Int?
   canton_id                          Int?
@@ -77,10 +108,10 @@ model report {
   street                             String?   @db.VarChar(100)
   report_date                        DateTime? @db.Date
   report_time                        DateTime? @db.Time(6)
-  status                             String?   @default("Waiting") @db.VarChar(100)
+  status                             String?   @default("En espera") @db.VarChar(100)
   updated_at                         DateTime? @updatedAt
   canton                             canton?   @relation(fields: [canton_id], references: [canton_id], onDelete: NoAction, onUpdate: NoAction)
   district_report_districtTodistrict district? @relation("report_districtTodistrict", fields: [district], references: [district_id], onDelete: NoAction, onUpdate: NoAction)
-  neighbor                           neighbor? @relation(fields: [neighbor_id], references: [identification], onDelete: NoAction, onUpdate: NoAction)
+  author                             User?     @relation(fields: [author_id], references: [id], onDelete: SetNull, onUpdate: Cascade) // Changed from neighbor to User and neighbor_id to author_id
   problem                            problem?  @relation(fields: [problem_id], references: [problem_id], onDelete: NoAction, onUpdate: NoAction)
 }

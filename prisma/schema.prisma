@@ -108,7 +108,7 @@ model report {
   street                             String?   @db.VarChar(100)
   report_date                        DateTime? @db.Date
   report_time                        DateTime? @db.Time(6)
-  status                             String?   @default("Waiting") @db.VarChar(100)
+  status                             String?   @default("En espera") @db.VarChar(100)
   updated_at                         DateTime? @updatedAt
   canton                             canton?   @relation(fields: [canton_id], references: [canton_id], onDelete: NoAction, onUpdate: NoAction)
   district_report_districtTodistrict district? @relation("report_districtTodistrict", fields: [district], references: [district_id], onDelete: NoAction, onUpdate: NoAction)

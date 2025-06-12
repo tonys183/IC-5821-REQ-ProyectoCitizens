@@ -189,12 +189,13 @@ function RegistrationPage() {
           {isLoading ? 'Registrando...' : 'Registrarme'}
         </button>
       </form>
-      <p style={{ textAlign: 'center', marginTop: '20px' }}> {}
-        ¿Ya tienes cuenta? <Link to="/login">Iniciar Sesión</Link>
-      </p>
-      <div className="registration-links">
-        <p>¿Eres empleado municipal?</p>
-        <Link to="/registro-municipalidad" className="register-link-button">Regístrate aquí</Link>
+      <div className="auth-switch-link-container">
+        <div className="auth-switch-link">
+          ¿Ya tienes cuenta? <Link to="/login">Iniciar Sesión</Link>
+        </div>
+        <div className="auth-switch-link">
+          ¿Eres empleado municipal? <Link to="/registro-municipalidad">Regístrate aquí</Link>
+        </div>
       </div>
     </div>
   );

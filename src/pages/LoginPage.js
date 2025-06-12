@@ -71,11 +71,11 @@ function LoginPage() {
           {isLoading ? 'Ingresando...' : 'Ingresar'}
         </button>
       </form>
-      <div className="registration-links">
-        <p>¿Sin cuenta? Regístrate como:</p>
+      <div className="login-registration-links">
+        <p>¿No tienes cuenta? Regístrate como:</p>
         <div className="button-row">
-          <Link to="/register" className="register-link-button">Vecino</Link>
-          <Link to="/registro-municipalidad" className="register-link-button">Municipalidad</Link>
+          <Link to="/register" className="register-button">Vecino</Link>
+          <Link to="/registro-municipalidad" className="register-button">Municipalidad</Link>
         </div>
       </div>
     </div>

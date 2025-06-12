@@ -55,7 +55,7 @@ export type problem = $Result.DefaultSelection<Prisma.$problemPayload>
 export type problem_type = $Result.DefaultSelection<Prisma.$problem_typePayload>
 /**
  * Model report
- * This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+ * 
  */
 export type report = $Result.DefaultSelection<Prisma.$reportPayload>
 

@@ -30,10 +30,9 @@
     "filterCanton": "All Cantons",
     "filterStatus": "All Statuses",
     "status": {
-      "waiting": "Pending",
+      "waiting": "Waiting",
       "inProgress": "In Progress",
-      "resolved": "Resolved",
-      "rejected": "Rejected"
+      "resolved": "Completed"
     },
     "createReport": "Create Report",
     "loading": "Loading reports...",

@@ -30,10 +30,17 @@ function ReportCard({ report, onCardClick }) {
 
   const getStatusKey = (statusString) => {
     switch(statusString) {
-      case 'Waiting': return 'reportList.status.waiting';
-      case 'In Progress': return 'reportList.status.inProgress';
-      case 'Resolved': return 'reportList.status.resolved';
-      default: return 'reportCard.unspecified';
+      case 'Waiting':
+      case 'En espera':
+        return 'reportList.status.waiting';
+      case 'In Progress':
+      case 'En progreso':
+        return 'reportList.status.inProgress';
+      case 'Resolved':
+      case 'Completado':
+        return 'reportList.status.resolved';
+      default:
+        return 'reportCard.unspecified';
     }
   };
 
@@ -65,12 +72,10 @@ function ReportCard({ report, onCardClick }) {
       <p className="report-card-description"><strong>{t('reportCard.problem')}:</strong> {fullProblemDescription}</p>
       <div className="report-card-details">
         <p><strong>{t('reportCard.location')}:</strong> {`${street || '-'}, ${neighborhood || '-'}, ${districtName}, ${cantonName}`}</p>
-        <p><strong>{t('reportCard.status')}:</strong> <span className={`status status-${(status || 'Desconocido').toLowerCase().replace(/\s+/g, '-')}`}>{t(getStatusKey(status))}</span></p>
+        <p><strong>{t('reportCard.status')}:</strong> <span className={`status status-${(status || 'desconocido').toLowerCase().replace(/\s+/g, '-')}`}>{t(getStatusKey(status))}</span></p>
         <p><strong>{t('reportCard.reportedBy')}:</strong> {reporterName}</p>
         <p><strong>{t('reportCard.lastUpdated')}:</strong> {formatDate(updated_at)}</p>
-        {}
       </div>
-      {}
     </div>
   );
 }

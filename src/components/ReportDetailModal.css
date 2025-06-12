@@ -115,28 +115,18 @@
   font-size: 0.9em;
 }
 
-.status-waiting, .status-esperando {
+.status-en-espera {
   background-color: #ffc107;
   color: #333;
 }
 
-.status-in-progress, .status-en-progreso {
+.status-en-progreso {
   background-color: #007bff;
   color: white;
 }
 
-.status-resolved, .status-resuelto {
+.status-completado {
   background-color: #28a745;
-  color: white;
-}
-
-.status-closed, .status-cerrado {
-  background-color: #6c757d;
-  color: white;
-}
-
-.status-rejected, .status-rechazado {
-  background-color: #dc3545;
   color: white;
 }
 

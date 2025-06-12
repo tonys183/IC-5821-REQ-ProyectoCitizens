@@ -2,7 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.js';
 import './Sidebar.css';
-import { FaCog, FaQuestionCircle } from 'react-icons/fa';
+import { FaCog, FaQuestionCircle, FaFileAlt, FaBell, FaUser } from 'react-icons/fa';
+import { MdDashboard } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 
 function Sidebar() {
@@ -13,9 +14,9 @@ function Sidebar() {
     <aside className="sidebar">
       <nav className="sidebar-nav top-nav">
         <ul>
-          <li><NavLink to="/dashboard" end>{t('sidebar.dashboard')}</NavLink></li>
-          <li><NavLink to="/reportes">{t('sidebar.reports')}</NavLink></li>
-          <li><NavLink to="/alertas">{t('sidebar.alerts')}</NavLink></li>
+          <li><NavLink to="/dashboard" end><MdDashboard /> {t('sidebar.dashboard')}</NavLink></li>
+          <li><NavLink to="/reportes"><FaFileAlt /> {t('sidebar.reports')}</NavLink></li>
+          <li><NavLink to="/alertas"><FaBell /> {t('sidebar.alerts')}</NavLink></li>
         </ul>
       </nav>
 
@@ -23,7 +24,7 @@ function Sidebar() {
 
       <nav className="sidebar-nav bottom-nav">
          <ul>
-           <li><NavLink to="/perfil" end>{t('sidebar.profile')}</NavLink></li>
+           <li><NavLink to="/perfil" end><FaUser /> {t('sidebar.profile')}</NavLink></li>
          </ul>
       </nav>
 

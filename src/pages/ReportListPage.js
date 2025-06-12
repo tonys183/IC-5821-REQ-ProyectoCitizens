@@ -3,14 +3,13 @@ import { Link } from 'react-router-dom';
 import ReportCard from '../components/ReportCard.js'; 
 import ReportDetailModal from '../components/ReportDetailModal.js'; 
 import { useAuth } from '../context/AuthContext.js';
+import { useReports } from '../context/ReportContext.js';
 import { useTranslation } from 'react-i18next'; 
 import './ReportListPage.css';
 
 function ReportListPage() {
   const { t } = useTranslation();
-  const [reports, setReports] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { reports, isLoading, error, fetchReports } = useReports();
   const [searchTerm, setSearchTerm] = useState('');
   const { user } = useAuth(); 
 
@@ -25,7 +24,7 @@ function ReportListPage() {
   useEffect(() => {
     const fetchAlerts = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/alerts');
+        const response = await fetch('/api/alerts');
         if (!response.ok) {
           console.error(`HTTP error! status: ${response.status}`);
           return;
@@ -42,7 +41,7 @@ function ReportListPage() {
   useEffect(() => {
     const fetchCantons = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/cantons');
+        const response = await fetch('/api/cantons');
         if (!response.ok) throw new Error('Failed to fetch cantons');
         const data = await response.json();
         setCantons(data);
@@ -55,35 +54,8 @@ function ReportListPage() {
 
 
   useEffect(() => {
-    const fetchReports = async () => {
-      setIsLoading(true);
-      setError(null);
-      
-      const query = new URLSearchParams();
-      if (filterCanton) {
-        query.append('cantonId', filterCanton);
-      }
-      if (filterStatus) {
-        query.append('status', filterStatus);
-      }
-      
-      try {
-        const response = await fetch(`http://localhost:3001/api/reports?${query.toString()}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setReports(data);
-      } catch (err) {
-        console.error("Failed to fetch reports:", err);
-        setError(err.message || t('reportList.error'));
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchReports();
-  }, [filterCanton, filterStatus, t]);
+    fetchReports({ cantonId: filterCanton, status: filterStatus });
+  }, [filterCanton, filterStatus, fetchReports]);
 
   const filteredReports = reports.filter(report => {
     const problemName = report.problem?.problem_name?.toLowerCase() || '';
@@ -112,11 +84,7 @@ function ReportListPage() {
   };
 
   const handleReportUpdate = (updatedReport) => {
-    setReports(prevReports => 
-      prevReports.map(report => 
-        report.report_id === updatedReport.report_id ? updatedReport : report
-      )
-    );
+    setSelectedReport(updatedReport);
   };
 
   return (
@@ -150,9 +118,9 @@ function ReportListPage() {
                 className="filter-select"
               >
                 <option value="">{t('reportList.filterStatus')}</option>
-                <option value="Waiting">{t('reportList.status.waiting')}</option>
-                <option value="In_Progress">{t('reportList.status.inProgress')}</option>
-                <option value="Resolved">{t('reportList.status.resolved')}</option>
+                <option value="En espera">{t('reportList.status.waiting')}</option>
+                <option value="En progreso">{t('reportList.status.inProgress')}</option>
+                <option value="Completado">{t('reportList.status.resolved')}</option>
               </select>
             </div>
           </div>
@@ -209,7 +177,6 @@ function ReportListPage() {
         report={selectedReport} 
         user={user}
         onClose={handleCloseModal} 
-        onReportUpdate={handleReportUpdate}
       />
     </div>
   );

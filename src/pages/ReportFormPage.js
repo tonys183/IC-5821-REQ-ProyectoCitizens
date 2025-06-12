@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.js';
+import { useReports } from '../context/ReportContext.js';
 import { FaTimes } from 'react-icons/fa'; 
 import { useTranslation } from 'react-i18next';
 import './ReportFormPage.css'; 
 
 function ReportFormPage() {
   const { t } = useTranslation();
+  const { createReport } = useReports();
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -148,39 +150,12 @@ function ReportFormPage() {
       street,
     };
 
-    const token = localStorage.getItem('authToken');
-    const headers = {
-      'Content-Type': 'application/json',
-    };
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
-    } else {
-      setError(t('reportForm.errors.noAuthToken'));
-      setIsLoading(false);
-      return;
-    }
-
     try {
-      const response = await fetch('/api/reports', {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(reportData),
-      });
-
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        if (response.status === 401 || response.status === 403) {
-            setError(responseData.message || t('reportForm.errors.authError'));
-        } else {
-            throw new Error(responseData.message || t('reportForm.errors.createError'));
-        }
-      } else {
-        setSuccessMessage(t('reportForm.success.reportCreated'));
-        setTimeout(() => {
-          navigate('/reportes'); 
-        }, 2000);
-      }
+      await createReport(reportData);
+      setSuccessMessage(t('reportForm.success.reportCreated'));
+      setTimeout(() => {
+        navigate('/reportes'); 
+      }, 1500);
     } catch (err) {
       setError(err.message || t('reportForm.errors.submitError'));
     } finally {
@@ -345,7 +320,7 @@ function ReportFormPage() {
             {t('reportForm.buttons.cancel')}
           </button>
           <button type="submit" className="submit-button" disabled={isLoading}>
-            {isLoading ? t('reportForm.buttons.submitting') : t('reportForm.buttons.createReport')}
+            {isLoading ? t('reportForm.buttons.sending') : t('reportForm.buttons.createReport')}
           </button>
         </div>
       </form>

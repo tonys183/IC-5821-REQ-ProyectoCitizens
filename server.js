@@ -429,24 +429,35 @@ app.post('/api/reports', authenticateToken, async (req, res) => {
   try {
     const newReport = await prisma.report.create({
       data: {
-        author_id: authenticatedUserId, 
-        report_title: report_title,
+        report_title,
         problem_id: parseInt(problem_id),
         canton_id: parseInt(canton_id),
         district: parseInt(district_id),
-        neighborhood: neighborhood,
-        street: street,
-        report_date: new Date(), 
-        report_time: new Date(), 
-        status: 'Waiting',       
-        updated_at: new Date(),  
+        neighborhood,
+        street,
+        status: 'En espera',
+        author_id: authenticatedUserId,
+        report_date: new Date(),
+        report_time: new Date(),
       },
     });
 
-    res.status(201).json({
-        message: 'Report created successfully',
-        report: newReport,
+    const populatedReport = await prisma.report.findUnique({
+      where: { report_id: newReport.report_id },
+      include: {
+        author: { 
+          include: {
+            neighborProfile: { select: { first_name: true, last_name: true } },
+            municipalityProfile: { select: { name: true } }
+          }
+        },
+        problem: { include: { problem_type: true } },
+        canton: true,
+        district_report_districtTodistrict: true,
+      },
     });
+
+    res.status(201).json(populatedReport);
 
   } catch (error) {
     console.error('Error creating report:', error);
@@ -613,15 +624,17 @@ app.put('/api/reports/:reportId', authenticateToken, async (req, res) => {
 app.patch('/api/reports/:reportId/status', authenticateToken, async (req, res) => {
   const { reportId } = req.params;
   const { status } = req.body;
-  const { role: userRole } = req.user;
+  const { role } = req.user;
 
-  if (userRole !== 'MUNICIPALITY') {
-    return res.status(403).json({ message: 'Access denied. Only municipality users can change report statuses.' });
+  if (role !== 'MUNICIPALITY') {
+    return res.status(403).json({ message: 'Forbidden. Only municipalities can update report statuses.' });
   }
 
-  const allowedStatuses = ['Waiting', 'In Progress', 'Resolved', 'Rejected'];
-  if (!status || !allowedStatuses.includes(status)) {
-    return res.status(400).json({ message: `Invalid status. Must be one of: ${allowedStatuses.join(', ')}` });
+  const allowedStatuses = ['En espera', 'En progreso', 'Completado'];
+  if (!allowedStatuses.includes(status)) {
+    return res.status(400).json({ 
+      message: `Invalid status. Must be one of: ${allowedStatuses.join(', ')}`
+    });
   }
 
   try {

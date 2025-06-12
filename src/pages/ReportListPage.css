@@ -79,6 +79,33 @@
   gap: 20px;
 }
 
+.report-card .status {
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.9em;
+  color: white; 
+  text-transform: capitalize;
+}
+
+.report-card .status.status-en-espera {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.report-card .status.status-en-progreso {
+  background-color: #007bff;
+}
+
+.report-card .status.status-completado {
+  background-color: #28a745;
+}
+
+.report-card .status.status-desconocido {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
 .no-reports-message {
   text-align: center;
   margin-top: 50px;
@@ -89,7 +116,7 @@
 .nuevos-avisos-sidebar {
   width: 250px;
   padding: 20px;
-  background-color: var(--bg-card);
+  background-color: var(--bg-dashboard-container);
   border: 1px solid var(--border-color);
   border-radius: 8px;
   color: var(--text-primary);

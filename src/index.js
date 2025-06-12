@@ -5,6 +5,7 @@ import App from './App.js';
 import reportWebVitals from './reportWebVitals.js';
 import { AuthProvider } from './context/AuthContext.js';
 import { ThemeProvider } from './context/ThemeContext.js';
+import { ReportProvider } from './context/ReportContext.js';
 import './i18n.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -13,7 +14,9 @@ root.render(
     <Suspense fallback={<div>Cargando...</div>}>
       <ThemeProvider>
         <AuthProvider>
-          <App />
+          <ReportProvider>
+            <App />
+          </ReportProvider>
         </AuthProvider>
       </ThemeProvider>
     </Suspense>
