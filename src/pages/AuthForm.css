@@ -69,7 +69,7 @@ body {
 }
 
 .form-container-styles .account-button { 
-  background-color: var(--bg-primary);
+  background-color: var(--bg-btnLogin-primary);
   color: var(--accent-color);
   padding: 12px 20px;
   border: none;
@@ -85,7 +85,7 @@ body {
 }
 
 .form-container-styles .account-button:hover {
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-btnLogin-secondary);
   transform: translateY(-2px);
 }
 

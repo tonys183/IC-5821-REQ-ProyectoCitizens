@@ -47,7 +47,7 @@ function LoginPage() {
       <h2>Iniciar Sesión</h2>
       <form onSubmit={handleSubmit} className="login-form">
         <div className="form-group">
-          <label htmlFor="email">Correo Electrónico</label>
+          <label htmlFor="email">Correo electrónico</label>
           <input
             type="email"
             id="email"
@@ -72,7 +72,7 @@ function LoginPage() {
         </button>
       </form>
       <div className="login-registration-links">
-        <p>¿No tienes cuenta? Regístrate como:</p>
+        <p>¿No tiene cuenta? Registrarse como:</p>
         <div className="button-row">
           <Link to="/register" className="register-button">Vecino</Link>
           <Link to="/registro-municipalidad" className="register-button">Municipalidad</Link>

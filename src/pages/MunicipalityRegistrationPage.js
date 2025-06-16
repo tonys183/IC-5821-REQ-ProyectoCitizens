@@ -126,7 +126,7 @@ function MunicipalityRegistrationPage() {
           ¿Ya tienes cuenta? <Link to="/login">Iniciar Sesión</Link>
         </div>
         <div className="auth-switch-link">
-          ¿No eres empleado municipal? <Link to="/register">Regístrate aquí</Link>
+          ¿No eres empleado municipal? <Link to="/register">Registrarse</Link>
         </div>
       </div>
     </div>

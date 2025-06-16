@@ -41,7 +41,7 @@ function RegistrationPage() {
     if (formData.email.endsWith(MUNI_DOMAIN)) {
       setError(
         <span>
-          Este formulario es para vecinos. Para registrar una cuenta de municipalidad, usa el 
+          Este formulario es para vecinos. Para registrar una cuenta de municipalidad, use el 
           <Link to="/registro-municipalidad" className="register-link-button" style={{display: 'inline-block', margin: '0 5px', textDecoration: 'none'}}>formulario de registro municipal</Link>.
         </span>
       );
@@ -124,7 +124,7 @@ function RegistrationPage() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="lastName">Primer Apellido</label>
+          <label htmlFor="lastName">Primer apellido</label>
           <input
             type="text"
             id="lastName"
@@ -135,7 +135,7 @@ function RegistrationPage() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="secondLastName">Segundo Apellido (Opcional)</label>
+          <label htmlFor="secondLastName">Segundo apellido (Opcional)</label>
           <input
             type="text"
             id="secondLastName"
@@ -145,7 +145,7 @@ function RegistrationPage() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="email">Correo Electrónico</label>
+          <label htmlFor="email">Correo electrónico</label>
           <input
             type="email"
             id="email"
@@ -174,7 +174,7 @@ function RegistrationPage() {
           </div>
         </div>
         <div className="form-group">
-          <label htmlFor="phoneNumber">Número de Teléfono (Opcional)</label>
+          <label htmlFor="phoneNumber">Número de teléfono (Opcional)</label>
           <input
             type="tel"
             id="phoneNumber"
@@ -194,7 +194,7 @@ function RegistrationPage() {
           ¿Ya tienes cuenta? <Link to="/login">Iniciar Sesión</Link>
         </div>
         <div className="auth-switch-link">
-          ¿Eres empleado municipal? <Link to="/registro-municipalidad">Regístrate aquí</Link>
+          ¿Eres empleado municipal? <Link to="/registro-municipalidad">Registrarse</Link>
         </div>
       </div>
     </div>

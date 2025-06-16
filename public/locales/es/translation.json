@@ -7,9 +7,9 @@
     "settings": "Configuración"
   },
   "dashboard": {
-    "title": "Bienvenido a la Aplicación",
-    "subtitle": "Este es tu panel principal.",
-    "description": "Desde aquí podrás acceder a las diferentes funcionalidades de la aplicación una vez que estén implementadas."
+    "title": "Bienvenid@ a Red Ciudadana",
+    "subtitle": "Este es el panel principal.",
+    "description": "Desde aquí se puede acceder a las diferentes funcionalidades de la aplicación una vez que estén implementadas."
   },
   "settings": {
     "title": "Configuración",

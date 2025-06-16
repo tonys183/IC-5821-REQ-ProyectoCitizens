@@ -7,8 +7,8 @@
     "settings": "Settings"
   },
   "dashboard": {
-    "title": "Welcome to the Application",
-    "subtitle": "This is your main dashboard.",
+    "title": "Welcome to Red Ciudadana",
+    "subtitle": "This is the main dashboard.",
     "description": "From here you can access the different functionalities of the application once they are implemented."
   },
   "settings": {
