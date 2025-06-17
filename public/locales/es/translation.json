@@ -178,11 +178,11 @@
       "saving": "Guardando...",
       "cancel": "Cancelar",
       "editInfo": "Editar Información",
-      "deleteAccount": "Eliminar Mi Cuenta",
+      "deleteAccount": "Eliminar Cuenta",
       "deleting": "Eliminando..."
     },
     "dangerZone": {
-      "title": "Zona Peligrosa",
+      "title": "Eliminar mi cuenta",
       "description": "La eliminación de la cuenta es permanente.",
       "confirmDelete": "¿Estás seguro de que quieres eliminar tu cuenta? Esta acción es irreversible."
     },
@@ -196,11 +196,11 @@
   },
   "contactPage": {
     "title": "Página de Contacto",
-    "intro": "Si tienes alguna pregunta, sugerencia o problema, no dudes en contactarnos.",
-    "infoTitle": "Información de Contacto",
+    "intro": "Si tienes alguna pregunta, sugerencia o problema, no dude en contactar.",
+    "infoTitle": "Información de contacto",
     "emailLabel": "Email",
     "phoneLabel": "Teléfono",
     "addressLabel": "Dirección",
-    "addressValue": "Oficinas Centrales, San José, Costa Rica"
+    "addressValue": "100 oeste de la Iglesia de la Agonía, Alajuela, Costa Rica"
   }
 } 

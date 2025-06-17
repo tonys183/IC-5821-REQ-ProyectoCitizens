@@ -178,11 +178,11 @@
       "saving": "Saving...",
       "cancel": "Cancel",
       "editInfo": "Edit Information",
-      "deleteAccount": "Delete My Account",
+      "deleteAccount": "Delete Account",
       "deleting": "Deleting..."
     },
     "dangerZone": {
-      "title": "Danger Zone",
+      "title": "Delete my account",
       "description": "Account deletion is permanent.",
       "confirmDelete": "Are you sure you want to delete your account? This action is irreversible."
     },
@@ -197,10 +197,10 @@
   "contactPage": {
     "title": "Contact Page",
     "intro": "If you have any questions, suggestions, or problems, do not hesitate to contact us.",
-    "infoTitle": "Contact Information",
+    "infoTitle": "Contact information",
     "emailLabel": "Email",
     "phoneLabel": "Phone",
     "addressLabel": "Address",
-    "addressValue": "Headquarters, San José, Costa Rica"
+    "addressValue": "100 west of the Church of the Agony, Alajuela, Costa Rica"
   }
 } 
