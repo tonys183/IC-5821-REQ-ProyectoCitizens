@@ -1,9 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../context/AuthContext.js';
 import './ReportCard.css';
 
 function ReportCard({ report, onCardClick }) {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const {
     report_title,
     status,
@@ -13,14 +15,16 @@ function ReportCard({ report, onCardClick }) {
     canton,
     district_report_districtTodistrict,
     neighborhood,
-    street
+    street,
+    viewedByMunicipality
   } = report || {};
 
   const problemTypeName = problem?.problem_type?.type_name || t('reportCard.unspecified');
   const problemName = problem?.problem_name || t('reportCard.unspecified');
   const fullProblemDescription = `${problemTypeName} - ${problemName}`;
 
-  
+  const showNewIndicator = user?.role === 'MUNICIPALITY' && !viewedByMunicipality;
+
   const reporterName = author
     ? (author.neighborProfile?.first_name ? `${author.neighborProfile.first_name} ${author.neighborProfile.last_name}` : author.municipalityProfile?.name) || t('reportCard.anonymous')
     : t('reportCard.anonymous');
@@ -68,6 +72,7 @@ function ReportCard({ report, onCardClick }) {
 
   return (
     <div className="report-card" onClick={handleCardClick} style={{ cursor: 'pointer' }}>
+      {showNewIndicator && <div className="new-indicator"></div>}
       <h4 className="report-card-title">{report_title || 'Reporte Sin Título'}</h4>
       <p className="report-card-description"><strong>{t('reportCard.problem')}:</strong> {fullProblemDescription}</p>
       <div className="report-card-details">

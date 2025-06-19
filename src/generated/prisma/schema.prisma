@@ -110,6 +110,7 @@ model report {
   report_time                        DateTime? @db.Time(6)
   status                             String?   @default("En espera") @db.VarChar(100)
   updated_at                         DateTime? @updatedAt
+  viewedByMunicipality               Boolean?  @default(false)
   canton                             canton?   @relation(fields: [canton_id], references: [canton_id], onDelete: NoAction, onUpdate: NoAction)
   district_report_districtTodistrict district? @relation("report_districtTodistrict", fields: [district], references: [district_id], onDelete: NoAction, onUpdate: NoAction)
   author                             User?     @relation(fields: [author_id], references: [id], onDelete: SetNull, onUpdate: Cascade) // Changed from neighbor to User and neighbor_id to author_id

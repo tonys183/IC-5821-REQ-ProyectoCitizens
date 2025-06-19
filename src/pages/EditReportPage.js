@@ -8,7 +8,7 @@ import './ReportFormPage.css';
 function EditReportPage() {
   const { t } = useTranslation();
   const { reportId } = useParams();
-  const { user } = useAuth();
+  const { user, isLoading: isAuthLoading } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -53,7 +53,7 @@ function EditReportPage() {
       }
     };
     fetchInitialData();
-  }, []);
+  }, [t]);
 
   const fetchProblemsByType = useCallback(async (problemTypeId) => {
     if (!problemTypeId) {
@@ -94,8 +94,12 @@ function EditReportPage() {
   }, []);
 
   useEffect(() => {
+    if (isAuthLoading) {
+      return; 
+    }
+
     if (!reportId || !user) {
-        if (!user && !isLoadingReport) {
+        if (!user) {
              setError(t('reportForm.errors.notAuthenticated'));
              setIsLoadingReport(false);
         }
@@ -124,10 +128,10 @@ function EditReportPage() {
         
         const initialFormData = {
           report_title: data.report_title || '',
-          problem_type_id: data.problem_type_id?.toString() || '',
-          problem_id: data.problem_id?.toString() || '',
-          canton_id: data.canton_id?.toString() || '',
-          district_id: data.district_id?.toString() || '',
+          problem_type_id: data.problem?.problem_type?.problem_type_id?.toString() || '',
+          problem_id: data.problem?.problem_id?.toString() || '',
+          canton_id: data.canton?.canton_id?.toString() || '',
+          district_id: data.district?.toString() || '',
           neighborhood: data.neighborhood || '',
           street: data.street || '',
         };
@@ -149,7 +153,7 @@ function EditReportPage() {
     };
 
     fetchReportData();
-  }, [reportId, user, navigate, fetchProblemsByType, fetchDistrictsByCanton]);
+  }, [reportId, user, navigate, fetchProblemsByType, fetchDistrictsByCanton, t, isAuthLoading]);
 
   const handleCancel = () => {
     navigate('/reportes');

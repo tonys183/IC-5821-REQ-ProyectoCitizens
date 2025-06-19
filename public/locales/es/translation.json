@@ -26,7 +26,7 @@
     "logout": "Cerrar Sesión"
   },
   "reportList": {
-    "searchPlaceholder": "Buscar reportes... (título, problema, ubicación)",
+    "searchPlaceholder": "Buscar reportes...",
     "filterCanton": "Todos los Cantones",
     "filterStatus": "Todos los Estados",
     "status": {

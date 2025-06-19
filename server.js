@@ -34,6 +34,23 @@ function authenticateToken(req, res, next) {
   });
 }
 
+function optionalAuthenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (token == null) {
+    return next();
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, userPayload) => {
+    if (err) {
+      return next(); 
+    }
+    req.user = userPayload;
+    next();
+  });
+}
+
 app.get('/api', (req, res) => {
   res.json({ message: 'Hello from the backend API!' });
 });
@@ -195,7 +212,7 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
-app.get('/api/reports', async (req, res) => {
+app.get('/api/reports', optionalAuthenticateToken, async (req, res) => {
   const { cantonId, status } = req.query;
 
   const whereClause = {};
@@ -209,43 +226,56 @@ app.get('/api/reports', async (req, res) => {
   }
 
   try {
+    // Conditional sorting based on user role
+    let orderBy = [{ updated_at: 'desc' }]; // Default for neighbors and public
+    if (req.user && req.user.role === 'MUNICIPALITY') {
+      orderBy = [
+        { viewedByMunicipality: 'asc' }, // false (not viewed) comes first
+        { updated_at: 'desc' }            // Then sort by most recently updated
+      ];
+    }
+
     const reports = await prisma.report.findMany({
       where: whereClause,
-      orderBy: {
-        updated_at: 'desc',
-      },
-      include: {
-        author: { 
-          include: {
-            neighborProfile: { 
+      select: {
+        report_id: true,
+        report_title: true,
+        status: true,
+        report_date: true,
+        updated_at: true,
+        viewedByMunicipality: true,
+        neighborhood: true,
+        street: true,
+        author: {
+          select: {
+            neighborProfile: {
               select: {
                 first_name: true,
                 last_name: true,
-              }
-            },
-            municipalityProfile: { 
-              select: {
-                name: true,
-              }
-            }
-          }
-        },
-        problem: { 
-          include: {
-            problem_type: { 
-              select: {
-                type_name: true,
               },
             },
           },
         },
-        canton: {
-          select: { canton_name: true }
+        problem: {
+          select: {
+            problem_name: true,
+            problem_type: {
+              select: {
+                type_name: true
+              }
+            }
+          }
         },
-        district_report_districtTodistrict: { 
+        canton: {
+          select: {
+            canton_name: true,
+          },
+        },
+        district_report_districtTodistrict: {
             select: { district_name: true }
         }
       },
+      orderBy: orderBy, // Apply the conditional sorting
     });
     res.status(200).json(reports);
   } catch (error) {
@@ -256,58 +286,44 @@ app.get('/api/reports', async (req, res) => {
 
 app.get('/api/reports/:reportId', authenticateToken, async (req, res) => {
   const { reportId } = req.params;
-  const authenticatedUserId = req.user.userId; 
+  const { role } = req.user;
 
   try {
     const report = await prisma.report.findUnique({
-      where: {
-        report_id: parseInt(reportId),
-      },
+      where: { report_id: parseInt(reportId, 10) },
       include: {
+        author: {
+          include: {
+            neighborProfile: true,
+          },
+        },
         problem: {
           include: {
-            problem_type: true, 
+            problem_type: true,
           },
         },
         canton: true,
-        district_report_districtTodistrict: true, 
+        district_report_districtTodistrict: true,
       },
     });
 
     if (!report) {
-      return res.status(404).json({ message: 'Report not found.' });
+      return res.status(404).json({ message: 'Report not found' });
     }
 
-    // Verify ownership
-    if (report.author_id !== authenticatedUserId) {
-      return res.status(403).json({ message: 'Access denied. You are not the owner of this report.' });
+    if (role === 'MUNICIPALITY' && !report.viewedByMunicipality) {
+      prisma.report.update({
+        where: { report_id: parseInt(reportId, 10) },
+        data: { viewedByMunicipality: true },
+      }).catch(err => {
+        console.error(`Failed to mark report ${reportId} as viewed:`, err);
+      });
     }
 
- 
-    const responseReport = {
-      report_id: report.report_id,
-      report_title: report.report_title,
-      problem_type_id: report.problem?.problem_type?.problem_type_id, 
-      problem_id: report.problem_id,
-      canton_id: report.canton_id,
-      district_id: report.district, 
-      neighborhood: report.neighborhood,
-      street: report.street,
-      status: report.status,
-      problem_type_name: report.problem?.problem_type?.type_name,
-      problem_name: report.problem?.problem_name,
-      canton_name: report.canton?.canton_name,
-      district_name: report.district_report_districtTodistrict?.district_name,
-    };
-    
-    res.status(200).json(responseReport);
-
+    res.status(200).json(report);
   } catch (error) {
     console.error(`Error fetching report ${reportId}:`, error);
-    if (error instanceof SyntaxError || error.name === 'SyntaxError' || error.message.includes('invalid input syntax for type integer')) {
-      return res.status(400).json({ message: 'Invalid report ID format.' });
-    }
-    res.status(500).json({ message: 'Internal server error while fetching report.' });
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 

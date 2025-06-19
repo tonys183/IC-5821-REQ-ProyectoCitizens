@@ -39,14 +39,14 @@ model NeighborProfile {
   phone_number    Int?
 
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId Int  @unique // one-to-one relation
+  userId Int  @unique
 
   @@map("neighbor_profiles")
 }
 
 model MunicipalityProfile {
   id          Int    @id @default(autoincrement())
-  name        String @db.VarChar(255) // e.g., "Municipalidad de Alajuela"
+  name        String @db.VarChar(255)
   canton      String @db.VarChar(100)
 
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -99,7 +99,7 @@ model problem_type {
 
 model report {
   report_id                          Int       @id @default(autoincrement())
-  author_id                          Int?      // Changed from neighbor_id
+  author_id                          Int?      
   report_title                       String?   @db.VarChar(100)
   problem_id                         Int?
   canton_id                          Int?
@@ -110,6 +110,7 @@ model report {
   report_time                        DateTime? @db.Time(6)
   status                             String?   @default("En espera") @db.VarChar(100)
   updated_at                         DateTime? @updatedAt
+  viewedByMunicipality               Boolean?  @default(false)
   canton                             canton?   @relation(fields: [canton_id], references: [canton_id], onDelete: NoAction, onUpdate: NoAction)
   district_report_districtTodistrict district? @relation("report_districtTodistrict", fields: [district], references: [district_id], onDelete: NoAction, onUpdate: NoAction)
   author                             User?     @relation(fields: [author_id], references: [id], onDelete: SetNull, onUpdate: Cascade) // Changed from neighbor to User and neighbor_id to author_id

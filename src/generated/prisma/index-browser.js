@@ -188,7 +188,8 @@ exports.Prisma.ReportScalarFieldEnum = {
   report_date: 'report_date',
   report_time: 'report_time',
   status: 'status',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  viewedByMunicipality: 'viewedByMunicipality'
 };
 
 exports.Prisma.SortOrder = {

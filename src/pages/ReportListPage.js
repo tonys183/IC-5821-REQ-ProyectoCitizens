@@ -81,10 +81,9 @@ function ReportListPage() {
   const handleCloseModal = () => {
     setSelectedReport(null);
     setIsModalOpen(false);
-  };
-
-  const handleReportUpdate = (updatedReport) => {
-    setSelectedReport(updatedReport);
+    if (user?.role === 'MUNICIPALITY') {
+      fetchReports({ cantonId: filterCanton, status: filterStatus });
+    }
   };
 
   return (
@@ -124,9 +123,12 @@ function ReportListPage() {
               </select>
             </div>
           </div>
-          <Link to="/reportes/nuevo" className="create-report-button">
-            {t('reportList.createReport')}
-          </Link>
+          {/* Show create report button only to neighbors */}
+          {user?.role === 'NEIGHBOR' && (
+            <Link to="/reportes/nuevo" className="create-report-button">
+              {t('reportList.createReport')}
+            </Link>
+          )}
         </div>
 
         {isLoading && <p>{t('reportList.loading')}</p>}

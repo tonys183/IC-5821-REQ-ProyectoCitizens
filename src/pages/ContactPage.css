@@ -1,7 +1,3 @@
-.contact-page {
-  display: flex;
-}
-
 .contact-container {
   flex-grow: 1;
   padding: 40px;
@@ -43,6 +39,8 @@
   font-size: 1em;
   color: var(--text-secondary);
   line-height: 1.6;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .contact-info p strong {
@@ -105,7 +103,6 @@
   text-decoration: underline;
 }
 
-/* Responsive Styles */
 @media (max-width: 768px) {
   .contact-container {
     padding: 20px;

@@ -9,7 +9,7 @@ import './ReportFormPage.css';
 function ReportFormPage() {
   const { t } = useTranslation();
   const { createReport } = useReports();
-  const { isAuthenticated } = useAuth();
+  const { user, isLoading: isAuthLoading } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -114,6 +114,16 @@ function ReportFormPage() {
     }
   }, [formData.canton_id, t]);
 
+  useEffect(() => {
+    if (!isAuthLoading) {
+      if (!user) {
+        navigate('/login');
+      } else if (user.role === 'MUNICIPALITY') {
+        navigate('/reportes');
+      }
+    }
+  }, [user, isAuthLoading, navigate]);
+
   const handleCancel = () => {
     navigate('/reportes'); 
   };
@@ -126,7 +136,7 @@ function ReportFormPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!isAuthenticated) {
+    if (!user) {
       setError(t('reportForm.errors.notAuthenticated'));
       return;
     }
@@ -162,6 +172,10 @@ function ReportFormPage() {
       setIsLoading(false);
     }
   };
+
+  if (isAuthLoading || (user && user.role !== 'NEIGHBOR')) {
+    return <div>{t('reportForm.loading')}</div>;
+  }
 
   return (
     <div className="form-container">

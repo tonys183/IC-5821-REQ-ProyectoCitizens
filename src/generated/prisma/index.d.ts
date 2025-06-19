@@ -10723,6 +10723,7 @@ export namespace Prisma {
     report_time: Date | null
     status: string | null
     updated_at: Date | null
+    viewedByMunicipality: boolean | null
   }
 
   export type ReportMaxAggregateOutputType = {
@@ -10738,6 +10739,7 @@ export namespace Prisma {
     report_time: Date | null
     status: string | null
     updated_at: Date | null
+    viewedByMunicipality: boolean | null
   }
 
   export type ReportCountAggregateOutputType = {
@@ -10753,6 +10755,7 @@ export namespace Prisma {
     report_time: number
     status: number
     updated_at: number
+    viewedByMunicipality: number
     _all: number
   }
 
@@ -10786,6 +10789,7 @@ export namespace Prisma {
     report_time?: true
     status?: true
     updated_at?: true
+    viewedByMunicipality?: true
   }
 
   export type ReportMaxAggregateInputType = {
@@ -10801,6 +10805,7 @@ export namespace Prisma {
     report_time?: true
     status?: true
     updated_at?: true
+    viewedByMunicipality?: true
   }
 
   export type ReportCountAggregateInputType = {
@@ -10816,6 +10821,7 @@ export namespace Prisma {
     report_time?: true
     status?: true
     updated_at?: true
+    viewedByMunicipality?: true
     _all?: true
   }
 
@@ -10918,6 +10924,7 @@ export namespace Prisma {
     report_time: Date | null
     status: string | null
     updated_at: Date | null
+    viewedByMunicipality: boolean | null
     _count: ReportCountAggregateOutputType | null
     _avg: ReportAvgAggregateOutputType | null
     _sum: ReportSumAggregateOutputType | null
@@ -10952,6 +10959,7 @@ export namespace Prisma {
     report_time?: boolean
     status?: boolean
     updated_at?: boolean
+    viewedByMunicipality?: boolean
     canton?: boolean | report$cantonArgs<ExtArgs>
     district_report_districtTodistrict?: boolean | report$district_report_districtTodistrictArgs<ExtArgs>
     author?: boolean | report$authorArgs<ExtArgs>
@@ -10971,6 +10979,7 @@ export namespace Prisma {
     report_time?: boolean
     status?: boolean
     updated_at?: boolean
+    viewedByMunicipality?: boolean
     canton?: boolean | report$cantonArgs<ExtArgs>
     district_report_districtTodistrict?: boolean | report$district_report_districtTodistrictArgs<ExtArgs>
     author?: boolean | report$authorArgs<ExtArgs>
@@ -10990,6 +10999,7 @@ export namespace Prisma {
     report_time?: boolean
     status?: boolean
     updated_at?: boolean
+    viewedByMunicipality?: boolean
     canton?: boolean | report$cantonArgs<ExtArgs>
     district_report_districtTodistrict?: boolean | report$district_report_districtTodistrictArgs<ExtArgs>
     author?: boolean | report$authorArgs<ExtArgs>
@@ -11009,9 +11019,10 @@ export namespace Prisma {
     report_time?: boolean
     status?: boolean
     updated_at?: boolean
+    viewedByMunicipality?: boolean
   }
 
-  export type reportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"report_id" | "author_id" | "report_title" | "problem_id" | "canton_id" | "district" | "neighborhood" | "street" | "report_date" | "report_time" | "status" | "updated_at", ExtArgs["result"]["report"]>
+  export type reportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"report_id" | "author_id" | "report_title" | "problem_id" | "canton_id" | "district" | "neighborhood" | "street" | "report_date" | "report_time" | "status" | "updated_at" | "viewedByMunicipality", ExtArgs["result"]["report"]>
   export type reportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     canton?: boolean | report$cantonArgs<ExtArgs>
     district_report_districtTodistrict?: boolean | report$district_report_districtTodistrictArgs<ExtArgs>
@@ -11052,6 +11063,7 @@ export namespace Prisma {
       report_time: Date | null
       status: string | null
       updated_at: Date | null
+      viewedByMunicipality: boolean | null
     }, ExtArgs["result"]["report"]>
     composites: {}
   }
@@ -11491,6 +11503,7 @@ export namespace Prisma {
     readonly report_time: FieldRef<"report", 'DateTime'>
     readonly status: FieldRef<"report", 'String'>
     readonly updated_at: FieldRef<"report", 'DateTime'>
+    readonly viewedByMunicipality: FieldRef<"report", 'Boolean'>
   }
     
 
@@ -12087,7 +12100,8 @@ export namespace Prisma {
     report_date: 'report_date',
     report_time: 'report_time',
     status: 'status',
-    updated_at: 'updated_at'
+    updated_at: 'updated_at',
+    viewedByMunicipality: 'viewedByMunicipality'
   };
 
   export type ReportScalarFieldEnum = (typeof ReportScalarFieldEnum)[keyof typeof ReportScalarFieldEnum]
@@ -12175,6 +12189,13 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -12645,6 +12666,7 @@ export namespace Prisma {
     report_time?: DateTimeNullableFilter<"report"> | Date | string | null
     status?: StringNullableFilter<"report"> | string | null
     updated_at?: DateTimeNullableFilter<"report"> | Date | string | null
+    viewedByMunicipality?: BoolNullableFilter<"report"> | boolean | null
     canton?: XOR<CantonNullableScalarRelationFilter, cantonWhereInput> | null
     district_report_districtTodistrict?: XOR<DistrictNullableScalarRelationFilter, districtWhereInput> | null
     author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
@@ -12664,6 +12686,7 @@ export namespace Prisma {
     report_time?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
     updated_at?: SortOrderInput | SortOrder
+    viewedByMunicipality?: SortOrderInput | SortOrder
     canton?: cantonOrderByWithRelationInput
     district_report_districtTodistrict?: districtOrderByWithRelationInput
     author?: UserOrderByWithRelationInput
@@ -12686,6 +12709,7 @@ export namespace Prisma {
     report_time?: DateTimeNullableFilter<"report"> | Date | string | null
     status?: StringNullableFilter<"report"> | string | null
     updated_at?: DateTimeNullableFilter<"report"> | Date | string | null
+    viewedByMunicipality?: BoolNullableFilter<"report"> | boolean | null
     canton?: XOR<CantonNullableScalarRelationFilter, cantonWhereInput> | null
     district_report_districtTodistrict?: XOR<DistrictNullableScalarRelationFilter, districtWhereInput> | null
     author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
@@ -12705,6 +12729,7 @@ export namespace Prisma {
     report_time?: SortOrderInput | SortOrder
     status?: SortOrderInput | SortOrder
     updated_at?: SortOrderInput | SortOrder
+    viewedByMunicipality?: SortOrderInput | SortOrder
     _count?: reportCountOrderByAggregateInput
     _avg?: reportAvgOrderByAggregateInput
     _max?: reportMaxOrderByAggregateInput
@@ -12728,6 +12753,7 @@ export namespace Prisma {
     report_time?: DateTimeNullableWithAggregatesFilter<"report"> | Date | string | null
     status?: StringNullableWithAggregatesFilter<"report"> | string | null
     updated_at?: DateTimeNullableWithAggregatesFilter<"report"> | Date | string | null
+    viewedByMunicipality?: BoolNullableWithAggregatesFilter<"report"> | boolean | null
   }
 
   export type UserCreateInput = {
@@ -13137,6 +13163,7 @@ export namespace Prisma {
     report_time?: Date | string | null
     status?: string | null
     updated_at?: Date | string | null
+    viewedByMunicipality?: boolean | null
     canton?: cantonCreateNestedOneWithoutReportInput
     district_report_districtTodistrict?: districtCreateNestedOneWithoutReport_report_districtTodistrictInput
     author?: UserCreateNestedOneWithoutReportsInput
@@ -13156,6 +13183,7 @@ export namespace Prisma {
     report_time?: Date | string | null
     status?: string | null
     updated_at?: Date | string | null
+    viewedByMunicipality?: boolean | null
   }
 
   export type reportUpdateInput = {
@@ -13166,6 +13194,7 @@ export namespace Prisma {
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    viewedByMunicipality?: NullableBoolFieldUpdateOperationsInput | boolean | null
     canton?: cantonUpdateOneWithoutReportNestedInput
     district_report_districtTodistrict?: districtUpdateOneWithoutReport_report_districtTodistrictNestedInput
     author?: UserUpdateOneWithoutReportsNestedInput
@@ -13185,6 +13214,7 @@ export namespace Prisma {
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    viewedByMunicipality?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type reportCreateManyInput = {
@@ -13200,6 +13230,7 @@ export namespace Prisma {
     report_time?: Date | string | null
     status?: string | null
     updated_at?: Date | string | null
+    viewedByMunicipality?: boolean | null
   }
 
   export type reportUpdateManyMutationInput = {
@@ -13210,6 +13241,7 @@ export namespace Prisma {
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    viewedByMunicipality?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type reportUncheckedUpdateManyInput = {
@@ -13225,6 +13257,7 @@ export namespace Prisma {
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    viewedByMunicipality?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -13716,6 +13749,11 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
   export type DistrictNullableScalarRelationFilter = {
     is?: districtWhereInput | null
     isNot?: districtWhereInput | null
@@ -13744,6 +13782,7 @@ export namespace Prisma {
     report_time?: SortOrder
     status?: SortOrder
     updated_at?: SortOrder
+    viewedByMunicipality?: SortOrder
   }
 
   export type reportAvgOrderByAggregateInput = {
@@ -13767,6 +13806,7 @@ export namespace Prisma {
     report_time?: SortOrder
     status?: SortOrder
     updated_at?: SortOrder
+    viewedByMunicipality?: SortOrder
   }
 
   export type reportMinOrderByAggregateInput = {
@@ -13782,6 +13822,7 @@ export namespace Prisma {
     report_time?: SortOrder
     status?: SortOrder
     updated_at?: SortOrder
+    viewedByMunicipality?: SortOrder
   }
 
   export type reportSumOrderByAggregateInput = {
@@ -13804,6 +13845,14 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type NeighborProfileCreateNestedOneWithoutUserInput = {
@@ -14298,6 +14347,10 @@ export namespace Prisma {
     set?: Date | string | null
   }
 
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+  }
+
   export type cantonUpdateOneWithoutReportNestedInput = {
     create?: XOR<cantonCreateWithoutReportInput, cantonUncheckedCreateWithoutReportInput>
     connectOrCreate?: cantonCreateOrConnectWithoutReportInput
@@ -14529,6 +14582,11 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -14541,6 +14599,14 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type NeighborProfileCreateWithoutUserInput = {
@@ -14614,6 +14680,7 @@ export namespace Prisma {
     report_time?: Date | string | null
     status?: string | null
     updated_at?: Date | string | null
+    viewedByMunicipality?: boolean | null
     canton?: cantonCreateNestedOneWithoutReportInput
     district_report_districtTodistrict?: districtCreateNestedOneWithoutReport_report_districtTodistrictInput
     problem?: problemCreateNestedOneWithoutReportInput
@@ -14631,6 +14698,7 @@ export namespace Prisma {
     report_time?: Date | string | null
     status?: string | null
     updated_at?: Date | string | null
+    viewedByMunicipality?: boolean | null
   }
 
   export type reportCreateOrConnectWithoutAuthorInput = {
@@ -14753,6 +14821,7 @@ export namespace Prisma {
     report_time?: DateTimeNullableFilter<"report"> | Date | string | null
     status?: StringNullableFilter<"report"> | string | null
     updated_at?: DateTimeNullableFilter<"report"> | Date | string | null
+    viewedByMunicipality?: BoolNullableFilter<"report"> | boolean | null
   }
 
   export type UserCreateWithoutNeighborProfileInput = {
@@ -14958,6 +15027,7 @@ export namespace Prisma {
     report_time?: Date | string | null
     status?: string | null
     updated_at?: Date | string | null
+    viewedByMunicipality?: boolean | null
     district_report_districtTodistrict?: districtCreateNestedOneWithoutReport_report_districtTodistrictInput
     author?: UserCreateNestedOneWithoutReportsInput
     problem?: problemCreateNestedOneWithoutReportInput
@@ -14975,6 +15045,7 @@ export namespace Prisma {
     report_time?: Date | string | null
     status?: string | null
     updated_at?: Date | string | null
+    viewedByMunicipality?: boolean | null
   }
 
   export type reportCreateOrConnectWithoutCantonInput = {
@@ -15052,6 +15123,7 @@ export namespace Prisma {
     report_time?: Date | string | null
     status?: string | null
     updated_at?: Date | string | null
+    viewedByMunicipality?: boolean | null
     canton?: cantonCreateNestedOneWithoutReportInput
     author?: UserCreateNestedOneWithoutReportsInput
     problem?: problemCreateNestedOneWithoutReportInput
@@ -15069,6 +15141,7 @@ export namespace Prisma {
     report_time?: Date | string | null
     status?: string | null
     updated_at?: Date | string | null
+    viewedByMunicipality?: boolean | null
   }
 
   export type reportCreateOrConnectWithoutDistrict_report_districtTodistrictInput = {
@@ -15141,6 +15214,7 @@ export namespace Prisma {
     report_time?: Date | string | null
     status?: string | null
     updated_at?: Date | string | null
+    viewedByMunicipality?: boolean | null
     canton?: cantonCreateNestedOneWithoutReportInput
     district_report_districtTodistrict?: districtCreateNestedOneWithoutReport_report_districtTodistrictInput
     author?: UserCreateNestedOneWithoutReportsInput
@@ -15158,6 +15232,7 @@ export namespace Prisma {
     report_time?: Date | string | null
     status?: string | null
     updated_at?: Date | string | null
+    viewedByMunicipality?: boolean | null
   }
 
   export type reportCreateOrConnectWithoutProblemInput = {
@@ -15444,6 +15519,7 @@ export namespace Prisma {
     report_time?: Date | string | null
     status?: string | null
     updated_at?: Date | string | null
+    viewedByMunicipality?: boolean | null
   }
 
   export type AlertUpdateWithoutAuthorInput = {
@@ -15477,6 +15553,7 @@ export namespace Prisma {
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    viewedByMunicipality?: NullableBoolFieldUpdateOperationsInput | boolean | null
     canton?: cantonUpdateOneWithoutReportNestedInput
     district_report_districtTodistrict?: districtUpdateOneWithoutReport_report_districtTodistrictNestedInput
     problem?: problemUpdateOneWithoutReportNestedInput
@@ -15494,6 +15571,7 @@ export namespace Prisma {
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    viewedByMunicipality?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type reportUncheckedUpdateManyWithoutAuthorInput = {
@@ -15508,6 +15586,7 @@ export namespace Prisma {
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    viewedByMunicipality?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type districtCreateManyCantonInput = {
@@ -15527,6 +15606,7 @@ export namespace Prisma {
     report_time?: Date | string | null
     status?: string | null
     updated_at?: Date | string | null
+    viewedByMunicipality?: boolean | null
   }
 
   export type districtUpdateWithoutCantonInput = {
@@ -15553,6 +15633,7 @@ export namespace Prisma {
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    viewedByMunicipality?: NullableBoolFieldUpdateOperationsInput | boolean | null
     district_report_districtTodistrict?: districtUpdateOneWithoutReport_report_districtTodistrictNestedInput
     author?: UserUpdateOneWithoutReportsNestedInput
     problem?: problemUpdateOneWithoutReportNestedInput
@@ -15570,6 +15651,7 @@ export namespace Prisma {
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    viewedByMunicipality?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type reportUncheckedUpdateManyWithoutCantonInput = {
@@ -15584,6 +15666,7 @@ export namespace Prisma {
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    viewedByMunicipality?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type reportCreateManyDistrict_report_districtTodistrictInput = {
@@ -15598,6 +15681,7 @@ export namespace Prisma {
     report_time?: Date | string | null
     status?: string | null
     updated_at?: Date | string | null
+    viewedByMunicipality?: boolean | null
   }
 
   export type reportUpdateWithoutDistrict_report_districtTodistrictInput = {
@@ -15608,6 +15692,7 @@ export namespace Prisma {
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    viewedByMunicipality?: NullableBoolFieldUpdateOperationsInput | boolean | null
     canton?: cantonUpdateOneWithoutReportNestedInput
     author?: UserUpdateOneWithoutReportsNestedInput
     problem?: problemUpdateOneWithoutReportNestedInput
@@ -15625,6 +15710,7 @@ export namespace Prisma {
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    viewedByMunicipality?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type reportUncheckedUpdateManyWithoutDistrict_report_districtTodistrictInput = {
@@ -15639,6 +15725,7 @@ export namespace Prisma {
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    viewedByMunicipality?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type reportCreateManyProblemInput = {
@@ -15653,6 +15740,7 @@ export namespace Prisma {
     report_time?: Date | string | null
     status?: string | null
     updated_at?: Date | string | null
+    viewedByMunicipality?: boolean | null
   }
 
   export type reportUpdateWithoutProblemInput = {
@@ -15663,6 +15751,7 @@ export namespace Prisma {
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    viewedByMunicipality?: NullableBoolFieldUpdateOperationsInput | boolean | null
     canton?: cantonUpdateOneWithoutReportNestedInput
     district_report_districtTodistrict?: districtUpdateOneWithoutReport_report_districtTodistrictNestedInput
     author?: UserUpdateOneWithoutReportsNestedInput
@@ -15680,6 +15769,7 @@ export namespace Prisma {
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    viewedByMunicipality?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type reportUncheckedUpdateManyWithoutProblemInput = {
@@ -15694,6 +15784,7 @@ export namespace Prisma {
     report_time?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    viewedByMunicipality?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type problemCreateManyProblem_typeInput = {

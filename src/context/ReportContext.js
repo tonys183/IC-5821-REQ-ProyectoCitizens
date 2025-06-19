@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect, useCallback } from 'react';
+import React, { createContext, useState, useContext, useCallback } from 'react';
 
 const ReportContext = createContext();
 
@@ -19,7 +19,13 @@ export function ReportProvider({ children }) {
     if (filters.status) query.append('status', filters.status);
 
     try {
-      const response = await fetch(`/api/reports?${query.toString()}`);
+      const token = localStorage.getItem('authToken');
+      const headers = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      const response = await fetch(`/api/reports?${query.toString()}`, { headers });
       if (!response.ok) {
         throw new Error('Failed to fetch reports');
       }

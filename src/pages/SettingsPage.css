@@ -13,6 +13,8 @@
   color: var(--accent-color);
   margin-bottom: 2rem;
   font-size: 2rem;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .settings-section {
@@ -47,10 +49,6 @@
   transition: background-color 0.2s ease-in-out;
 }
 
-.settings-option-item:hover {
-  
-}
-
 .settings-option-item span {
   font-size: 1rem;
 }
@@ -60,10 +58,9 @@
   gap: 10px;
 }
 
-
-
 .settings-logout-button {
   background-color: var(--error-color);
+  margin-left: -8px;
 }
 
 .settings-logout-button:hover {
@@ -71,9 +68,6 @@
   opacity: 1; 
 }
 
-.settings-option-item .settings-logout-button {
- 
-}
 
 @media (max-width: 768px) {
   .settings-page-container {
@@ -82,11 +76,11 @@
   }
 
   .settings-title {
-    font-size: 1.8rem;
+    font-size: 1.2rem;
   }
 
   .settings-section-title {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 
   .settings-option-item {
@@ -100,13 +94,17 @@
 
   .language-buttons {
     width: 100%;
-    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-sizing: border-box;
   }
 
   .settings-action-button,
   .settings-logout-button {
-    width: 100%;
-    padding: 0.8rem;
-    font-size: 1rem;
+    width: 60px;
+    padding: 1rem 0.2rem;
+    font-size: 0.8rem;
+    box-sizing: border-box;
   }
 } 

@@ -4,22 +4,46 @@ import { useTranslation } from 'react-i18next';
 import { useReports } from '../context/ReportContext.js';
 import './ReportDetailModal.css';
 
-function ReportDetailModal({ report, user, onClose, show }) {
+function ReportDetailModal({ report: initialReport, user, onClose, show }) {
   const { t, i18n } = useTranslation();
   const { updateReportStatus } = useReports();
   const navigate = useNavigate();
+
+  const [report, setReport] = useState(null);
   const [newStatus, setNewStatus] = useState('');
   const [isUpdating, setIsUpdating] = useState(false);
   const [error, setError] = useState('');
   const currentUserId = user?.id;
 
   useEffect(() => {
-    if (report) {
-      setNewStatus(report.status || '');
+    if (show && initialReport?.report_id) {
+      const fetchReportDetails = async () => {
+        try {
+          const token = localStorage.getItem('authToken');
+          const response = await fetch(`/api/reports/${initialReport.report_id}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+          if (!response.ok) {
+            throw new Error('Failed to fetch report details.');
+          }
+          const data = await response.json();
+          setReport(data);
+          setNewStatus(data.status || '');
+        } catch (err) {
+          console.error("Error fetching report details:", err);
+          setError(err.message);
+          setReport(initialReport);
+        }
+      };
+      
+      fetchReportDetails();
+    } else if (!show) {
+      setReport(null);
       setError('');
-      setIsUpdating(false);
     }
-  }, [report]);
+  }, [show, initialReport]);
 
   if (!show || !report) {
     return null;
@@ -86,7 +110,6 @@ function ReportDetailModal({ report, user, onClose, show }) {
 
     try {
       await updateReportStatus(report_id, newStatus);
-      const updatedReportFromContext = { ...report, status: newStatus };
       onClose();
 
     } catch (err) {
