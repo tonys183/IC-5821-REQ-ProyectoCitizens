@@ -1,5 +1,17 @@
 # IC-5821 — Requerimientos de Software
 
+<p align="center">🏘️</p>
+
+<p align="center">
+  <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square">
+  <img alt="React" src="https://img.shields.io/badge/React-61DAFB?style=flat-square">
+  <img alt="Prisma" src="https://img.shields.io/badge/Prisma-2D3748?style=flat-square">
+</p>
+
+<p align="center">
+  <a href="#proyecto-citizens">Proyecto</a>
+</p>
+
 Proyecto del curso Requerimientos de Software (IC-5821), enfocado en una propuesta para facilitar la comunicación entre los habitantes de una comunidad y la municipalidad mediante el reporte de problemas y averías.
 
 ## Proyecto (Citizens)
