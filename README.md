@@ -3,9 +3,10 @@
 <p align="center">🏘️</p>
 
 <p align="center">
-  <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square">
-  <img alt="React" src="https://img.shields.io/badge/React-61DAFB?style=flat-square">
-  <img alt="Prisma" src="https://img.shields.io/badge/Prisma-2D3748?style=flat-square">
+  <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=white">
+  <img alt="React" src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=white">
+  <img alt="Prisma" src="https://img.shields.io/badge/Prisma-2D3748?style=flat-square&logo=prisma&logoColor=white">
+  <a href="LICENSE"><img alt="Licencia GPL-3.0" src="https://img.shields.io/github/license/tonys183/IC-5821-REQ-ProyectoCitizens?style=flat-square&label=Licencia&logo=opensourceinitiative&logoColor=white"></a>
 </p>
 
 <p align="center">
