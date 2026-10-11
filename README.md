@@ -1,5 +1,11 @@
-# IC-5821-REQ-ProyectoCitizens
-Nombre completo y carnet de los estudiantes:  
-Gael Ruiz Ñurinda: 2024165704  
-Anthony Segura Paniagua: 2024068397  
-Saúl Pacheco Cubillo: 2024220652
+# IC-5821 — Requerimientos de Software
+
+Proyecto del curso Requerimientos de Software (IC-5821), enfocado en una propuesta para facilitar la comunicación entre los habitantes de una comunidad y la municipalidad mediante el reporte de problemas y averías.
+
+## Proyecto (Citizens)
+
+Citizens surgió como una propuesta de sistema de reportes comunitarios orientada a la Municipalidad de Alajuela. La idea era ofrecer un espacio donde los vecinos pudieran registrar problemas de su comunidad, indicar el tipo de incidente y su ubicación, y consultar el estado de sus reportes. De esta forma, la información quedaría centralizada para facilitar su revisión y seguimiento por parte de la municipalidad.
+
+El sistema contempla perfiles para vecinos y municipalidades, con funciones para crear y consultar reportes, actualizar su estado y publicar alertas o avisos dirigidos a la comunidad. Cada reporte reúne datos como el tipo de problema, cantón, distrito, barrio, calle y fecha, para ayudar a identificar la situación reportada y el lugar donde ocurre.
+
+La propuesta buscaba trasladar las necesidades de los ciudadanos y del personal municipal a las funciones de una aplicación, como parte del trabajo del curso de Requerimientos de Software. Su propósito era apoyar la participación ciudadana y brindar mayor visibilidad al seguimiento de los problemas de la comunidad.
