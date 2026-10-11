@@ -1,7 +1,5 @@
 # IC-5821 — Requerimientos de Software
 
-<p align="center">🏘️</p>
-
 <p align="center">
   <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=white">
   <img alt="React" src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=white">
